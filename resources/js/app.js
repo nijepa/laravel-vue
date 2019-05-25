@@ -9,24 +9,102 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 /**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ * Load Sweet Alert
  */
+import swal from 'sweetalert2'
+window.swal = swal;
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+const toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+window.toast = toast;
 
+/**
+ * Load vForm
+ */
+import { Form, HasError, AlertError } from 'vform'
+window.Form = Form;
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
+
+/**
+ * Load Vue-Progress bar
+ */
+import VueProgressBar from 'vue-progressbar';
+Vue.use(VueProgressBar, {
+   color: 'blue',
+   failedColor: 'red',
+   height: '5px'
+});
+
+/**
+ * Load Moment
+ */
+import moment from 'moment';
+
+/**
+ * Create events listener
+ */
+window.Fire = new Vue();
+
+/**
+ * Load Vue Router
+ */
+import VueRouter from 'vue-router';
+
+Vue.use(VueRouter);
+
+/**
+ * Create Vue routes
+ * @type {*[]}
+ */
+let routes = [
+    {path: '/dashboard', component: require('./components/Dashboard.vue').default},
+    {path: '/profile', component: require('./components/Profile.vue').default},
+    {path: '/users', component: require('./components/Users.vue').default}
+];
+
+/**
+ * Create Vue router
+ * @type {VueRouter}
+ */
+const router = new VueRouter({
+    mode: 'history',
+    routes
+});
+
+Vue.filter('upText', (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+});
+
+Vue.filter('customDate', (fromDate) => {
+    return moment(fromDate).format("MMM Do YYYY");
+});
+
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue').default
+);
+
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 const app = new Vue({
     el: '#app',
+    router
 });
