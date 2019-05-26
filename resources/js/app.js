@@ -32,6 +32,12 @@ Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
 
 /**
+ * Load authorization
+ */
+import Gate from './Gate';
+Vue.prototype.$gate = new Gate(window.user);
+
+/**
  * Load Vue-Progress bar
  */
 import VueProgressBar from 'vue-progressbar';
@@ -98,6 +104,11 @@ Vue.component(
 Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
+);
+
+Vue.component(
+    'unauthorized',
+    require('./components/Unauthorized.vue').default
 );
 /**
  * Next, we will create a fresh Vue application instance and attach it to
