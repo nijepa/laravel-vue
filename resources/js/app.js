@@ -53,6 +53,11 @@ Vue.use(VueProgressBar, {
 import moment from 'moment';
 
 /**
+ * Load Laravel-Vue-Pagination
+ */
+Vue.component('pagination', require('laravel-vue-pagination'));
+
+/**
  * Create events listener
  */
 window.Fire = new Vue();
@@ -71,7 +76,8 @@ Vue.use(VueRouter);
 let routes = [
     {path: '/dashboard', component: require('./components/Dashboard.vue').default},
     {path: '/profile', component: require('./components/Profile.vue').default},
-    {path: '/users', component: require('./components/Users.vue').default}
+    {path: '/users', component: require('./components/Users.vue').default},
+    {path: '*', component: require('./components/NotFound.vue').default}
 ];
 
 /**
@@ -117,5 +123,16 @@ Vue.component(
  */
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data: {
+        search: ''
+    },
+    methods: {
+        searchIt: _.debounce(() => {
+            Fire.$emit('searching');
+        }, 2000)
+
+            //console.log('Searching...')
+
+    }
 });

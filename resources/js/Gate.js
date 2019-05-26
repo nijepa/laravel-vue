@@ -16,4 +16,11 @@ export default class Gate {
         return this.user.type === 'user';
     }
 
+    authUser() {
+        return this.user.name;
+    }
+
+    authType() {
+        return this.user.type;
+    }
 }

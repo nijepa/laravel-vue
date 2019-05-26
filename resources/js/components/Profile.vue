@@ -5,8 +5,8 @@
                 <div class="card card-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header text-white" style="background: url('./img/user-profile-bg.jpg') center center;">
-                        <h3 class="widget-user-username">ggggg</h3>
-                        <h5 class="widget-user-desc">Web Designer</h5>
+                        <h3 class="widget-user-username">{{ user }}</h3>
+                        <h5 class="widget-user-desc">{{ type }}</h5>
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
@@ -126,6 +126,8 @@
         name: "Profile",
         data() {
             return {
+                user: '',
+                type: '',
                 form: new Form({
                     id: '',
                     name: '',
@@ -179,6 +181,8 @@
             }
         },
         created() {
+            this.type = this.$gate.authType();
+            this.user = this.$gate.authUser();
             axios.get("api/profile")
                 .then(({ data }) => (this.form.fill(data)))
                 .catch();
