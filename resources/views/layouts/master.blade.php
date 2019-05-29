@@ -192,13 +192,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p>Users</p>
                                 </router-link>
                             </li>
-                            @endcan
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>Inactive Page</p>
-                                </a>
+                                <router-link to="/cities" class="nav-link">
+                                    <i class="fa fa-city nav-icon"></i>
+                                    <p>Cities</p>
+                                </router-link>
                             </li>
+                            <li class="nav-item">
+                                <router-link to="/countries" class="nav-link">
+                                    <i class="fa fa-globe-europe nav-icon"></i>
+                                    <p>Countries</p>
+                                </router-link>
+                            </li>
+                            @endcan
                         </ul>
                     </li>
                     <li class="nav-item">

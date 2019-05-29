@@ -15,6 +15,8 @@ export default new Router({
         {path: '/dashboard', component: require('./components/Dashboard.vue').default},
         {path: '/profile', component: require('./components/Profile.vue').default},
         {path: '/users', component: require('./components/Users.vue').default},
+        {path: '/cities', component: require('./components/Cities.vue').default},
+        {path: '/countries', component: require('./components/Countries.vue').default},
         {path: '*', component: require('./components/NotFound.vue').default}
         
     ]

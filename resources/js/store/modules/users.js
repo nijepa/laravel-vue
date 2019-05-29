@@ -35,9 +35,10 @@ const actions = {
             .then(response => {
                 commit('update', response.data);
                 console.log(response.data)
+            })
+            .catch(err => {
+                console.log(err);
             });
-
-
     },
     removeUser ({ commit }, user) {
         axios.delete(`api/user/${user.id}`)
@@ -64,8 +65,6 @@ const mutations = {
         Vue.set(state.users, user.index, user)
         //state.user = user
     }
-
-
 };
 
 export default {

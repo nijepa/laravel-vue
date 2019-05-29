@@ -7,6 +7,8 @@ import contacts from './modules/contacts';
 import owner from './modules/owner';
 import repDet from './modules/repDet';
 import news from './modules/news';*/
+import countries from './modules/countries';
+import cities from './modules/cities';
 import users from './modules/users';
 
 /**
@@ -23,6 +25,8 @@ export default new Vuex.Store({
         owner,
         repDet,
         news,*/
+        cities,
+        countries,
         users
     }
 })
