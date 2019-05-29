@@ -2,6 +2,7 @@
     <div class="container">
         <div class="row" v-if="$gate.isAdmin()">
             <div class="col-12">
+
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Users</h3>
@@ -23,18 +24,18 @@
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
-                            <tr v-for="user in users.data" :key="user.id">
+                            <tr v-for="user in users.users.data" :key="user.id">
                                 <td>{{ user.id }}</td>
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
                                 <td><span class="tag tag-success">{{ user.type | upText }}</span></td>
                                 <td>{{ user.created_at | customDate }}</td>
                                 <td>
-                                    <button href="" @click="editModal(user)" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
+                                    <button @click="editModal(user)" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
                                         <i class="fas fa-user-edit"></i>
                                     </button>
                                     /
-                                    <button type="button" @click="deleteUser(user.id)" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
+                                    <button  @click="deleteUser(user)" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
                                         <i class="fas fa-user-minus"></i>
                                     </button>
                                 </td>
@@ -44,7 +45,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <pagination :data="users" @pagination-change-page="getResults">
+                        <pagination :data="users.users" @pagination-change-page="getResults">
                             <span slot="prev-nav">&lt; Previous</span>
                             <span slot="next-nav">Next &gt;</span>
                         </pagination>
@@ -122,6 +123,7 @@
 </template>
 
 <script>
+    import { mapGetters, mapActions } from 'vuex';
     export default {
         name: "Users",
         data() {
@@ -139,37 +141,48 @@
                 editMode: true
             }
         },
+        computed: mapGetters(['allUsers']),
         methods: {
+            ...mapActions(['fetchUsers',
+                'fetchUsersP',
+                'fetchUsersS',
+                'addUser',
+                'renewUser',
+                'removeUser']),
             loadUsers() {
                 if(this.$gate.isAdmin()) {
-                    axios.get("api/user")
+      /*              axios.get("api/user")
                         .then(({ data }) => (this.users = data))
-                        .catch();
+                        .catch();*/
+                    this.fetchUsersP();
+                    this.users = this.$store.state.users;
                 }
             },
             getResults(page = 1) {
-                axios.get('api/user?page=' + page)
+                this.fetchUsersP(page);
+                this.users = this.$store.state.users;
+        /*        axios.get('api/user?page=' + page)
                     .then(response => {
+                        console.log(response.data);
                         this.users = response.data;
-                    });
+                    });*/
             },
             newModal() {
                 this.editMode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
-
             },
             editModal(user) {
                 this.editMode = true;
                 $('#addNew').modal('show');
                 this.form.fill(user);
-
             },
             createUser() {
                 this.$Progress.start();
-                this.form.post('api/user')
-                    .then(({ data }) => {
-                        console.log(data);
+                this.addUser(this.form);
+                // this.form.post('api/user')
+                //     .then(({ data }) => {
+                        //console.log(data);
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
@@ -177,13 +190,16 @@
                             title: 'User added successfully'
                         });
                         this.$Progress.finish();
-                    })
-                    .catch(() => {})
+                    // })
+                    // .catch(() => {})
             },
             updateUser(id) {
                 this.$Progress.start();
-                this.form.put('api/user/'+this.form.id)
-                    .then(() => {
+                //console.log(this.form);
+                this.renewUser(this.form);
+
+                //this.form.put('api/user/'+this.form.id)
+                    //.then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
@@ -191,12 +207,12 @@
                             title: 'User updated successfully'
                         });
                         this.$Progress.finish();
-                    })
+            /*        })
                     .catch(() => {
                         this.$Progress.fail();
-                    })
+                    })*/
             },
-            deleteUser(id){
+            deleteUser(user){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -208,16 +224,19 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.form.delete('api/user/'+id).then(()=>{
+                        this.removeUser(user);
+                        //this.form.delete('api/user/'+id).then(()=>{
                             swal.fire(
                                 'Deleted!',
                                 'User has been deleted.',
                                 'success'
                             );
                             Fire.$emit('AfterCreate');
-                        }).catch(()=> {
-                            swal("Failed!", "There was something wrong.", "warning");
-                        });
+                        // }).catch(()=> {
+                        //     swal("Failed!", "There was something wrong.", "warning");
+                        // });
+                    } else {
+                        console.log('qqqqqqqqqqqq');
                     }
                 })
             }
@@ -225,14 +244,18 @@
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                axios.get('api/findUser?q=' + query)
+                this.fetchUsersS(query);
+        /*        axios.get('api/findUser?q=' + query)
                     .then((data) => {
+                        console.log(data);
                         this.users = data.data
                     })
                     .catch(() => {
 
-                    })
+                    })*/
             });
+            // this.fetchUsers();
+            // this.users = this.$store.state.users;
             this.loadUsers();
             Fire.$on('AfterCreate', () => {
                 this.loadUsers();
