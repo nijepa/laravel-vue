@@ -188,19 +188,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             @can('isAdmin')
                             <li class="nav-item">
                                 <router-link to="/users" class="nav-link">
-                                    <i class="fa fa-users nav-icon"></i>
+                                    <i class="fa fa-users nav-icon text-orange"></i>
                                     <p>Users</p>
                                 </router-link>
                             </li>
                             <li class="nav-item">
                                 <router-link to="/cities" class="nav-link">
-                                    <i class="fa fa-city nav-icon"></i>
+                                    <i class="fa fa-city nav-icon text-yellow"></i>
                                     <p>Cities</p>
                                 </router-link>
                             </li>
                             <li class="nav-item">
                                 <router-link to="/countries" class="nav-link">
-                                    <i class="fa fa-globe-europe nav-icon"></i>
+                                    <i class="fa fa-globe-europe nav-icon text-yellow"></i>
                                     <p>Countries</p>
                                 </router-link>
                             </li>

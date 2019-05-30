@@ -63218,13 +63218,13 @@ var render = function() {
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-header" }, [
-                _c("h3", { staticClass: "card-title" }, [_vm._v("Cities")]),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-tools" }, [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-outline-success",
+                      staticClass: "btn btn-success",
                       on: {
                         click: function($event) {
                           return _vm.newModal()
@@ -63233,7 +63233,7 @@ var render = function() {
                     },
                     [
                       _vm._v("\n                            Add City "),
-                      _c("i", { staticClass: "fas fa-user-plus" })
+                      _vm._m(1)
                     ]
                   )
                 ])
@@ -63244,7 +63244,7 @@ var render = function() {
                   _c(
                     "tbody",
                     [
-                      _vm._m(0),
+                      _vm._m(2),
                       _vm._v(" "),
                       _vm._l(_vm.cities.cities.data, function(city) {
                         return _c("tr", { key: city.id }, [
@@ -63274,7 +63274,7 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-outline-info btn-sm",
+                                staticClass: "btn btn-info btn-sm",
                                 attrs: {
                                   "data-toggle": "tooltip",
                                   "data-placement": "top",
@@ -63286,7 +63286,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fas fa-user-edit" })]
+                              [_c("i", { staticClass: "fas fa-edit" })]
                             ),
                             _vm._v(
                               "\n                                /\n                                "
@@ -63294,7 +63294,7 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-outline-danger btn-sm",
+                                staticClass: "btn btn-danger btn-sm",
                                 attrs: {
                                   "data-toggle": "tooltip",
                                   "data-placement": "top",
@@ -63306,7 +63306,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fas fa-user-minus" })]
+                              [_c("i", { staticClass: "fas fa-trash-alt" })]
                             )
                           ])
                         ])
@@ -63403,7 +63403,7 @@ var render = function() {
                         [_vm._v("Update City")]
                       ),
                       _vm._v(" "),
-                      _vm._m(1)
+                      _vm._m(3)
                     ]),
                     _vm._v(" "),
                     _c(
@@ -63536,14 +63536,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "modal-footer" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              attrs: { type: "button", "data-dismiss": "modal" }
-                            },
-                            [_vm._v("Close")]
-                          ),
+                          _vm._m(4),
                           _vm._v(" "),
                           _c(
                             "button",
@@ -63559,7 +63552,7 @@ var render = function() {
                               staticClass: "btn btn-success",
                               attrs: { type: "submit" }
                             },
-                            [_vm._v("Create")]
+                            [_vm._v("Create "), _vm._m(5)]
                           ),
                           _vm._v(" "),
                           _c(
@@ -63576,7 +63569,7 @@ var render = function() {
                               staticClass: "btn btn-success",
                               attrs: { type: "submit" }
                             },
-                            [_vm._v("Update")]
+                            [_vm._v("Update "), _vm._m(6)]
                           )
                         ])
                       ]
@@ -63591,6 +63584,22 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h3",
+      { staticClass: "card-title text-blue font-weight-bold h3" },
+      [_c("i", { staticClass: "fas fa-city fa-2x icolor" }), _vm._v(" CITIES")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fas fa-plus" })])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -63623,6 +63632,34 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-danger",
+        attrs: { type: "button", "data-dismiss": "modal" }
+      },
+      [
+        _vm._v("Close "),
+        _c("span", [_c("i", { staticClass: "far fa-times-circle" })])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "far fa-check-circle" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "far fa-save" })])
   }
 ]
 render._withStripped = true
@@ -63652,13 +63689,13 @@ var render = function() {
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-header" }, [
-                _c("h3", { staticClass: "card-title" }, [_vm._v("Countries")]),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-tools" }, [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-outline-success",
+                      staticClass: "btn btn-success",
                       on: {
                         click: function($event) {
                           return _vm.newModal()
@@ -63667,7 +63704,7 @@ var render = function() {
                     },
                     [
                       _vm._v("\n                            Add Country "),
-                      _c("i", { staticClass: "fas fa-user-plus" })
+                      _vm._m(1)
                     ]
                   )
                 ])
@@ -63678,7 +63715,7 @@ var render = function() {
                   _c(
                     "tbody",
                     [
-                      _vm._m(0),
+                      _vm._m(2),
                       _vm._v(" "),
                       _vm._l(_vm.countries.countries.data, function(country) {
                         return _c("tr", { key: country.id }, [
@@ -63696,11 +63733,11 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-outline-info btn-sm",
+                                staticClass: "btn btn-info btn-sm",
                                 attrs: {
                                   "data-toggle": "tooltip",
                                   "data-placement": "top",
-                                  title: "Edit User"
+                                  title: "Edit"
                                 },
                                 on: {
                                   click: function($event) {
@@ -63708,19 +63745,17 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fas fa-user-edit" })]
+                              [_c("i", { staticClass: "fas fa-edit" })]
                             ),
-                            _vm._v(
-                              "\n                                /\n                                "
-                            ),
+                            _vm._v(" "),
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-outline-danger btn-sm",
+                                staticClass: "btn btn-danger btn-sm",
                                 attrs: {
                                   "data-toggle": "tooltip",
                                   "data-placement": "top",
-                                  title: "Delete User"
+                                  title: "Delete"
                                 },
                                 on: {
                                   click: function($event) {
@@ -63728,7 +63763,7 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_c("i", { staticClass: "fas fa-user-minus" })]
+                              [_c("i", { staticClass: "fas fa-trash-alt" })]
                             )
                           ])
                         ])
@@ -63825,7 +63860,7 @@ var render = function() {
                         [_vm._v("Update Country")]
                       ),
                       _vm._v(" "),
-                      _vm._m(1)
+                      _vm._m(3)
                     ]),
                     _vm._v(" "),
                     _c(
@@ -63893,14 +63928,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "modal-footer" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              attrs: { type: "button", "data-dismiss": "modal" }
-                            },
-                            [_vm._v("Close")]
-                          ),
+                          _vm._m(4),
                           _vm._v(" "),
                           _c(
                             "button",
@@ -63916,7 +63944,7 @@ var render = function() {
                               staticClass: "btn btn-success",
                               attrs: { type: "submit" }
                             },
-                            [_vm._v("Create")]
+                            [_vm._v("Create "), _vm._m(5)]
                           ),
                           _vm._v(" "),
                           _c(
@@ -63933,7 +63961,7 @@ var render = function() {
                               staticClass: "btn btn-success",
                               attrs: { type: "submit" }
                             },
-                            [_vm._v("Update")]
+                            [_vm._v("Update "), _vm._m(6)]
                           )
                         ])
                       ]
@@ -63948,6 +63976,25 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h3",
+      { staticClass: "card-title text-blue font-weight-bold h3" },
+      [
+        _c("i", { staticClass: "fas fa-globe-europe fa-2x icolor" }),
+        _vm._v(" COUNTRIES")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fas fa-plus" })])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -63978,6 +64025,34 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-danger",
+        attrs: { type: "button", "data-dismiss": "modal" }
+      },
+      [
+        _vm._v("Close "),
+        _c("span", [_c("i", { staticClass: "far fa-times-circle" })])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "far fa-check-circle" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "far fa-save" })])
   }
 ]
 render._withStripped = true
@@ -64372,7 +64447,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Update")]
+                          [_vm._v("Update "), _vm._m(3)]
                         )
                       ])
                     ])
@@ -64462,6 +64537,12 @@ var staticRenderFns = [
         _vm._v("Display User Activity")
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fas fa-save" })])
   }
 ]
 render._withStripped = true
@@ -64529,13 +64610,13 @@ var render = function() {
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-header" }, [
-                _c("h3", { staticClass: "card-title" }, [_vm._v("Users")]),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-tools" }, [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-outline-success",
+                      staticClass: "btn btn-success",
                       on: {
                         click: function($event) {
                           return _vm.newModal()
@@ -64544,7 +64625,7 @@ var render = function() {
                     },
                     [
                       _vm._v("\n                            Add User "),
-                      _c("i", { staticClass: "fas fa-user-plus" })
+                      _vm._m(1)
                     ]
                   )
                 ])
@@ -64555,7 +64636,7 @@ var render = function() {
                   _c(
                     "tbody",
                     [
-                      _vm._m(0),
+                      _vm._m(2),
                       _vm._v(" "),
                       _vm._l(_vm.users.users.data, function(user) {
                         return _c("tr", { key: user.id }, [
@@ -64581,7 +64662,7 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-outline-info btn-sm",
+                                staticClass: "btn btn-info btn-sm",
                                 attrs: {
                                   "data-toggle": "tooltip",
                                   "data-placement": "top",
@@ -64601,7 +64682,7 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-outline-danger btn-sm",
+                                staticClass: "btn btn-danger btn-sm",
                                 attrs: {
                                   "data-toggle": "tooltip",
                                   "data-placement": "top",
@@ -64710,7 +64791,7 @@ var render = function() {
                         [_vm._v("Update User")]
                       ),
                       _vm._v(" "),
-                      _vm._m(1)
+                      _vm._m(3)
                     ]),
                     _vm._v(" "),
                     _c(
@@ -64987,14 +65068,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "modal-footer" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              attrs: { type: "button", "data-dismiss": "modal" }
-                            },
-                            [_vm._v("Close")]
-                          ),
+                          _vm._m(4),
                           _vm._v(" "),
                           _c(
                             "button",
@@ -65010,7 +65084,7 @@ var render = function() {
                               staticClass: "btn btn-success",
                               attrs: { type: "submit" }
                             },
-                            [_vm._v("Create")]
+                            [_vm._v("Create "), _vm._m(5)]
                           ),
                           _vm._v(" "),
                           _c(
@@ -65027,7 +65101,7 @@ var render = function() {
                               staticClass: "btn btn-success",
                               attrs: { type: "submit" }
                             },
-                            [_vm._v("Update")]
+                            [_vm._v("Update "), _vm._m(6)]
                           )
                         ])
                       ]
@@ -65042,6 +65116,22 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h3",
+      { staticClass: "card-title text-blue font-weight-bold h3" },
+      [_c("i", { staticClass: "fas fa-users fa-2x icolor" }), _vm._v(" USERS")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fas fa-user-plus" })])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -65076,6 +65166,34 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-danger",
+        attrs: { type: "button", "data-dismiss": "modal" }
+      },
+      [
+        _vm._v("Close "),
+        _c("span", [_c("i", { staticClass: "far fa-window-close" })])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "far fa-check-circle" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "far fa-save" })])
   }
 ]
 render._withStripped = true

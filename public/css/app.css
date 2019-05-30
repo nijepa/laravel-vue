@@ -29623,3 +29623,158 @@ readers do not read off random characters that represent icons */
   color: #fff !important;
 }
 
+.icolor {
+  color: #1f6fb2;
+}
+
+.h3 {
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-info {
+  background-color: transparent;
+  color: #3490dc;
+  border: 2px solid #3490dc;
+  transition: all 0.5s;
+  text-align: center;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  outline: none;
+}
+
+.btn-info:hover {
+  background: linear-gradient(, #3490dc);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  color: white;
+}
+
+.btn-info:active {
+  background: linear-gradient(, #3490dc);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+}
+
+.btn-info span:after {
+  content: "\BB";
+  /*position: absolute;*/
+  opacity: 0;
+  /*top: 0;*/
+  right: -20px;
+  transition: 0.5s;
+  position: absolute;
+}
+
+.btn-info span {
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn-info:hover span {
+  padding-right: 25px;
+}
+
+.btn-info:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.btn-success {
+  background-color: transparent;
+  color: #38c172;
+  border: 2px solid #38c172;
+  transition: all 0.5s;
+  text-align: center;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  outline: none;
+}
+
+.btn-success:hover {
+  background: linear-gradient(, #38c172);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  color: white;
+}
+
+.btn-success:active {
+  background: linear-gradient(, #38c172);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+}
+
+.btn-success span:after {
+  content: "\BB";
+  /*position: absolute;*/
+  opacity: 0;
+  /*top: 0;*/
+  right: -20px;
+  transition: 0.5s;
+  position: absolute;
+}
+
+.btn-success span {
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn-success:hover span {
+  padding-right: 25px;
+}
+
+.btn-success:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.btn-danger {
+  background-color: transparent;
+  color: #e3342f;
+  border: 2px solid #e3342f;
+  transition: all 0.5s;
+  text-align: center;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  outline: none;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(, #e3342f);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  color: white;
+}
+
+.btn-danger:active {
+  background: linear-gradient(, #e3342f);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+}
+
+.btn-danger span:after {
+  content: "\BB";
+  /*position: absolute;*/
+  opacity: 0;
+  /*top: 0;*/
+  right: -20px;
+  transition: 0.5s;
+  position: absolute;
+}
+
+.btn-danger span {
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn-danger:hover span {
+  padding-right: 25px;
+}
+
+.btn-danger:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+

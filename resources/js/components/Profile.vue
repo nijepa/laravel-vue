@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-12">
-                                            <button @click.prevent="updateInfo" type="submit" class="btn btn-success">Update</button>
+                                            <button @click.prevent="updateInfo" type="submit" class="btn btn-success">Update <span><i class="fas fa-save"></i></span></button>
                                         </div>
                                     </div>
                                 </form>

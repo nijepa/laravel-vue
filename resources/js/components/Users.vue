@@ -5,10 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Users</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-users fa-2x icolor"></i> USERS</h3>
                         <div class="card-tools">
-                            <button class="btn btn-outline-success" @click="newModal()">
-                                Add User <i class="fas fa-user-plus"></i>
+                            <button class="btn btn-success" @click="newModal()">
+                                Add User <span><i class="fas fa-user-plus"></i></span>
                             </button>
                         </div>
                     </div>
@@ -31,11 +31,11 @@
                                 <td><span class="tag tag-success">{{ user.type | upText }}</span></td>
                                 <td>{{ user.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(user)" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
+                                    <button @click="editModal(user)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
                                         <i class="fas fa-user-edit"></i>
                                     </button>
                                     /
-                                    <button  @click="deleteUser(user)" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
+                                    <button  @click="deleteUser(user)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
                                         <i class="fas fa-user-minus"></i>
                                     </button>
                                 </td>
@@ -104,9 +104,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create</button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="far fa-window-close"></i></i></span></button>
+                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="far fa-check-circle"></i></span></button>
+                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="far fa-save"></i></span></button>
                             </div>
                             <!-- /.modal-body -->
                         </form>

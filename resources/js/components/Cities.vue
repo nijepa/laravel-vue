@@ -5,10 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Cities</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-city fa-2x icolor"></i> CITIES</h3>
                         <div class="card-tools">
-                            <button class="btn btn-outline-success" @click="newModal()">
-                                Add City <i class="fas fa-user-plus"></i>
+                            <button class="btn btn-success" @click="newModal()">
+                                Add City <span><i class="fas fa-plus"></i></span>
                             </button>
                         </div>
                     </div>
@@ -30,12 +30,12 @@
                                 <td><span class="tag tag-success">{{ city.country_id ? city.country.name : 'not selected'  }}</span></td>
                                 <td>{{ city.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(city)" class="btn btn-outline-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
-                                        <i class="fas fa-user-edit"></i>
+                                    <button @click="editModal(city)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
+                                        <i class="fas fa-edit"></i>
                                     </button>
                                     /
-                                    <button  @click="deleteCity(city)" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
-                                        <i class="fas fa-user-minus"></i>
+                                    <button  @click="deleteCity(city)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
+                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -88,9 +88,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create</button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="far fa-times-circle"></i></span></button>
+                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="far fa-check-circle"></i></span></button>
+                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="far fa-save"></i></span></button>
                             </div>
                             <!-- /.modal-body -->
                         </form>
