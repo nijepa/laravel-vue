@@ -141,4 +141,5 @@ const app = new Vue({
             //console.log('Searching...')
 
     }
+
 });

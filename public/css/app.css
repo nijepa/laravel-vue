@@ -29657,7 +29657,7 @@ readers do not read off random characters that represent icons */
 }
 
 .btn-info span:after {
-  content: "\BB";
+  content: "\2316";
   /*position: absolute;*/
   opacity: 0;
   /*top: 0;*/
@@ -29706,7 +29706,7 @@ readers do not read off random characters that represent icons */
 }
 
 .btn-success span:after {
-  content: "\BB";
+  content: "\2316";
   /*position: absolute;*/
   opacity: 0;
   /*top: 0;*/
