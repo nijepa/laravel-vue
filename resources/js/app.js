@@ -117,6 +117,12 @@ Vue.component(
     require('./components/Unauthorized.vue').default
 );
 
+/**
+ * Load AOS
+ */
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
 import helpers from './helpers/helpers';
 import filters from './helpers/filters';
 import router from './router';
@@ -133,13 +139,13 @@ const app = new Vue({
     data: {
         search: ''
     },
+    created () {
+        AOS.init()
+    },
     methods: {
         searchIt: _.debounce(() => {
             Fire.$emit('searching');
         }, 2000)
-
             //console.log('Searching...')
-
     }
-
 });

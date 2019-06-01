@@ -17,6 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResources(['about' => 'API\AboutsController']);
+Route::apiResources(['contact' => 'API\ContactsController']);
+Route::apiResources(['owner' => 'API\OwnersController']);
+Route::apiResources(['product' => 'API\ProductsController']);
+Route::apiResources(['representation' => 'API\RepresentationsController']);
+Route::apiResources(['reps_det' => 'API\RepresentationDetsController']);
+
 Route::apiResources(['user' => 'API\UserController']);
 Route::apiResources(['city' => 'API\CitiesController']);
 Route::apiResources(['country' => 'API\CountriesController']);

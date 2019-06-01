@@ -11,7 +11,7 @@
             <Activities></Activities>
         </transition>
         <faq></faq>
-        <news></news>
+<!--        <news></news>-->
         <products></products>
         <Contact msg="Welcome to Your Vue.js App"/>
         <app-footer></app-footer>
@@ -20,14 +20,14 @@
 
 <script>
     // @ is an alias to /src
-    import Header from '@/components/home/Header.vue';
-    import Footer from '@/components/Footer.vue';
-    import Contact from '@/components/home/Contact.vue'
-    import Carousel from '@/components/home/Carousel.vue'
-    import Activities from '@/components/home/Activities.vue'
-    import Faq from '@/components/home/Faq.vue'
-    import Products from '@/components/home/Products.vue'
-    import News from '@/components/home/News.vue'
+    import Header from '../../components/front/home/Header.vue';
+    import Footer from '../../components/front/Footer.vue';
+    import Contact from '../../components/front/home/Contact.vue'
+    import Carousel from '../../components/front/home/Carousel.vue'
+    import Activities from '../../components/front/home/Activities.vue'
+    import Faq from '../../components/front/home/Faq.vue'
+    import Products from '../../components/front/home/Products.vue'
+    import News from '../../components/front/home/News.vue'
 
     export default {
         name: 'home',
@@ -39,7 +39,7 @@
             Activities,
             Faq,
             Products,
-            News
+            //News
         }
     }
 </script>

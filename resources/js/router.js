@@ -12,7 +12,7 @@ export default new Router({
 
     base: process.env.BASE_URL,
     routes: [
-        {path: '/', component: require('./components/Dashboard.vue').default},
+        {path: '/', component: require('./views/front/Home.vue').default},
         {path: '/home', component: require('./components/Dashboard.vue').default},
         {path: '/dashboard', component: require('./components/Dashboard.vue').default},
         {path: '/profile', component: require('./components/Profile.vue').default},

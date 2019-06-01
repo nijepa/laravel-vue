@@ -30,6 +30,15 @@ Vue.use(VueProgressBar, {
     height: '5px'
 });
 
+
+
+/**
+ * Load smooth scrolling plugin
+ */
+import vueSmoothScroll from 'vue2-smooth-scroll'
+Vue.use(vueSmoothScroll);
+Vue.config.productionTip = false;
+
 /**
  * Load Laravel-Vue-Pagination
  */

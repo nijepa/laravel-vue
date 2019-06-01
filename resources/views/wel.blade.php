@@ -1,35 +1,35 @@
-@extends('layouts.front')
-<div class="flex-center position-ref full-height">
-    @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-                <a href="{{ url('/home') }}">Home</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="">
+    <link rel="stylesheet" href="/css/app.css">
+    <title>donau</title>
+</head>
+<body id="home" data-spy="scroll" data-target="#main-nav">
+<noscript>
+    <strong>We're sorry but donau doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+</noscript>
 
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}">Register</a>
-                @endif
-            @endauth
-        </div>
-    @endif
-
-    <div class="content">
-        <div class="title m-b-md">
-            Laravel
-        </div>
-
-        <div class="links">
-            <a href="https://laravel.com/docs">Docs</a>
-            <a href="https://laracasts.com">Laracasts</a>
-            <a href="https://laravel-news.com">News</a>
-            <a href="https://blog.laravel.com">Blog</a>
-            <a href="https://nova.laravel.com">Nova</a>
-            <a href="https://forge.laravel.com">Forge</a>
-            <a href="https://github.com/laravel/laravel">GitHub</a>
-        </div>
-    </div>
+<div id="app">
+    <router-view></router-view>
 </div>
-@section('content')
+<!-- built files will be auto injected -->
 
-@endsection
+<script src="/js/app.js"></script>
+
+</body>
+
+<script>
+
+    $('ul.navbar-nav li.dropdown').hover(function() {
+        $(this).find('.dropdown-menu').stop(true, true).delay(200).slideDown(300);
+    }, function() {
+        $(this).find('.dropdown-menu').stop(true, true).delay(200).slideUp(300);
+    });
+
+</script>
+</html>
