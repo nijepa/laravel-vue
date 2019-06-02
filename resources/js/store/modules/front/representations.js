@@ -23,7 +23,7 @@ const actions = {
     },
     async fetchRep ({ commit }, rep) {
         const response = await axios.get(
-            `api/representation/?id=${rep.id}`,
+            `api/representation?id=${rep.id}`,
             rep
         );
         // console.log(response.data);

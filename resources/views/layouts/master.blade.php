@@ -48,7 +48,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Messages Dropdown Menu -->
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-comments fa-2x"></i>
+                    <i class="far fa-comments fa-1.8x"></i>
                     <span class="badge badge-danger navbar-badge">3</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -178,7 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fa-t <i fas fa-cogs text-teal"></i>
+                            <i class="nav-icon fas fa-cogs text-teal"></i>
                             <p>
                                 Manage
                                 <i class="right fa fa-angle-left"></i>
@@ -207,6 +207,95 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             @endcan
                         </ul>
                     </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-t <i fas fa-atlas text-pink"></i>
+                            <p>
+                                Front
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('isAdmin')
+                                <li class="nav-item">
+                                    <router-link to="/aboutsB" class="nav-link">
+                                        <i class="fas fa-certificate nav-icon text-purp"></i>
+                                        <p>About</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/representations" class="nav-link">
+                                        <i class="fas fa-hands-helping nav-icon text-purp"></i>
+                                        <p>Representations</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/productsB" class="nav-link">
+                                        <i class="fas fa-boxes nav-icon text-purp"></i>
+                                        <p>Products</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/contacts" class="nav-link">
+                                        <i class="far fa-address-book nav-icon text-purp"></i>
+                                        <p>Contacts</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/news" class="nav-link">
+                                        <i class="far fa-newspaper nav-icon text-purp"></i>
+                                        <p>News</p>
+                                    </router-link>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-project-diagram text-blue"></i>
+                            <p>
+                                Projects
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('isAdmin')
+                                <li class="nav-item">
+                                    <router-link to="/aboutsB" class="nav-link">
+                                        <i class="fas fa-certificate nav-icon text-cyan"></i>
+                                        <p>View</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/representations" class="nav-link">
+                                        <i class="fas fa-hands-helping nav-icon text-cyan"></i>
+                                        <p>Add</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/productsB" class="nav-link">
+                                        <i class="fas fa-boxes nav-icon text-purp"></i>
+                                        <p>Products</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/contacts" class="nav-link">
+                                        <i class="far fa-address-book nav-icon text-purp"></i>
+                                        <p>Contacts</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/news" class="nav-link">
+                                        <i class="far fa-newspaper nav-icon text-purp"></i>
+                                        <p>News</p>
+                                    </router-link>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
                         <router-link to="/profile" class="nav-link">
                             <i class="nav-icon fas fa-user text-orange"></i>

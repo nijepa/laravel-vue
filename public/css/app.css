@@ -13877,6 +13877,10 @@ a.text-muted:hover {
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }@charset "UTF-8";
 
+.text-purp {
+  color: rgba(242, 141, 170, 0.8);
+}
+
 .text-blue {
   color: #3490dc;
 }
@@ -13911,6 +13915,10 @@ a.text-muted:hover {
 
 .text-cyan {
   color: #6cb2eb;
+}
+
+.text-pink {
+  color: #f66d9b;
 }
 
 /*!

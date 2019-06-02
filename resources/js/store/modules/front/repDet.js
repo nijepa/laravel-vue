@@ -17,11 +17,11 @@ const getters = {
 const actions = {
     async fetchRepDet ({ commit }, repDet) {
         const response = await axios.get(
-            `api/reps_det/?id=${repDet.id}`,
+            `api/reps_det?id=${repDet.id}`,
             repDet
         );
         //console.log(response.data);
-        commit('setRepDet', response.data.data);
+        commit('setRepDet', response.data);
     },
     resetRepState ({ commit }) {
         commit('resetState')
