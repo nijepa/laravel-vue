@@ -12,7 +12,7 @@ const actions = {
     async fetchContacts ({ commit }) {
         const response = await axios.get('api/contact');
         console.log(response.data);
-        commit('setContacts', response.data.data)
+        commit('setContacts', response.data)
     }
 };
 

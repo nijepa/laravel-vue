@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\RepDet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class RepresentationDetsController extends Controller
 {
@@ -41,7 +42,8 @@ class RepresentationDetsController extends Controller
      */
     public function show($id)
     {
-        $repdets = RepDet::where('id', $id)->get();//To get the output in array
+        $repdets = RepDet::findOrFail($id);
+        //$repdets = RepDet::where('id', $id)->get();//To get the output in array
 
         return response()->json($repdets);
     }
@@ -67,5 +69,18 @@ class RepresentationDetsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function repsD(Request $request)
+    {
+        $repdets = DB::table('rep_dets')->where($request);//To get the output in array
+
+        return response()->json($repdets);
     }
 }

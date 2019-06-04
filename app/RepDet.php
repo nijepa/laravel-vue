@@ -14,7 +14,7 @@ class RepDet extends Model
     protected $fillable = [
         'rep_id',
         'title',
-        'doc_id_id'
+        'doc_id'
     ];
 
     /**

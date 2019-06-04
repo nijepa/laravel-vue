@@ -63,7 +63,7 @@
                 const selRep = rep;
                 this.fetchRep(selRep);
                 this.fetchRepDet(selRep);
-                console.log(selRep)
+                //console.log(selRep)
             }
         },
         created() {

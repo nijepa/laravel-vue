@@ -17,10 +17,10 @@ const getters = {
 const actions = {
     async fetchRepDet ({ commit }, repDet) {
         const response = await axios.get(
-            `api/reps_det?id=${repDet.id}`,
+            `api/reps_det/${repDet.id}`,
             repDet
         );
-        //console.log(response.data);
+        console.log(repDet);
         commit('setRepDet', response.data);
     },
     resetRepState ({ commit }) {
@@ -33,11 +33,6 @@ const mutations = {
     resetState (state) {
         Object.assign(state, getDefaultState())
     }
-    //   const index = state.reps.findIndex(rep => reps.id === rep.id);
-    //   if (index !== -1) {
-    //     state.reps.splice(index, 1, rep);
-    //   }
-    // }
 };
 
 export default {

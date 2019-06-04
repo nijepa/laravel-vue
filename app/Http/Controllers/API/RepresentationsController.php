@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Representation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class RepresentationsController extends Controller
 {
@@ -41,8 +42,7 @@ class RepresentationsController extends Controller
      */
     public function show($id)
     {
-        $rep = Representation::where('id', $id)->first();//To get the output in array
-        dd($id);
+        $rep = Representation::findOrFail($id);
         /*        ^               ^
          This will get the user | This will get all the Orders related to the user*/
 
@@ -70,5 +70,21 @@ class RepresentationsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reps($id)
+    {
+        //dd($request);
+        $rep = Representation::findOrFail($id);
+        //$rep = Representation::where('id', $id)->get();//To get the output in array
+
+
+        return response()->json($rep);
     }
 }
