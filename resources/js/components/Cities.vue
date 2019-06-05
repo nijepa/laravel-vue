@@ -117,8 +117,7 @@
                 form: new Form({
                     id: '',
                     name: '',
-                    country_id: '',
-
+                    country_id: ''
                 }),
                 editMode: true
             }

@@ -43,10 +43,10 @@
         name: "Products",
         computed: mapGetters(['allProducts']),
         methods: {
-            ...mapActions(['fetchProducts'])
+            ...mapActions(['fetchProductsF'])
         },
         created() {
-            this.fetchProducts();
+            this.fetchProductsF();
         }
     }
 </script>

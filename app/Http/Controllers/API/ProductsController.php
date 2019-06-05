@@ -15,6 +15,20 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        $products = Product::orderBy('name')->paginate(5);//To get the output in array
+        /*        ^               ^
+         This will get the user | This will get all the Orders related to the user*/
+
+        return response()->json($products);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function productF()
+    {
         $products = Product::orderBy('name')->get();//To get the output in array
         /*        ^               ^
          This will get the user | This will get all the Orders related to the user*/

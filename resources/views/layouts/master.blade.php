@@ -231,7 +231,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </router-link>
                                 </li>
                                 <li class="nav-item">
-                                    <router-link to="/productsB" class="nav-link">
+                                    <router-link to="/products" class="nav-link">
                                         <i class="fas fa-boxes nav-icon text-purp"></i>
                                         <p>Products</p>
                                     </router-link>

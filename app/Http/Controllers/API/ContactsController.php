@@ -15,6 +15,20 @@ class ContactsController extends Controller
      */
     public function index()
     {
+        $contacts = Contact::orderBy('name')->paginate(5);//To get the output in array
+        /*        ^               ^
+         This will get the user | This will get all the Orders related to the user*/
+
+        return response()->json($contacts);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function contactF()
+    {
         $contacts = Contact::orderBy('name')->get();//To get the output in array
         /*        ^               ^
          This will get the user | This will get all the Orders related to the user*/

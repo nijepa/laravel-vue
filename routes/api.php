@@ -30,6 +30,9 @@ Route::apiResources(['user' => 'API\UserController']);
 Route::apiResources(['city' => 'API\CitiesController']);
 Route::apiResources(['country' => 'API\CountriesController']);
 
+Route::get('productF', 'API\ProductsController@productF');
+Route::get('contactF', 'API\ContactsController@contactF');
+
 Route::get('profile', 'API\UserController@profile');
 Route::put('profile', 'API\UserController@updateProfile');
 

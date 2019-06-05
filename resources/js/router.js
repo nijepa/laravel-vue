@@ -23,6 +23,8 @@ export default new Router({
         {path: '/users', component: require('./components/Users.vue').default},
         {path: '/cities', component: require('./components/Cities.vue').default},
         {path: '/countries', component: require('./components/Countries.vue').default},
+        {path: '/products', component: require('./components/Products.vue').default},
+        {path: '/contacts', component: require('./components/Contacts.vue').default},
         {path: '*', component: require('./components/NotFound.vue').default}
         
     ]

@@ -144,11 +144,11 @@
         },
         computed: mapGetters(['allOwner', 'allContacts']),
         methods: {
-            ...mapActions(['fetchOwner', 'fetchContacts'])
+            ...mapActions(['fetchOwner', 'fetchContactsF'])
         },
         created() {
             this.fetchOwner();
-            this.fetchContacts();
+            this.fetchContactsF();
         }
     }
 </script>

@@ -5,10 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-globe-europe fa-2x icolor"></i> PRODUCTS</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-globe-europe fa-2x icolor"></i> CONTACTS</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
-                                Add Product <span><i class="fas fa-plus"></i></span>
+                                Add Contact <span><i class="fas fa-plus"></i></span>
                             </button>
                         </div>
                     </div>
@@ -19,21 +19,21 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Description</th>
+                                <th>E-mail</th>
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
-                            <tr v-for="product in products.products.data" :key="product.id">
-                                <td>{{ product.id }}</td>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.description }}</td>
-                                <td>{{ product.created_at | customDate }}</td>
+                            <tr v-for="contact in contacts.contacts.data" :key="contact.id">
+                                <td>{{ contact.id }}</td>
+                                <td>{{ contact.name }}</td>
+                                <td>{{ contact.email }}</td>
+                                <td>{{ contact.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(product)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <button @click="editModal(contact)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </button>
 
-                                    <button  @click="deleteCountry(product)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <button  @click="deleteContact(contact)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
@@ -43,7 +43,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <pagination :data="products.products" @pagination-change-page="getResults">
+                        <pagination :data="contacts.contacts" @pagination-change-page="getResults">
                             <span slot="prev-nav">&lt; Previous</span>
                             <span slot="next-nav">Next &gt;</span>
                         </pagination>
@@ -57,13 +57,13 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New Product</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Product</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New Contact</h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Contact</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div><!-- /.modal-header -->
-                        <form @submit.prevent="editMode ? updateProduct() : createProduct()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? updateContact() : createContact()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Name</label>
@@ -72,10 +72,10 @@
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="form.description" type="text" name="description" placeholder="Description"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
-                                    <has-error :form="form" field="description"></has-error>
+                                    <label>Email</label>
+                                    <input v-model="form.email" type="email" name="email" placeholder="E-mail"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                                    <has-error :form="form" field="email"></has-error>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -100,38 +100,38 @@
 <script>
     import { mapGetters, mapActions } from 'vuex';
     export default {
-        name: "Products",
+        name: "Contacts",
         data() {
             return {
-                products: {},
+                contacts: {},
                 form: new Form({
                     id: '',
                     name: '',
-                    description: ''
+                    email: ''
                 }),
                 editMode: true
             }
         },
-        computed: mapGetters(['allProducts']),
+        computed: mapGetters(['allContacts']),
         methods: {
-            ...mapActions(['fetchProducts',
-                'fetchProductsP',
-                'fetchProductsS',
-                'addProduct',
-                'renewProduct',
-                'removeProduct']),
-            loadProducts() {
+            ...mapActions(['fetchContacts',
+                'fetchContactsP',
+                'fetchContactsS',
+                'addContact',
+                'renewContact',
+                'removeContact']),
+            loadContacts() {
                 if(this.$gate.isAdmin()) {
                     /*              axios.get("api/user")
                                       .then(({ data }) => (this.users = data))
                                       .catch();*/
-                    this.fetchProductsP();
-                    this.products = this.$store.state.products;
+                    this.fetchContactsP();
+                    this.contacts = this.$store.state.contacts;
                 }
             },
             getResults(page = 1) {
-                this.fetchProductsP(page);
-                this.products = this.$store.state.products;
+                this.fetchContactsP(page);
+                this.contacts = this.$store.state.contacts;
                 /*        axios.get('api/user?page=' + page)
                             .then(response => {
                                 console.log(response.data);
@@ -143,14 +143,14 @@
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-            editModal(country) {
+            editModal(contact) {
                 this.editMode = true;
                 $('#addNew').modal('show');
-                this.form.fill(country);
+                this.form.fill(contact);
             },
-            createProduct() {
+            createContact() {
                 this.$Progress.start();
-                this.addProduct(this.form);
+                this.addContact(this.form);
                 // this.form.post('api/user')
                 //     .then(({ data }) => {
                 //console.log(data);
@@ -158,16 +158,16 @@
                 $('#addNew').modal('hide');
                 toast.fire({
                     type: 'success',
-                    title: 'Product added successfully'
+                    title: 'Contact added successfully'
                 });
                 this.$Progress.finish();
                 // })
                 // .catch(() => {})
             },
-            updateProduct(id) {
+            updateContact(id) {
                 this.$Progress.start();
                 //console.log(this.form);
-                this.renewProduct(this.form);
+                this.renewContact(this.form);
 
                 //this.form.put('api/user/'+this.form.id)
                 //.then(() => {
@@ -175,7 +175,7 @@
                 $('#addNew').modal('hide');
                 toast.fire({
                     type: 'success',
-                    title: 'Product updated successfully'
+                    title: 'Contact updated successfully'
                 });
                 this.$Progress.finish();
                 /*        })
@@ -183,7 +183,7 @@
                             this.$Progress.fail();
                         })*/
             },
-            deleteCountry(product){
+            deleteContact(contact){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -195,7 +195,7 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.removeProduct(product);
+                        this.removeContact(contact);
                         //this.form.delete('api/user/'+id).then(()=>{
                         swal.fire(
                             'Deleted!',
@@ -215,7 +215,7 @@
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                this.fetchProductsS(query);
+                this.fetchContactsS(query);
                 /*        axios.get('api/findUser?q=' + query)
                             .then((data) => {
                                 console.log(data);
@@ -227,9 +227,9 @@
             });
             // this.fetchUsers();
             // this.users = this.$store.state.users;
-            this.loadProducts();
+            this.loadContacts();
             Fire.$on('AfterCreate', () => {
-                this.loadProducts();
+                this.loadContacts();
             });
         }
     }
