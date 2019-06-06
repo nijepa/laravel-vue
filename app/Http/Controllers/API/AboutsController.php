@@ -15,10 +15,24 @@ class AboutsController extends Controller
      */
     public function index()
     {
-        $abouts = About::orderBy('title')->leftJoin('about_dets', 'abouts.id', '=', 'about_dets.about_id')->get();//To get the output in array
+        $abouts = About::orderBy('title')->leftJoin('about_dets', 'abouts.id', '=', 'about_dets.about_id')->paginate(5);//To get the output in array
 
 
         return response()->json($abouts);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function aboutF()
+    {
+        $about = About::orderBy('title')->leftJoin('about_dets', 'abouts.id', '=', 'about_dets.about_id')->get();//To get the output in array
+        /*        ^               ^
+         This will get the user | This will get all the Orders related to the user*/
+
+        return response()->json($about);
     }
 
     /**

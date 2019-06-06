@@ -18,20 +18,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Front end apis
-Route::apiResources(['about' => 'API\AboutsController']);
-Route::apiResources(['contact' => 'API\ContactsController']);
 Route::apiResources(['owner' => 'API\OwnersController']);
-Route::apiResources(['product' => 'API\ProductsController']);
 Route::apiResources(['representation' => 'API\RepresentationsController']);
 Route::apiResources(['reps_det' => 'API\RepresentationDetsController']);
+
+Route::get('productF', 'API\ProductsController@productF');
+Route::get('contactF', 'API\ContactsController@contactF');
+Route::get('aboutF', 'API\AboutsController@aboutF');
+
 
 // Backend apis
 Route::apiResources(['user' => 'API\UserController']);
 Route::apiResources(['city' => 'API\CitiesController']);
 Route::apiResources(['country' => 'API\CountriesController']);
-
-Route::get('productF', 'API\ProductsController@productF');
-Route::get('contactF', 'API\ContactsController@contactF');
+Route::apiResources(['product' => 'API\ProductsController']);
+Route::apiResources(['contact' => 'API\ContactsController']);
+Route::apiResources(['about' => 'API\AboutsController']);
 
 Route::get('profile', 'API\UserController@profile');
 Route::put('profile', 'API\UserController@updateProfile');

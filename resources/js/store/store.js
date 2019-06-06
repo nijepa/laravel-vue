@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import representations from './modules/front/representations';
 import products from './modules/front/products';
-import about from './modules/front/about';
+import abouts from './modules/front/about';
 import contacts from './modules/front/contacts';
 import owner from './modules/front/owner';
 import repDet from './modules/front/repDet';
@@ -20,7 +20,7 @@ export default new Vuex.Store({
     modules: {
         representations,
         products,
-        about,
+        abouts,
         contacts,
         owner,
         repDet,

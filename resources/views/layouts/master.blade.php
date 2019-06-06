@@ -219,7 +219,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <ul class="nav nav-treeview">
                             @can('isAdmin')
                                 <li class="nav-item">
-                                    <router-link to="/aboutsB" class="nav-link">
+                                    <router-link to="/abouts" class="nav-link">
                                         <i class="fas fa-certificate nav-icon text-purp"></i>
                                         <p>About</p>
                                     </router-link>

@@ -91,7 +91,7 @@
         },
         computed: mapGetters(['allAbout']),
         methods: {
-            ...mapActions(['fetchAbout']),
+            ...mapActions(['fetchAboutF']),
             onAccor(id) {
                 if (id === 1) {
                     this.clicked1 = !this.clicked1
@@ -103,7 +103,7 @@
             }
         },
         created() {
-            this.fetchAbout();
+            this.fetchAboutF();
         }
     }
 </script>

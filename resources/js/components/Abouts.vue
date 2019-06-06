@@ -5,7 +5,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-globe-europe fa-2x icolor"></i> ABOUT</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-certificate fa-2x icolor"></i> ABOUT</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add About <span><i class="fas fa-plus"></i></span>
@@ -18,20 +18,20 @@
                             <tbody>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Title</th>
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
-                            <tr v-for="country in countries.countries.data" :key="country.id">
-                                <td>{{ country.id }}</td>
-                                <td>{{ country.name }}</td>
-                                <td>{{ country.created_at | customDate }}</td>
+                            <tr v-for="about in abouts.abouts.data" :key="about.id">
+                                <td>{{ about.id }}</td>
+                                <td>{{ about.title }}</td>
+                                <td>{{ about.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(country)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <button @click="editModal(about)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </button>
 
-                                    <button  @click="deleteCountry(country)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <button  @click="deleteAbout(about)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </td>
@@ -41,7 +41,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <pagination :data="countries.countries" @pagination-change-page="getResults">
+                        <pagination :data="abouts.abouts" @pagination-change-page="getResults">
                             <span slot="prev-nav">&lt; Previous</span>
                             <span slot="next-nav">Next &gt;</span>
                         </pagination>
@@ -55,19 +55,19 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New Country</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Country</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New About</h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update About</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div><!-- /.modal-header -->
-                        <form @submit.prevent="editMode ? updateCountry() : createCountry()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? updateAbout() : createAbout()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input v-model="form.name" type="text" name="name" placeholder="Name"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                                    <has-error :form="form" field="name"></has-error>
+                                    <input v-model="form.title" type="text" name="title" placeholder="Title"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                    <has-error :form="form" field="title"></has-error>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -92,37 +92,37 @@
 <script>
     import { mapGetters, mapActions } from 'vuex';
     export default {
-        name: "Countries",
+        name: "Abouts",
         data() {
             return {
-                countries: {},
+                abouts: {},
                 form: new Form({
                     id: '',
-                    name: ''
+                    title: ''
                 }),
                 editMode: true
             }
         },
-        computed: mapGetters(['allCountries']),
+        computed: mapGetters(['allAbouts']),
         methods: {
-            ...mapActions(['fetchCountries',
-                'fetchCountriesP',
-                'fetchCountriesS',
-                'addCountry',
-                'renewCountry',
-                'removeCountry']),
-            loadCountries() {
+            ...mapActions(['fetchAbouts',
+                'fetchAboutsP',
+                'fetchAboutsS',
+                'addAbout',
+                'renewAbout',
+                'removeAbout']),
+            loadAbouts() {
                 if(this.$gate.isAdmin()) {
                     /*              axios.get("api/user")
                                       .then(({ data }) => (this.users = data))
                                       .catch();*/
-                    this.fetchCountriesP();
-                    this.countries = this.$store.state.countries;
+                    this.fetchAboutsP();
+                    this.abouts = this.$store.state.abouts;
                 }
             },
             getResults(page = 1) {
-                this.fetchCountriesP(page);
-                this.countries = this.$store.state.countries;
+                this.fetchAboutsP(page);
+                this.abouts = this.$store.state.abouts;
                 /*        axios.get('api/user?page=' + page)
                             .then(response => {
                                 console.log(response.data);
@@ -134,14 +134,14 @@
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-            editModal(country) {
+            editModal(about) {
                 this.editMode = true;
                 $('#addNew').modal('show');
-                this.form.fill(country);
+                this.form.fill(about);
             },
-            createCountry() {
+            createAbout() {
                 this.$Progress.start();
-                this.addCountry(this.form);
+                this.addAbout(this.form);
                 // this.form.post('api/user')
                 //     .then(({ data }) => {
                 //console.log(data);
@@ -149,16 +149,16 @@
                 $('#addNew').modal('hide');
                 toast.fire({
                     type: 'success',
-                    title: 'Country added successfully'
+                    title: 'About added successfully'
                 });
                 this.$Progress.finish();
                 // })
                 // .catch(() => {})
             },
-            updateCountry(id) {
+            updateAbout(id) {
                 this.$Progress.start();
                 //console.log(this.form);
-                this.renewCountry(this.form);
+                this.renewAbout(this.form);
 
                 //this.form.put('api/user/'+this.form.id)
                 //.then(() => {
@@ -166,7 +166,7 @@
                 $('#addNew').modal('hide');
                 toast.fire({
                     type: 'success',
-                    title: 'Country updated successfully'
+                    title: 'About updated successfully'
                 });
                 this.$Progress.finish();
                 /*        })
@@ -174,7 +174,7 @@
                             this.$Progress.fail();
                         })*/
             },
-            deleteCountry(country){
+            deleteAbout(about){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -186,11 +186,11 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.removeCountry(country);
+                        this.removeAbout(about);
                         //this.form.delete('api/user/'+id).then(()=>{
                         swal.fire(
                             'Deleted!',
-                            'Country has been deleted.',
+                            'About has been deleted.',
                             'success'
                         );
                         Fire.$emit('AfterCreate');
@@ -206,7 +206,7 @@
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                this.fetchCountriesS(query);
+                this.fetchAboutsS(query);
                 /*        axios.get('api/findUser?q=' + query)
                             .then((data) => {
                                 console.log(data);
@@ -218,9 +218,9 @@
             });
             // this.fetchUsers();
             // this.users = this.$store.state.users;
-            this.loadCountries();
+            this.loadAbouts();
             Fire.$on('AfterCreate', () => {
-                this.loadCountries();
+                this.loadAbouts();
             });
         }
     }

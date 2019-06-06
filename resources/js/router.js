@@ -12,11 +12,13 @@ export default new Router({
 
     base: process.env.BASE_URL,
     routes: [
+        // frontend routes
         {path: '/', component: require('./views/front/Home.vue').default},
         {path: '/representations', component: require('./views/front/Representations.vue').default},
         {path: '/about', component: require('./views/front/About.vue').default},
         {path: '/contact', component: require('./views/front/Contact.vue').default},
 
+        //backend routes
         {path: '/home', component: require('./components/Dashboard.vue').default},
         {path: '/dashboard', component: require('./components/Dashboard.vue').default},
         {path: '/profile', component: require('./components/Profile.vue').default},
@@ -25,7 +27,7 @@ export default new Router({
         {path: '/countries', component: require('./components/Countries.vue').default},
         {path: '/products', component: require('./components/Products.vue').default},
         {path: '/contacts', component: require('./components/Contacts.vue').default},
+        {path: '/abouts', component: require('./components/Abouts.vue').default},
         {path: '*', component: require('./components/NotFound.vue').default}
-        
     ]
 })

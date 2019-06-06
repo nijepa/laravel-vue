@@ -5,7 +5,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-globe-europe fa-2x icolor"></i> PRODUCTS</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-boxes fa-2x icolor"></i> PRODUCTS</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add Product <span><i class="fas fa-plus"></i></span>
