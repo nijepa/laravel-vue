@@ -1,2 +1,2 @@
-# laravel-vue
-Laravel Vue app
+
+Laravel Vue web-site and application
