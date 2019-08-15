@@ -2,33 +2,34 @@ import axios from 'axios';
 
 const getDefaultState = () => {
     return {
-        repDet: []
+        aboutDet: []
     }
 }
 
 const state = {
-    repDet: getDefaultState()
+    aboutDet: getDefaultState()
 };
 
 const getters = {
-    allRepDet: state => state.repDet
+    allAboutDet: state => state.aboutDet
 };
 
 const actions = {
-    async fetchRepDet ({ commit }, repDet) {
+    async fetchAboutDet ({ commit }, aboutDet) {
         const response = await axios.get(
-            `api/reps_det/${repDet.id}`,
-            repDet
+            `api/about_dets/`,
+            aboutDet
         );
-        commit('setRepDet', response.data);
+        //console.log(repDet);
+        commit('setAboutDet', response.data);
     },
-    resetRepState ({ commit }) {
+    resetAboutState ({ commit }) {
         commit('resetState')
     }
 };
 
 const mutations = {
-    setRepDet: (state, repDet) => (state.repDet = repDet),
+    setAboutDet: (state, aboutDet) => (state.aboutDet = aboutDet),
     resetState (state) {
         Object.assign(state, getDefaultState())
     }

@@ -11,6 +11,16 @@
                                 Add About <span><i class="fas fa-plus"></i></span>
                             </button>
                         </div>
+                        <div class="">
+                            <form action="" >
+                                <div class="form-group">
+                                    <input class="form-control" type="text" v-model="abouts.abouts.data[0].title" >
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" type="text" v-model="abouts.abouts.data[0].description" ></textarea>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
@@ -18,13 +28,15 @@
                             <tbody>
                             <tr>
                                 <th>ID</th>
-                                <th>Title</th>
+                                <th>Caption</th>
+                                <th>Description</th>
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
                             <tr v-for="about in abouts.abouts.data" :key="about.id">
                                 <td>{{ about.id }}</td>
-                                <td>{{ about.title }}</td>
+                                <td>{{ about.caption }}</td>
+                                <td>{{ about.description }}</td>
                                 <td>{{ about.created_at | customDate }}</td>
                                 <td>
                                     <button @click="editModal(about)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">

@@ -18,12 +18,12 @@ const getters = {
 
 const actions = {
     async fetchNews ({ commit }) {
-        const response = await axios.get('http://localhost/don/donau/public/backend/api/news/read.php');
-        commit('setNews', response.data.data)
+        const response = await axios.get('api/news');
+        commit('setNews', response.data)
     },
     async fetchNewsD ({ commit }, newsD) {
         const response = await axios.get(
-            `http://localhost/don/donau/public/backend/api/news/read_single.php/?id=${newsD.id}`,
+            `api/news/${newsD.id}`,
             newsD
         );
         commit('setNewsD', response.data);

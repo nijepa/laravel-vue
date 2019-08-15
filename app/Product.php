@@ -16,4 +16,14 @@ class Product extends Model
         'photo_id',
         'description'
     ];
+
+    /**
+     * Relationship to product details
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productdets()
+    {
+        return $this->hasMany(ProductDet::class);
+    }
 }

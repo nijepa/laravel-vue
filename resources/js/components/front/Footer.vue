@@ -12,7 +12,12 @@
                 </div>
                 <div class="row text-center mb-3">
                     <div class="col" :key="owner.id" v-for="owner in allOwner">
-                        <p>Adresa: {{owner.address}} &#8605; Telefon: <a :href="'tel:'+ owner.phone">{{owner.phone}}</a> &#8605; Email: <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">{{ owner.email }}</a> &#8605; <a :href="owner.skype"><i class="cap-icon ci-skype m-1 cont"></i></a> &#8605; <a :href="owner.watsup"><i class="cap-icon ci-whatsapp m-1 cont"></i></a></p>
+                        <p>Adresa: {{owner.address}} &#8605; Telefon:
+                            <a :href="'tel:'+ owner.phone">{{owner.phone}}</a> &#8605; Email:
+                            <a :href="owner.email" target="_top">{{ owner.email }}</a> &#8605;
+                            <a :href="owner.skype"><i class="cap-icon ci-skype m-1 cont"></i></a> &#8605;
+                            <a :href="owner.watsup"><i class="cap-icon ci-whatsapp m-1 cont"></i></a>
+                        </p>
                     </div>
                 </div>
                 <div class="row text-center">
@@ -57,11 +62,11 @@
         cursor: pointer;
     }
     a {
-        color: white;
+
         text-decoration: none;
     }
-    a:hover {
-        color: aquamarine;
+    a.cont:hover, a.cont:active {
+        color: #ff6b96 !important;
     }
     .cont {
         font-size: 20px;

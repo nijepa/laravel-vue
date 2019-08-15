@@ -17,6 +17,8 @@ export default new Router({
         {path: '/representations', component: require('./views/front/Representations.vue').default},
         {path: '/about', component: require('./views/front/About.vue').default},
         {path: '/contact', component: require('./views/front/Contact.vue').default},
+        {path: '/products', component: require('./views/front/Product.vue').default},
+        {path: '/news', component: require('./views/front/News.vue').default},
 
         //backend routes
         {path: '/home', component: require('./components/Dashboard.vue').default},

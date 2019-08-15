@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col m-auto text-center  has-overlay">
-                        <h1>Zastupanja</h1>
+                        <h1>Proizvodi</h1>
                         <p>stranih kompanija</p>
                     </div>
                 </div>
@@ -13,26 +13,26 @@
         <div class="container">
             <div class="row">
                 <div class="col-4 my-5">
-                    <nav @click="getRep(rep)" :key="rep.id" class="nav flex-column list-group" v-for="rep in allReps">
-                        <a href="#" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}} <img :src="'../img/companies/' + rep.logo_small_id" class="img-fluid mx-auto d-block"></a>
+                    <nav  @click="getProduct(product)" :key="product.id" class="nav flex-column list-group" v-for="product in allProducts">
+                        <a style="height:150px;" href="#" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{product.name}} <img :src="'../img/' + product.photo_id" class="img-fluid mx-auto d-block h-75"></a>
                     </nav>
                 </div>
 
                 <div class="col-8 my-5">
                     <div class="card">
                         <transition name="slide" mode="out-in" appear>
-                            <div :key="oneRep.id" v-if="oneRep.id" class="card-body">
-                                <a :href="oneRep.website" target="_blank"><img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block"></a>
-                                <img :src="'../img/companies/' + oneRep.photo_id" alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
-                                <h3>{{oneRep.name}} <a :href="oneRep.website" target="_blank"><i class='cap-icon ci-link'></i></a></h3>
-                                <h5 class="text-muted">{{oneRep.short_desc}}</h5>
-                                <p class="my-3" v-html="oneRep.description"></p>
-                                <div v-if="allRepDet.length">
+                            <div :key="oneProduct.id" v-if="oneProduct.id" class="card-body">
+<!--                                <a :href="oneRep.website" target="_blank"><img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block"></a>-->
+                                <img :src="'../img/' + oneProduct.photo_id" alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
+                                <h3>{{oneProduct.name}}</h3>
+<!--                                <h5 class="text-muted">{{oneRep.short_desc}}</h5>-->
+                                <p class="my-3" v-html="oneProduct.description"></p>
+                         <!--       <div v-if="allRepDet.length">
                                     <img :src="'../img/companies/docs/pdfdown.png'" alt="" class="img-fluid my-3">
                                     <div :key="repDet.id" v-for="repDet in allRepDet">
                                         <a :href="'../img/companies/docs/' + repDet.doc_id" target="_blank" class="my-3"><i class="cap-icon ci-download m-1"></i> {{repDet.title}}</a>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             <div key=2 v-else class="card-body">
                                 <i class="cap-icon ci-compass mb-2 activ mx-auto" style="cursor: pointer; font-size: 80px"></i>
@@ -57,57 +57,32 @@
 
     export default {
 
-        name: "Companies",
+        name: "Products",
 
-        computed: mapGetters(['allReps', 'oneRep', 'allRepDet']),
+        computed: mapGetters(['allProducts', 'oneProduct', 'allProductDet']),
 
         methods: {
-            ...mapActions(['fetchReps', 'fetchRep', 'resetRepState', 'fetchRepDet']),
+            ...mapActions(['fetchProductsF', 'fetchProduct', 'resetProductState', 'fetchProductDet']),
 
-            getRep(rep) {
-                const selRep = rep;
-                this.fetchRep(selRep);
-                this.fetchRepDet(selRep);
+            getProduct(product) {
+                const selProduct = product;
+                this.fetchProduct(selProduct);
+                this.fetchProductDet(selProduct);
                 //console.log(selRep)
             }
         },
 
         created() {
-            this.fetchReps();
+            this.fetchProductsF();
         },
 
         destroyed:function(){
-            this.resetRepState();
+            this.resetProductState();
         }
+
     }
 </script>
 
 <style scoped>
-    .slide-enter-active {
-        animation: slide-in 800ms ease-out forwards;
-    }
-    .slide-leave-active {
-        animation: slide-out 800ms ease-out forwards;
-    }
-    @keyframes slide-in {
-        from {
-            transform: translateX(-30px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
 
-    @keyframes slide-out {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(-30px);
-            opacity: 0;
-        }
-    }
 </style>

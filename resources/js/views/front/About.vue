@@ -9,11 +9,12 @@
         <transition appear name="slide" mode="out-in">
             <appInfo></appInfo>
         </transition>
-        <appQuotes></appQuotes>
+        <transition appear name="sli" mode="out-in">
+            <appQuotes></appQuotes>
+        </transition>
         <appManagers></appManagers>
         <appFooter></appFooter>
     </div>
-
 </template>
 
 <script>
@@ -23,7 +24,9 @@
     import Info from '../../components/front/about/Info.vue';
     import Quotes from '../../components/front/about/Quotes.vue';
     import Managers from '../../components/front/about/Managers.vue';
+
     export default {
+
         components: {
             appHeader: Header,
             appFooter: Footer,
@@ -32,6 +35,7 @@
             appQuotes: Quotes,
             appManagers: Managers
         },
+
         created() {
             //Scrolls to top when view is displayed
             window.scrollTo(0, 0);

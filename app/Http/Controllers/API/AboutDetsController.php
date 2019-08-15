@@ -15,7 +15,7 @@ class AboutDetsController extends Controller
      */
     public function index()
     {
-        $aboutdets = AboutDet::orderBy('caption')->paginate(5);//To get the output in array
+        $aboutdets = AboutDet::orderBy('caption')->get();//To get the output in array
         /*        ^               ^
          This will get the user | This will get all the Orders related to the user*/
 

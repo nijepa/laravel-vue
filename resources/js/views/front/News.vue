@@ -1,10 +1,10 @@
 <template>
-    <div class="contact">
+    <div class="products">
         <transition appear name="sli" mode="out-in">
             <appHeader></appHeader>
         </transition>
         <transition appear name="slid" mode="out-in">
-            <appContact></appContact>
+            <appNews></appNews>
         </transition>
         <transition appear name="slide" mode="out-in">
             <appFooter></appFooter>
@@ -15,14 +15,15 @@
 <script>
     import Header from '../../components/front/Header.vue';
     import Footer from '../../components/front/Footer.vue';
-    import Contact from '../../components/front/contact/Contact.vue';
+    import News from '../../components/front/news/News.vue';
 
     export default {
+        name: "News",
 
         components: {
             appHeader: Header,
             appFooter: Footer,
-            appContact: Contact,
+            appNews: News,
         },
 
         created() {
@@ -31,3 +32,7 @@
         }
     }
 </script>
+
+<style scoped>
+
+</style>

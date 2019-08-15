@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\RepDet;
+use App\ProductDet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-class RepresentationDetsController extends Controller
+class ProductDetsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +16,21 @@ class RepresentationDetsController extends Controller
      */
     public function index()
     {
-        $repdets = RepDet::orderBy('title')->get();//To get the output in array
+        $productdets = ProductDet::orderBy('title')->get();//To get the output in array
         /*        ^               ^
          This will get the user | This will get all the Orders related to the user*/
 
-        return response()->json($repdets);
+        return response()->json($productdets);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -42,10 +52,18 @@ class RepresentationDetsController extends Controller
      */
     public function show($id)
     {
-        //$repdets = RepDet::findOrFail($id);
-        $repdets = RepDet::where('rep_id', $id)->get();//To get the output in array
+        //
+    }
 
-        return response()->json($repdets);
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -69,18 +87,5 @@ class RepresentationDetsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function repsD(Request $request)
-    {
-        $repdets = DB::table('rep_dets')->where($request);//To get the output in array
-
-        return response()->json($repdets);
     }
 }

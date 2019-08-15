@@ -6,7 +6,8 @@ const state = {
 };
 
 const getters = {
-    allProducts: state => state.products
+    allProducts: state => state.products,
+    oneProduct: state => state.product
 };
 
 const actions = {
@@ -29,6 +30,14 @@ const actions = {
             `api/findProduct?q=${query}`
         );
         commit('setProducts', response.data);
+    },
+    async fetchProduct ({ commit }, product) {
+        const response = await axios.get(
+            `api/product/${product.id}`,
+            product.id
+        );
+        //console.log(rep);
+        commit('setProduct', response.data);
     },
     async addProduct ({ commit }, form) {
         const response = await axios.post("api/product", form);
@@ -58,6 +67,7 @@ const actions = {
 
 const mutations = {
     setProducts: (state, products) => (state.products = products),
+    setProduct: (state, product) => (state.product = product),
     remove (state, product) {
         let index = state.products.data.findIndex(id => id === product.id);
         state.products.data.splice(index, 1);

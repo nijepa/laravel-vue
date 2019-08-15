@@ -55,7 +55,11 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        /*        ^               ^
+         This will get the user | This will get all the Orders related to the user*/
+
+        return response()->json($product);
     }
 
     /**

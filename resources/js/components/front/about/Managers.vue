@@ -16,23 +16,23 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-4 col-md-4" :key="contact.id" v-for="contact in allContacts">
                         <div class="card">
                             <div class="card-body">
                                 <img src="img/person3.jpg" alt="" class="img-fluid rounded-circle w-50 mb-3">
-                                <h3>Radovan Ranđić</h3>
-                                <h5 class="text-muted">CEO</h5>
+                                <h3>{{contact.name}}</h3>
+                                <h5 class="text-muted">{{contact.title}}</h5>
                                 <div class="d-flex justify-content-center">
-                                    <i @mouseover="hover1 = true" @mouseleave="hover1 = false" :class="{'cap-icon ci-envelope m-2': hover1 == false, 'cap-icon ci-envelope-out m-2': hover1 == true}"></i>
-                                    <i @mouseover="hover2 = true" @mouseleave="hover2 = false" :class="{'cap-icon ci-mobile m-2': hover2 == false, 'cap-icon ci-phone m-2': hover2 == true}"></i>
-                                    <i @mouseover="hover3 = true" @mouseleave="hover3 = false" :class="{'cap-icon ci-whatsapp-squared m-2': hover3 == false, 'cap-icon ci-whatsapp-circled m-2': hover3 == true}"></i>
-                                    <i @mouseover="hover4 = true" @mouseleave="hover4 = false" :class="{'cap-icon ci-facebook-squared m-2': hover4 == false, 'cap-icon ci-facebook-circled m-2': hover4 == true}"></i>
+                                    <a :href="'mailto:' + contact.email"><i @mouseover="hover1 = true" @mouseleave="hover1 = false" :class="{'cap-icon ci-envelope m-2': hover1 == false, 'cap-icon ci-envelope-out m-2': hover1 == true}"></i></a>
+                                    <a :href="'tel:'+ contact.phone"><i @mouseover="hover2 = true" @mouseleave="hover2 = false" :class="{'cap-icon ci-mobile m-2': hover2 == false, 'cap-icon ci-phone m-2': hover2 == true}"></i></a>
+                                    <a :href="'tel:'+ contact.whatsapp"><i @mouseover="hover3 = true" @mouseleave="hover3 = false" :class="{'cap-icon ci-whatsapp-squared m-2': hover3 == false, 'cap-icon ci-whatsapp-circled m-2': hover3 == true}"></i></a>
+                                    <a :href="'url:'+ contact.facebook" target="_top"><i @mouseover="hover4 = true" @mouseleave="hover4 = false" :class="{'cap-icon ci-facebook-squared m-2': hover4 == false, 'cap-icon ci-facebook-circled m-2': hover4 == true}"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6">
+                    <!--<div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <img src="img/person4.jpg" alt="" class="img-fluid rounded-circle w-50 mb-3">
@@ -46,9 +46,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
-                    <div class="col-lg-4 col-md-6">
+                    <!--<div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <img src="img/person1.jpg" alt="" class="img-fluid rounded-circle w-50 mb-3">
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                 </div>
             </div>
@@ -71,8 +71,22 @@
 </template>
 
 <script>
+    import { mapGetters, mapActions } from 'vuex';
+
     export default {
+
         name: "Managers",
+
+        computed: mapGetters([ 'allContacts']),
+
+        methods: {
+            ...mapActions([ 'fetchContactsF'])
+        },
+
+        created() {
+            this.fetchContactsF();
+        },
+
         data() {
             return {
                 hover1: false,
@@ -88,5 +102,12 @@
     i {
         font-size: 30px;
         cursor: pointer;
+        color: black;
+    }
+
+    a {
+        color: ghostwhite;
+        text-decoration: none;
+        font-size: 1.5rem;
     }
 </style>

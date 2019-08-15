@@ -1,43 +1,61 @@
 <template>
-    <section id="news">>
-        <div class="info-header mb-5">
-            <h1 class="text-center text-primary pb-3">
-                Vesti
-            </h1>
-            <p class="lead pb-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus obcaecati alias rerum dolore fugiat debitis?</p>
-        </div>
-<!--        <hooper :itemsToShow="1" :centerMode="true" :infiniteScroll="true" :autoPlay="true" :playSpeed="5000" class="hoop">
-            <slide :key="news.id" v-for="news in allNews">
+    <div>
+        <!-- NEWS -->
+        <section id="news" class="my-5 text-center">
+            <div data-aos="flip-down">
                 <div class="container">
-                    <img :src="'../img/news/' + news.pic_id" style="opacity:0.8;background:rgba(0,0,0,0.6);">
-                    <h4 class="top-center ">{{news.title}}</h4>
-                    <p class="centered lead ">{{news.body}}</p>
+                    <div class="row">
+                        <div class="col">
+                            <div class="info-header mb-5">
+                                <h1 class="text-primary pb-3">
+                                    Vesti
+                                </h1>
+                                <p class="lead">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias laborum numquam aperiam dolores a porro!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div :key="news.id" class="col-lg-12 col-md-12" v-for="news in allNews">
+                            <div class="card">
+                                <div @click="getNews(news)" class="card-body">
+                                    <img :src="'../img/news/' + news.pic_id" alt="" class="img-fluid rounded-circle w-80 mb-3">
+                                    <h3>{{news.title}}</h3>
+                                    <h5 class="text-muted" v-html="news.body"></h5>
+                                    <!--<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed commodi nostrum, ab libero voluptas officia.</p>-->
+                                    <div class="d-flex justify-content-center">
+                                        <!--                                        <a href="#" class="btn btn-primary btn-lg mt-3"><span>Više ... </span></a>-->
+                                        <router-link to="/products" class="btn btn-primary btn-lg mt-3"><a><span>Više ... </span></a></router-link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </slide>
-            <hooper-navigation class="text-primary" slot="hooper-addons"></hooper-navigation>
-            <hooper-pagination slot="hooper-addons"></hooper-pagination>
-            <hooper-progress slot="hooper-addons"></hooper-progress>
-        </hooper>-->
-    </section>
+            </div>
+        </section>
+    </div>
 </template>
 
 <script>
-    //import { Hooper, Slide, Progress as HooperProgress, Pagination as HooperPagination, Navigation as HooperNavigation } from 'hooper'
-    //import 'hooper/dist/hooper.css'
-    import { mapGetters, mapActions } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex';
+
     export default {
-        name: 'News',
-/*        components: {
-            Hooper,
-            Slide,
-            HooperProgress,
-            HooperPagination,
-            HooperNavigation
-        },*/
-        computed: mapGetters(['allNews']),
+
+        name: "News",
+
+        computed: mapGetters(['allNews', 'oneNews',]),
+
         methods: {
-            ...mapActions(['fetchNews'])
+            ...mapActions(['fetchNews', 'fetchNewsD']),
+
+            getNews(news) {
+                const selNews = news;
+                this.fetchNews(selNews);
+            }
         },
+
         created() {
             this.fetchNews();
         }

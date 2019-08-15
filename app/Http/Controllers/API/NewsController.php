@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        $news = News::orderBy('news_date', 'desc')->take(1)->get();//To get the output in array
+
+        return response()->json($news);
     }
 
     /**
@@ -36,7 +39,9 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        //
+        $news = News::findOrFail($id);
+
+        return response()->json($news);
     }
 
     /**

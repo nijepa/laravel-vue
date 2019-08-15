@@ -11,7 +11,7 @@
             <Activities></Activities>
         </transition>
         <faq></faq>
-<!--        <news></news>-->
+        <news></news>
         <products></products>
         <Contact msg="Welcome to Your Vue.js App"/>
         <app-footer></app-footer>
@@ -30,7 +30,9 @@
     import News from '../../components/front/home/News.vue'
 
     export default {
+
         name: 'home',
+
         components: {
             appHeader: Header,
             appFooter: Footer,
@@ -39,10 +41,11 @@
             Activities,
             Faq,
             Products,
-            //News
+            News
         }
     }
 </script>
+
 <style>
     body {
         height: 100%;

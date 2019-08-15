@@ -15,7 +15,7 @@
                         </div>
 
                         <!-- ACCORDION -->
-                        <div id="accordion" :key="about.id" v-for="about in allAbout">
+                        <div id="accordion" :key="about.id" v-for="about in allAbouts">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="mb-0">
@@ -89,7 +89,7 @@
                 clicked3: false,
             }
         },
-        computed: mapGetters(['allAbout']),
+        computed: mapGetters(['allAbouts']),
         methods: {
             ...mapActions(['fetchAboutF']),
             onAccor(id) {

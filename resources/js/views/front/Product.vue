@@ -1,10 +1,10 @@
 <template>
-    <div class="contact">
+    <div class="products">
         <transition appear name="sli" mode="out-in">
             <appHeader></appHeader>
         </transition>
         <transition appear name="slid" mode="out-in">
-            <appContact></appContact>
+            <appProducts></appProducts>
         </transition>
         <transition appear name="slide" mode="out-in">
             <appFooter></appFooter>
@@ -15,19 +15,26 @@
 <script>
     import Header from '../../components/front/Header.vue';
     import Footer from '../../components/front/Footer.vue';
-    import Contact from '../../components/front/contact/Contact.vue';
+    import Products from '../../components/front/products/Products.vue';
 
     export default {
+
+        name: "Product",
 
         components: {
             appHeader: Header,
             appFooter: Footer,
-            appContact: Contact,
+            appProducts: Products,
         },
 
         created() {
             //Scrolls to top when view is displayed
             window.scrollTo(0, 0);
         }
+
     }
 </script>
+
+<style scoped>
+
+</style>
