@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-md navbar-light fixed-top py-4" id="main-nav">
         <div class="container">
-            <router-link to="/" activeClass="active" tag="li" >
+            <router-link to="/" activeClass="active"  >
                 <a class="navbar-brand">
                     <img src="img/donau.jpg" width="50" height="50" alt="">
                     <h3 class="d-inline align-middle ml-2">DONAU TRADE</h3>

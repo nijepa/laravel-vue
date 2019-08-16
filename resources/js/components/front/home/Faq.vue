@@ -33,12 +33,11 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row text-center">
+        <div id="abo" class="row text-center">
             <div class="col">
                 <router-link to="/about" activeClass="active" tag="a" class="btn btn-primary btn-lg mt-3">
                     <a><span>Više ... </span></a>

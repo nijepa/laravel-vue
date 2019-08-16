@@ -26,7 +26,7 @@
                                     <h3>{{product.name}}</h3>
                                     <h5 class="text-muted">{{product.description}}</h5>
                                     <!--<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed commodi nostrum, ab libero voluptas officia.</p>-->
-                                    <div class="d-flex justify-content-center">
+                                    <div id="con" class="d-flex justify-content-center">
                                         <router-link to="/products" class="btn btn-primary btn-lg mt-3"><a><span>Više ... </span></a></router-link>
                                     </div>
                                 </div>

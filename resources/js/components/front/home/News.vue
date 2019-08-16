@@ -26,7 +26,7 @@
                                     <h3>{{news.title}}</h3>
 <!--                                    <h5 class="text-muted" v-html="news.body"></h5>-->
                                     <!--<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed commodi nostrum, ab libero voluptas officia.</p>-->
-                                    <div class="d-flex justify-content-center">
+                                    <div id="new" class="d-flex justify-content-center">
                                         <router-link to="/products" class="btn btn-primary btn-lg mt-3"><a><span>Više ... </span></a></router-link>
                                     </div>
                                 </div>
