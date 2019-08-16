@@ -8,38 +8,37 @@
                         <div class="col-lg-9">
                             <h3>Kontaktirajte nas</h3>
                             <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, temporibus!</p>
+
                             <form>
                                 <div class="input-group input-group-lg mb-3">
                                     <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="cap-icon ci-user"></i>
-                    </span>
+                                        <span class="input-group-text">
+                                          <i class="cap-icon ci-user"></i>
+                                        </span>
                                     </div>
                                     <input type="text" class="form-control" placeholder="Ime">
                                 </div>
 
                                 <div class="input-group input-group-lg mb-3">
                                     <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="cap-icon ci-envelope"></i>
-                    </span>
+                                        <span class="input-group-text">
+                                          <i class="cap-icon ci-envelope"></i>
+                                        </span>
                                     </div>
                                     <input type="text" class="form-control" placeholder="Email">
                                 </div>
 
                                 <div class="input-group input-group-lg mb-3">
                                     <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="cap-icon ci-pencil"></i>
-                    </span>
+                                        <span class="input-group-text">
+                                          <i class="cap-icon ci-pencil"></i>
+                                        </span>
                                     </div>
                                     <textarea class="form-control" placeholder="Poruka" rows="5"></textarea>
                                 </div>
-
                                 <input type="submit" value="Submit" class="btn btn-primary btn-block btn-lg">
                             </form>
                         </div>
-
                         <div class="col-lg-3 align-self-center">
                             <img src="img/donau.jpg" alt="" class="img-fluid">
                         </div>
@@ -61,7 +60,9 @@
 
 <script>
     export default {
+
         name: 'Contact',
+
         props: {
             msg: String
         }

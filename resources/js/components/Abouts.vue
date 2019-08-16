@@ -72,7 +72,8 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div><!-- /.modal-header -->
+                        </div>
+                        <!-- /.modal-header -->
                         <form @submit.prevent="editMode ? updateAbout() : createAbout()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
@@ -103,8 +104,11 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+
     export default {
+
         name: "Abouts",
+
         data() {
             return {
                 abouts: {},
@@ -115,7 +119,9 @@
                 editMode: true
             }
         },
+
         computed: mapGetters(['allAbouts']),
+
         methods: {
             ...mapActions(['fetchAbouts',
                 'fetchAboutsP',
@@ -123,6 +129,7 @@
                 'addAbout',
                 'renewAbout',
                 'removeAbout']),
+
             loadAbouts() {
                 if(this.$gate.isAdmin()) {
                     /*              axios.get("api/user")
@@ -132,6 +139,7 @@
                     this.abouts = this.$store.state.abouts;
                 }
             },
+
             getResults(page = 1) {
                 this.fetchAboutsP(page);
                 this.abouts = this.$store.state.abouts;
@@ -141,16 +149,19 @@
                                 this.users = response.data;
                             });*/
             },
+
             newModal() {
                 this.editMode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
+
             editModal(about) {
                 this.editMode = true;
                 $('#addNew').modal('show');
                 this.form.fill(about);
             },
+
             createAbout() {
                 this.$Progress.start();
                 this.addAbout(this.form);
@@ -167,6 +178,7 @@
                 // })
                 // .catch(() => {})
             },
+
             updateAbout(id) {
                 this.$Progress.start();
                 //console.log(this.form);
@@ -186,6 +198,7 @@
                             this.$Progress.fail();
                         })*/
             },
+
             deleteAbout(about){
                 swal.fire({
                     title: 'Are you sure?',
@@ -215,6 +228,7 @@
                 })
             }
         },
+
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;

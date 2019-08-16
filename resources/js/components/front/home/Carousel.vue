@@ -42,17 +42,24 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+
     export default {
+
         name: "Carousel",
+
         computed: mapGetters(['allReps', 'oneRep', 'allRepDet']),
+
         methods: {
+
             ...mapActions(['fetchReps', 'fetchRep', 'resetRepState', 'fetchRepDet']),
+
             getRep(rep) {
                 const selRep = rep;
                 this.fetchRep(selRep);
 
             }
         },
+
         created() {
             this.fetchReps();
         }

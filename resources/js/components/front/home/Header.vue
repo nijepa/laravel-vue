@@ -20,8 +20,7 @@
                         <router-link to="/representations" class="nav-link"><a>Zastupanja</a></router-link>
                     </li>
                     <li class="nav-item">
-<!--                        <a href="#news" v-smooth-scroll class="nav-link">Vesti</a>-->
-                        <router-link to="/news" class="nav-link"><a>Vesti</a></router-link>
+                        <a href="#news" v-smooth-scroll class="nav-link">Vesti</a>
                     </li>
                     <li class="nav-item">
                         <a href="#authors" v-smooth-scroll class="nav-link">Proizvodi</a>

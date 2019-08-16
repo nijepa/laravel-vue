@@ -4,7 +4,7 @@
             <appHeader></appHeader>
         </transition>
         <transition appear name="slid" mode="out-in">
-            <appIntro></appIntro>
+            <appIntro title="O Nama" desc="wwwwwwwwwww"></appIntro>
         </transition>
         <transition appear name="slide" mode="out-in">
             <appInfo></appInfo>
@@ -20,7 +20,7 @@
 <script>
     import Header from '../../components/front/Header.vue';
     import Footer from '../../components/front/Footer.vue';
-    import Intro from '../../components/front/about/Intro.vue';
+    import Intro from '../../components/front/Intro.vue';
     import Info from '../../components/front/about/Info.vue';
     import Quotes from '../../components/front/about/Quotes.vue';
     import Managers from '../../components/front/about/Managers.vue';

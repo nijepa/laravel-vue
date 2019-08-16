@@ -1,17 +1,8 @@
 <template>
     <div class="">
-        <header id="page-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col m-auto text-center  has-overlay">
-                        <h1>Proizvodi</h1>
-                        <p>stranih kompanija</p>
-                    </div>
-                </div>
-            </div>
-        </header>
         <div class="container">
             <div class="row">
+
                 <div class="col-4 my-5">
                     <nav  @click="getProduct(product)" :key="product.id" class="nav flex-column list-group" v-for="product in allProducts">
                         <a style="height:150px;" href="#" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{product.name}} <img :src="'../img/' + product.photo_id" class="img-fluid mx-auto d-block h-75"></a>
@@ -35,9 +26,9 @@
                                 </div>-->
                             </div>
                             <div key=2 v-else class="card-body">
-                                <i class="cap-icon ci-compass mb-2 activ mx-auto" style="cursor: pointer; font-size: 80px"></i>
+                                <i class="cap-icon ci-shopping-cart-full mb-2 activ mx-auto" style="cursor: pointer; font-size: 80px"></i>
                                 <!--<img src="img/person3.jpg" alt="" class="img-fluid rounded-circle w-50 mb-3">-->
-                                <h3>Zastupanja stranih kompanija</h3>
+                                <h3 class="mt-3 mb-3">Naši proizvodi</h3>
                                 <!--<h5 class="text-muted">CEO</h5>-->
                                 <p>Iskustvo, kao i dugogodišnje poslovanje sa pomenutim evropskim firmama i mnogim drugim Vam garantuju kvalitetnu i fer saradnju.</p>
                                 <p>Molimo Vas da nam se obratite ako imate bilo kakvo pitanje vezano za dole navedene firme ili njihove proizvodne programe.</p>
@@ -68,7 +59,6 @@
                 const selProduct = product;
                 this.fetchProduct(selProduct);
                 this.fetchProductDet(selProduct);
-                //console.log(selRep)
             }
         },
 
@@ -84,5 +74,7 @@
 </script>
 
 <style scoped>
-
+    .nav-link {
+        background-color: white;
+    }
 </style>

@@ -4,6 +4,7 @@
         <section id="authors" class="my-5 text-center">
             <div data-aos="slide-down">
                 <div class="container">
+
                     <div class="row">
                         <div class="col">
                             <div class="info-header mb-5">
@@ -16,6 +17,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div :key="product.id" class="col-lg-3 col-md-6" v-for="product in allProducts">
                             <div class="card">
@@ -25,7 +27,6 @@
                                     <h5 class="text-muted">{{product.description}}</h5>
                                     <!--<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed commodi nostrum, ab libero voluptas officia.</p>-->
                                     <div class="d-flex justify-content-center">
-<!--                                        <a href="#" class="btn btn-primary btn-lg mt-3"><span>Više ... </span></a>-->
                                         <router-link to="/products" class="btn btn-primary btn-lg mt-3"><a><span>Više ... </span></a></router-link>
                                     </div>
                                 </div>

@@ -2,6 +2,7 @@
     <footer id="main-footer" class=" bg-primary text-white">
         <div data-aos="zoom-in-up">
             <div class="container-fluid">
+
                 <div class="row text-center">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <p class="lead">
@@ -10,6 +11,7 @@
                         </p>
                     </div>
                 </div>
+
                 <div class="row text-center mb-3">
                     <div class="col" :key="owner.id" v-for="owner in allOwner">
                         <p>Adresa: {{owner.address}} &#8605; Telefon:
@@ -20,6 +22,7 @@
                         </p>
                     </div>
                 </div>
+
                 <div class="row text-center">
                     <div class="col" :key="owner.id" v-for="owner in allOwner">
                         <a :href="owner.facebook"><i @mouseover="hover1 = true" @mouseleave="hover1 = false" :class="{'cap-icon ci-facebook-squared m-2': hover1 == false, 'cap-icon ci-facebook-circled m-2': hover1 == true}"></i></a>
@@ -28,6 +31,7 @@
                         <a :href="owner.twitter"><i @mouseover="hover4 = true" @mouseleave="hover4 = false" :class="{'cap-icon ci-twitter-squared m-2': hover4 == false, 'cap-icon ci-twitter-circled m-2': hover4 == true}" ></i></a>
                     </div>
                 </div>
+
             </div>
         </div>
     </footer>
@@ -35,8 +39,11 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+
     export default {
+
         name: "Footer",
+
         data() {
             return {
                 hover1: false,
@@ -45,11 +52,13 @@
                 hover4: false,
             }
         },
-        name: "Owner",
+
         computed: mapGetters(['allOwner']),
+
         methods: {
             ...mapActions(['fetchOwner'])
         },
+
         created() {
             this.fetchOwner();
         }

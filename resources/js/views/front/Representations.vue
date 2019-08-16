@@ -4,6 +4,9 @@
             <appHeader></appHeader>
         </transition>
         <transition appear name="slid" mode="out-in">
+            <appIntro title="Zastupanja" desc="stranih kompanija"></appIntro>
+        </transition>
+        <transition appear name="slid" mode="out-in">
             <appRepresentations></appRepresentations>
         </transition>
         <transition appear name="slide" mode="out-in">
@@ -15,6 +18,7 @@
 <script>
     import Header from '../../components/front/Header.vue';
     import Footer from '../../components/front/Footer.vue';
+    import Intro from '../../components/front/Intro.vue';
     import Representations from '../../components/front/representations/Companies.vue';
 
     export default {
@@ -23,6 +27,7 @@
             appHeader: Header,
             appFooter: Footer,
             appRepresentations: Representations,
+            appIntro: Intro
         },
 
         created() {
