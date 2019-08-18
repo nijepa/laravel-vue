@@ -71628,7 +71628,7 @@ var render = function() {
                       { name: "smooth-scroll", rawName: "v-smooth-scroll" }
                     ],
                     staticClass: "nav-link",
-                    attrs: { href: "#abou" }
+                    attrs: { href: "#about" }
                   },
                   [_vm._v("O nama")]
                 )
@@ -71658,7 +71658,7 @@ var render = function() {
                       { name: "smooth-scroll", rawName: "v-smooth-scroll" }
                     ],
                     staticClass: "nav-link",
-                    attrs: { href: "#abo" }
+                    attrs: { href: "#news" }
                   },
                   [_vm._v("Vesti")]
                 )
@@ -71672,7 +71672,7 @@ var render = function() {
                       { name: "smooth-scroll", rawName: "v-smooth-scroll" }
                     ],
                     staticClass: "nav-link",
-                    attrs: { href: "#new" }
+                    attrs: { href: "#authors" }
                   },
                   [_vm._v("Proizvodi")]
                 )
@@ -71686,7 +71686,7 @@ var render = function() {
                       { name: "smooth-scroll", rawName: "v-smooth-scroll" }
                     ],
                     staticClass: "nav-link",
-                    attrs: { href: "#con" }
+                    attrs: { href: "#contact" }
                   },
                   [_vm._v("Kontakt")]
                 )

@@ -20,7 +20,7 @@ $fa-font-path: "../webfonts";
 .router-link-exact-active {
   //background-color: #1f6fb2;
   //color: #fff !important;
-  color: black;
+  color: aqua;
   text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
   0px -5px 35px rgba(255,255,255,0.3);
 }
@@ -284,19 +284,19 @@ body {
 }
 
 .carousel-image-1 {
-  background: url(/img/companies/evoltex.jpg) rgba(0,0,0,0.7);
+  //background: url(/img/companies/evoltex.jpg) rgba(0,0,0,0.7);
   background-size: auto;
   background-repeat: no-repeat;
   text-align: center;
 }
 
 .carousel-image-2 {
-  background: url(/img/companies/ceramco.jpg);
+  //background: url(/img/companies/ceramco.jpg);
   background-size: cover;
 }
 
 .carousel-image-3 {
-  background: url(/img/image3.jpg);
+  //background: url(/img/image3.jpg);
   background-size: cover;
 }
 
@@ -330,7 +330,7 @@ body {
 
 #showcase {
   position: relative;
-  background: url(/img/mountains.jpg);
+  //background: url();
   min-height: 600px;
   margin: 0;
 

@@ -20,16 +20,34 @@
     <!-- built files will be auto injected -->
 
     <script src="/js/app.js"></script>
+    <script>
+        // The function actually applying the offset
+        function offsetAnchor() {
+            if (location.hash.length !== 0) {
+                window.scrollTo(window.scrollX, window.scrollY + 200);
+            }
+        }
 
+        // Captures click events of all <a> elements with href starting with #
+        $(document).on('click', 'a[href^="#"]', function(event) {
+            // Click events are captured before hashchanges. Timeout
+            // causes offsetAnchor to be called after the page jump.
+            window.setTimeout(function() {
+                offsetAnchor();
+            }, 0);
+        });
+
+        // Set the offset when entering page with hash present in the url
+        window.setTimeout(offsetAnchor, 0);
+    </script>
+    <script>
+
+        $('ul.navbar-nav li.dropdown').hover(function() {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).slideDown(300);
+        }, function() {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).slideUp(300);
+        });
+
+    </script>
   </body>
-
-  <script>
-
-    $('ul.navbar-nav li.dropdown').hover(function() {
-      $(this).find('.dropdown-menu').stop(true, true).delay(200).slideDown(300);
-    }, function() {
-      $(this).find('.dropdown-menu').stop(true, true).delay(200).slideUp(300);
-    });
-
-  </script>
 </html>

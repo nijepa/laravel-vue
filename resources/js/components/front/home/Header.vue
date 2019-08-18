@@ -14,19 +14,19 @@
                         <a href="#showcase" v-smooth-scroll class="nav-link">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#abou" v-smooth-scroll class="nav-link">O nama</a>
+                        <a href="#about" v-smooth-scroll class="nav-link">O nama</a>
                     </li>
                     <li class="nav-item">
                         <router-link to="/representations" class="nav-link"><a>Zastupanja</a></router-link>
                     </li>
                     <li class="nav-item">
-                        <a href="#abo" v-smooth-scroll class="nav-link">Vesti</a>
+                        <a href="#news" v-smooth-scroll class="nav-link">Vesti</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#new" v-smooth-scroll class="nav-link">Proizvodi</a>
+                        <a href="#authors" v-smooth-scroll class="nav-link">Proizvodi</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#con" v-smooth-scroll class="nav-link">Kontakt</a>
+                        <a href="#contact" v-smooth-scroll class="nav-link">Kontakt</a>
                     </li>
                 </ul>
             </div>

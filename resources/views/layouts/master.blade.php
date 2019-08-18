@@ -274,26 +274,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <p>Add</p>
                                     </router-link>
                                 </li>
-                                <li class="nav-item">
-                                    <router-link to="/productsB" class="nav-link">
-                                        <i class="fas fa-boxes nav-icon text-purp"></i>
-                                        <p>Products</p>
-                                    </router-link>
-                                </li>
-                                <li class="nav-item">
-                                    <router-link to="/contacts" class="nav-link">
-                                        <i class="far fa-address-book nav-icon text-purp"></i>
-                                        <p>Contacts</p>
-                                    </router-link>
-                                </li>
-                                <li class="nav-item">
-                                    <router-link to="/news" class="nav-link">
-                                        <i class="far fa-newspaper nav-icon text-purp"></i>
-                                        <p>News</p>
-                                    </router-link>
-                                </li>
                             @endcan
                         </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link has-treeview">
+                            <router-link to="/aboutsB" class="nav-item">
+                                <i class="fas fa-certificate nav-icon text-cyan"></i>
+                                <p>Meetings</p>
+                            </router-link>
+                        </a>
                     </li>
 
                     <li class="nav-item">
