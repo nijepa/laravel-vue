@@ -58,8 +58,8 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New City</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update City</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="fas fa-plus icolor"></i> Add New City</h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="fas fa-edit icolor"></i> Update City</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -172,9 +172,9 @@
 
             createCity() {
                 this.$Progress.start();
-                this.addCity(this.form);
-                // this.form.post('api/user')
-                //     .then(({ data }) => {
+                //this.addCity(this.form);
+                 this.form.post('api/city')
+                     .then(({ data }) => {
                         //console.log(data);
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -183,17 +183,17 @@
                             title: 'City added successfully'
                         });
                         this.$Progress.finish();
-                    // })
-                    // .catch(() => {})
+                     })
+                     .catch(() => {})
             },
 
             updateCity(id) {
                 this.$Progress.start();
                 //console.log(this.form);
-                this.renewCity(this.form);
+                //this.renewCity(this.form);
 
-                //this.form.put('api/user/'+this.form.id)
-                    //.then(() => {
+                this.form.put('api/city/'+this.form.id)
+                    .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
@@ -201,10 +201,10 @@
                             title: 'City updated successfully'
                         });
                         this.$Progress.finish();
-            /*        })
+                    })
                     .catch(() => {
                         this.$Progress.fail();
-                    })*/
+                    })
             },
 
             deleteCity(city){
@@ -219,17 +219,18 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.removeCity(city);
-                        //this.form.delete('api/user/'+id).then(()=>{
-                            swal.fire(
-                                'Deleted!',
-                                'City has been deleted.',
-                                'success'
+                        //this.removeCity(city);
+                        this.form.delete('api/city/'+city.id)
+                            .then(()=>{
+                                swal.fire(
+                                    'Deleted!',
+                                    'City has been deleted.',
+                                    'success'
                             );
-                            Fire.$emit('AfterCreate');
-                        // }).catch(()=> {
-                        //     swal("Failed!", "There was something wrong.", "warning");
-                        // });
+                                Fire.$emit('AfterCreate');
+                             }).catch(()=> {
+                                 swal("Failed!", "There was something wrong.", "warning");
+                             });
                     } else {
                         console.log('qqqqqqqqqqqq');
                     }

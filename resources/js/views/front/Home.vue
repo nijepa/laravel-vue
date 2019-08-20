@@ -10,7 +10,7 @@
         <transition appear name="slide" mode="out-in">
             <Activities></Activities>
         </transition>
-        <faq></faq>
+        <faq id="about"></faq>
         <news></news>
         <products></products>
         <Contact msg="Welcome to Your Vue.js App"/>

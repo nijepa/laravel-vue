@@ -20,7 +20,7 @@
     <!-- built files will be auto injected -->
 
     <script src="/js/app.js"></script>
-    <script>
+{{--    <script>
         // The function actually applying the offset
         function offsetAnchor() {
             if (location.hash.length !== 0) {
@@ -39,7 +39,7 @@
 
         // Set the offset when entering page with hash present in the url
         window.setTimeout(offsetAnchor, 0);
-    </script>
+    </script>--}}
     <script>
 
         $('ul.navbar-nav li.dropdown').hover(function() {

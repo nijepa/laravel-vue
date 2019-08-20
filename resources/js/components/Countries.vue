@@ -55,8 +55,8 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New Country</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Country</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="fas fa-plus icolor"></i> Add New Country</h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="fas fa-edit icolor"></i> Update Country</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -139,11 +139,12 @@
                 $('#addNew').modal('show');
                 this.form.fill(country);
             },
+
             createCountry() {
                 this.$Progress.start();
-                this.addCountry(this.form);
-                // this.form.post('api/user')
-                //     .then(({ data }) => {
+                //this.addCountry(this.form);
+                this.form.post('api/country')
+                     .then(({ data }) => {
                         //console.log(data);
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -152,16 +153,17 @@
                             title: 'Country added successfully'
                         });
                         this.$Progress.finish();
-                    // })
-                    // .catch(() => {})
+                     })
+                     .catch(() => {})
             },
+
             updateCountry(id) {
                 this.$Progress.start();
                 //console.log(this.form);
-                this.renewCountry(this.form);
+               //this.renewCountry(this.form);
 
-                //this.form.put('api/user/'+this.form.id)
-                    //.then(() => {
+                this.form.put('api/country/'+this.form.id)
+                    .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
@@ -169,11 +171,12 @@
                             title: 'Country updated successfully'
                         });
                         this.$Progress.finish();
-            /*        })
+                   })
                     .catch(() => {
                         this.$Progress.fail();
-                    })*/
+                    })
             },
+
             deleteCountry(country){
                 swal.fire({
                     title: 'Are you sure?',
@@ -186,17 +189,18 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.removeCountry(country);
-                        //this.form.delete('api/user/'+id).then(()=>{
-                            swal.fire(
-                                'Deleted!',
-                                'Country has been deleted.',
-                                'success'
-                            );
-                            Fire.$emit('AfterCreate');
-                        // }).catch(()=> {
-                        //     swal("Failed!", "There was something wrong.", "warning");
-                        // });
+                        //this.removeCountry(country);
+                        this.form.delete('api/country/'+country.id)
+                            .then(()=>{
+                                swal.fire(
+                                    'Deleted!',
+                                    'Country has been deleted.',
+                                    'success'
+                                );
+                                Fire.$emit('AfterCreate');
+                             }).catch(()=> {
+                                 swal("Failed!", "There was something wrong.", "warning");
+                             });
                     } else {
                         console.log('qqqqqqqqqqqq');
                     }

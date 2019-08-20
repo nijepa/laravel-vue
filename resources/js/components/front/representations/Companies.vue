@@ -5,7 +5,7 @@
 
                 <div class="col-4 my-5">
                     <nav @click="getRep(rep)" :key="rep.id" class="nav flex-column list-group" v-for="rep in allReps">
-                        <a href="#" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}} <img :src="'../img/companies/' + rep.logo_small_id" class="img-fluid mx-auto d-block"></a>
+                        <a  class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}} <img :src="'../img/companies/' + rep.logo_small_id" class="img-fluid mx-auto d-block"></a>
                     </nav>
                 </div>
 
@@ -77,6 +77,10 @@
 </script>
 
 <style scoped>
+    a {
+        cursor: pointer;
+        text-decoration: none;
+    }
     .slide-enter-active {
         animation: slide-in 800ms ease-out forwards;
     }

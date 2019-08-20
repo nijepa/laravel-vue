@@ -1,6 +1,6 @@
 <template>
     <!-- ABOUT SECTION -->
-    <section id="about" class="py-5 text-center bg-light">
+    <section class="py-5 text-center bg-light">
         <div class="container" >
             <div data-aos="zoom-out-down">
                 <div class="row">
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div id="abo" class="row text-center">
+        <div class="row text-center">
             <div class="col">
                 <router-link to="/about" activeClass="active" tag="a" class="btn btn-primary btn-lg mt-3">
                     <a><span>Više ... </span></a>

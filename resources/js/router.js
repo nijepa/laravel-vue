@@ -13,25 +13,26 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [
         // frontend routes
-        {path: '/', component: require('./views/front/Home.vue').default},
-        {path: '/representations', component: require('./views/front/Representations.vue').default},
-        {path: '/about', component: require('./views/front/About.vue').default},
-        {path: '/contact', component: require('./views/front/Contact.vue').default},
-        {path: '/products', component: require('./views/front/Product.vue').default},
-        {path: '/news', component: require('./views/front/News.vue').default},
-        {path: '/production', component: require('./views/front/Production.vue').default},
-        {path: '/exports', component: require('./views/front/Exports.vue').default},
+        {path: '/', component: () => import('./views/front/Home.vue')},
+        // {path: '/', component: require('./views/front/Home.vue').default},
+        {path: '/representations', component: () => import('./views/front/Representations.vue')},
+        {path: '/about', component: () => import('./views/front/About.vue')},
+        {path: '/contact', component: () => import('./views/front/Contact.vue')},
+        {path: '/products', component: () => import('./views/front/Product.vue')},
+        {path: '/news', component: () => import('./views/front/News.vue')},
+        {path: '/production', component: () => import('./views/front/Production.vue')},
+        {path: '/exports', component: () => import('./views/front/Exports.vue')},
 
         //backend routes
-        {path: '/home', component: require('./components/Dashboard.vue').default},
-        {path: '/dashboard', component: require('./components/Dashboard.vue').default},
-        {path: '/profile', component: require('./components/Profile.vue').default},
-        {path: '/users', component: require('./components/Users.vue').default},
-        {path: '/cities', component: require('./components/Cities.vue').default},
-        {path: '/countries', component: require('./components/Countries.vue').default},
-        {path: '/products', component: require('./components/Products.vue').default},
-        {path: '/contacts', component: require('./components/Contacts.vue').default},
-        {path: '/abouts', component: require('./components/Abouts.vue').default},
-        {path: '*', component: require('./components/NotFound.vue').default}
+        {path: '/home', component: () => import('./components/Dashboard.vue')},
+        {path: '/dashboard', component: () => import('./components/Dashboard.vue')},
+        {path: '/profile', component: () => import('./components/Profile.vue')},
+        {path: '/users', component: () => import('./components/Users.vue')},
+        {path: '/cities', component: () => import('./components/Cities.vue')},
+        {path: '/countries', component: () => import('./components/Countries.vue')},
+        {path: '/products', component: () => import('./components/Products.vue')},
+        {path: '/contacts', component: () => import('./components/Contacts.vue')},
+        {path: '/abouts', component: () => import('./components/Abouts.vue')},
+        {path: '*', component: () => import('./components/NotFound.vue')}
     ]
 })

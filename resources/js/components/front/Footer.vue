@@ -71,13 +71,15 @@
         cursor: pointer;
     }
     a {
-
         text-decoration: none;
     }
-    a.cont:hover, a.cont:active {
-        color: #ff6b96 !important;
+    i:hover, i:active {
+        color: #27528b !important;
+    }
+    a:hover, a:active {
+        color: #27528b !important;
     }
     .cont {
-        font-size: 20px;
+        font-size: large;
     }
 </style>
