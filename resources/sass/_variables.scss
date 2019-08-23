@@ -18,6 +18,11 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 $purp: rgba(242, 141, 170, 0.8);
+$yell: rgba(246, 226, 78, 0.8);
+
+.text-yell {
+  color: $yell;
+}
 
 .text-purp {
   color: $purp;

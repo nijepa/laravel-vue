@@ -27,7 +27,7 @@ export default new Router({
         {path: '/home', component: () => import('./components/Dashboard.vue')},
         {path: '/dashboard', component: () => import('./components/Dashboard.vue')},
         {path: '/profile', component: () => import('./components/Profile.vue')},
-        {path: '/users', component: () => import('./components/Users.vue')},
+        {path: '/users', component: () => import('./views/back/Users.vue')},
         {path: '/cities', component: () => import('./components/Cities.vue')},
         {path: '/countries', component: () => import('./components/Countries.vue')},
         {path: '/products', component: () => import('./components/Products.vue')},

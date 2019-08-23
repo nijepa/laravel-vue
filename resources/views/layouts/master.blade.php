@@ -152,7 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="/img/Profile.png" class="img-circle elevation-2" alt="User Image">
+                    <img src="/img/profile/{{Auth::user()->photo}}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                     <a href="#" class="d-block">
@@ -178,7 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-cogs text-teal"></i>
+                            <i class="nav-icon fas fa-cogs text-yell"></i>
                             <p>
                                 Manage
                                 <i class="right fa fa-angle-left"></i>

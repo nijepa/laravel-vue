@@ -13842,6 +13842,10 @@ a.text-muted:hover {
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }@charset "UTF-8";
 
+.text-yell {
+  color: rgba(246, 226, 78, 0.8);
+}
+
 .text-purp {
   color: rgba(242, 141, 170, 0.8);
 }
@@ -30300,7 +30304,13 @@ readers do not read off random characters that represent icons */
 .router-link-exact-active {
   color: aqua;
   text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2), 0px -5px 35px rgba(255, 255, 255, 0.3);
-  background-color: #2f5778;
+}
+
+.router-link-active {
+  color: aqua;
+  text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2), 0px -5px 35px rgba(255, 255, 255, 0.3);
+  border-style: ridge solid;
+  border-color: #1f6fb2;
 }
 
 .icolor {

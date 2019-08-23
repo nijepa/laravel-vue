@@ -8,7 +8,7 @@
                         <h3 class="card-title text-blue font-weight-bold h3"><i class="far fa-address-book fa-2x icolor"></i> CONTACTS</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
-                                Add Contact <span><i class="fas fa-plus"></i></span>
+                                Add Contact <span><i class="cap-icon ci-plus"></i></span>
                             </button>
                         </div>
                     </div>
@@ -30,11 +30,11 @@
                                 <td>{{ contact.created_at | customDate }}</td>
                                 <td>
                                     <button @click="editModal(contact)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="cap-icon ci-file-edit"></i>
                                     </button>
 
                                     <button  @click="deleteContact(contact)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                        <i class="fas fa-trash-alt"></i>
+                                        <i class="cap-icon ci-trash"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -57,8 +57,8 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New Contact</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Contact</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="cap-icon ci-plus icolor"></i> Add New Contact</h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="cap-icon ci-file-edit icolor"></i> Update Contact</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -79,9 +79,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="far fa-times-circle"></i></span></button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="far fa-check-circle"></i></span></button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="far fa-save"></i></span></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="cap-icon ci-times"></i></span></button>
+                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="cap-icon ci-check"></i></span></button>
+                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="cap-icon ci-save"></i></span></button>
                             </div>
                             <!-- /.modal-body -->
                         </form>
@@ -148,41 +148,44 @@
                 $('#addNew').modal('show');
                 this.form.fill(contact);
             },
+
             createContact() {
                 this.$Progress.start();
-                this.addContact(this.form);
-                // this.form.post('api/user')
-                //     .then(({ data }) => {
+                //this.addContact(this.form);
+                this.form.post('api/contact')
+                     .then(({ data }) => {
                 //console.log(data);
-                Fire.$emit('AfterCreate');
-                $('#addNew').modal('hide');
-                toast.fire({
-                    type: 'success',
-                    title: 'Contact added successfully'
-                });
-                this.$Progress.finish();
-                // })
-                // .catch(() => {})
+                        Fire.$emit('AfterCreate');
+                        $('#addNew').modal('hide');
+                        toast.fire({
+                            type: 'success',
+                            title: 'Contact added successfully'
+                        });
+                        this.$Progress.finish();
+                    })
+                    .catch(() => {})
             },
+
             updateContact(id) {
                 this.$Progress.start();
                 //console.log(this.form);
-                this.renewContact(this.form);
+                //this.renewContact(this.form);
 
-                //this.form.put('api/user/'+this.form.id)
-                //.then(() => {
-                Fire.$emit('AfterCreate');
-                $('#addNew').modal('hide');
-                toast.fire({
-                    type: 'success',
-                    title: 'Contact updated successfully'
-                });
-                this.$Progress.finish();
-                /*        })
-                        .catch(() => {
-                            this.$Progress.fail();
-                        })*/
+                this.form.put('api/contact/'+this.form.id)
+                    .then(() => {
+                        Fire.$emit('AfterCreate');
+                        $('#addNew').modal('hide');
+                        toast.fire({
+                            type: 'success',
+                            title: 'Contact updated successfully'
+                        });
+                        this.$Progress.finish();
+                    })
+                    .catch(() => {
+                        this.$Progress.fail();
+                    })
             },
+
             deleteContact(contact){
                 swal.fire({
                     title: 'Are you sure?',
@@ -195,23 +198,25 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.removeContact(contact);
-                        //this.form.delete('api/user/'+id).then(()=>{
-                        swal.fire(
-                            'Deleted!',
-                            'Product has been deleted.',
-                            'success'
-                        );
-                        Fire.$emit('AfterCreate');
-                        // }).catch(()=> {
-                        //     swal("Failed!", "There was something wrong.", "warning");
-                        // });
+                        //this.removeContact(contact);
+                        this.form.delete('api/contact/'+contact.id)
+                            .then(()=>{
+                                swal.fire(
+                                    'Deleted!',
+                                    'Contact has been deleted.',
+                                    'success'
+                                );
+                                Fire.$emit('AfterCreate');
+                        }).catch(()=> {
+                            swal("Failed!", "There was something wrong.", "warning");
+                        });
                     } else {
                         console.log('qqqqqqqqqqqq');
                     }
                 })
             }
         },
+
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;

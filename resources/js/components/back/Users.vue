@@ -13,19 +13,53 @@
                         </div>
                     </div>
                     <!-- /.card-header -->
+                    <appTableOptions
+                            :search.sync="search"
+                            :pageSize.sync="pageSize"
+                            @pageSizeChanged="pageSize = Number($event)"
+                            @searchChanged="search = $event"
+                    >
+                    </appTableOptions>
+     <!--               <div class="d-flex align-items-center">
+                        <div class="form-group ml-3 mt-3">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" v-model="search" placeholder="Search">
+                        </div>
+                        <div class="form-group ml-auto mr-3 mt-3">
+                            <label>Items per page</label>
+                            <select v-model="pageSize" name="type" class="form-control" id="ps">
+                                <option value="5">5</option>
+                                <option value="3">3</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>-->
+                    <hr>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
-                            <tbody>
+                            <thead>
+                   <!--         <tr>
+                                <th @click="sortBy('name')">Name</th>
+                                <th @click="sortBy('email')">Email</th>
+                            </tr>-->
                             <tr>
-                                <th>ID</th>
+                                <th @click="sortBy('id')">ID <i v-if="sortKey === 'id'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
                                 <th>Photo</th>
-                                <th>Name</th>
-                                <th>Email</th>
+                                <th @click="sortBy('name')">Name <i v-if="sortKey === 'name'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
+                                <th @click="sortBy('email')">Email <i v-if="sortKey === 'email'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
                                 <th>Type</th>
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
-                            <tr v-for="user in users.users.data" :key="user.id">
+                            </thead>
+                            <tbody>
+
+                     <!--       <tr  v-for="user in usersSorted">
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.email }}</td>
+                            </tr>-->
+<!--                            <tr v-for="user in users.users.data" :key="user.id">-->
+                            <tr v-for="user in usersSorted" :key="user.id">
                                 <td>{{ user.id }}</td>
                                 <td><img :src="'img/profile/'+user.photo" alt="" style="height: 50px"></td>
                                 <td>{{ user.name }}</td>
@@ -45,12 +79,25 @@
                             </tbody>
                         </table>
                     </div>
+
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <pagination :data="users.users" @pagination-change-page="getResults">
-                            <span slot="prev-nav">&lt; Previous</span>
-                            <span slot="next-nav">Next &gt;</span>
-                        </pagination>
+        <!--                <div>
+                            <button @click="prevPage" class="float-left btn btn-outline-info btn-sm"><i class="fas fa-arrow-left"></i> Previous</button>
+                            <button @click="nextPage" class="float-right btn btn-outline-info btn-sm">Next <i class="fas fa-arrow-right"></i></button>
+                        </div>-->
+<!--                        <pagination :data="users.users" @pagination-change-page="getResults">-->
+<!--                            <span slot="prev-nav">&lt; Previous</span>-->
+<!--                            <span slot="next-nav">Next &gt;</span>-->
+<!--                        </pagination>-->
+                        <appPagination
+                                :maxVisibleButtons="totalPages"
+                                :total-pages="totalPages"
+                                :total="totalPages"
+                                :per-page="3"
+                                :current-page="currentPage"
+                                @pagechanged="onPageChange"
+                        ></appPagination>
                     </div>
                 </div>
                 <!-- /.card -->
@@ -61,8 +108,8 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="fas fa-plus icolor"></i> Add New User</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="fas fa-edit icolor"></i> Update User</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="fas fa-user-plus icolor"></i> Add New User</h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="fas fa-user-edit icolor"></i> Update User</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -99,7 +146,7 @@
                                 <div class="form-group">
                                     <label for="photo" class="col-sm-2 control-label">Photo</label>
                                     <div class="col-sm-12">
-                                        <input type="file" @change="updatePhoto" name="photo" class="form-input">
+                                        <input type="file" @change="updatePhoto" name="photo" class="form-input" id="photo">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -115,9 +162,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="far fa-window-close"></i></span></button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="far fa-check-circle"></i></span></button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="far fa-save"></i></span></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="cap-icon ci-times"></i></span></button>
+                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="cap-icon ci-check"></i></span></button>
+                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="cap-icon ci-save"></i></span></button>
                             </div>
                             <!-- /.modal-body -->
                         </form>
@@ -135,14 +182,31 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import Paginations from '../shared/Paginations';
+    import TableOptions from '../shared/TableOptions';
 
     export default {
 
         name: "Users",
 
+        components: {
+            appPagination: Paginations,
+            appTableOptions: TableOptions
+        },
+
         data() {
             return {
-                users: {},
+                users: [],
+
+                sortKey: ['name'],
+                sortOrder: ['asc'],
+                currentPage: 1,
+                pageSize: 3,
+                totalPages: 1,
+                search: '',
+                columns: ['name', 'email'],
+                sorting: 'name',
+
                 form: new Form({
                     id: '',
                     name: '',
@@ -152,12 +216,30 @@
                     bio: '',
                     photo: ''
                 }),
+
                 editMode: true
             }
         },
 
         computed: {
+
             ...mapGetters(['allUsers']),
+
+            usersSorted: function() {
+                let result = this.users.users;
+                //this.totalPages = Math.ceil(result.length / this.pageSize);
+                if (this.search) {
+                    result = result.filter(item => item.name.toLowerCase().includes(this.search));
+                }
+                result =  _.orderBy(result, this.sortKey, this.sortOrder);
+
+                return result.filter((row, index) => {
+                    this.totalPages = Math.ceil(result.length / this.pageSize);
+                    let start = (this.currentPage - 1) * this.pageSize;
+                    let end = this.currentPage * this.pageSize;
+                    if (index >= start && index < end) return true;
+                });
+            },
         },
 
         methods: {
@@ -169,12 +251,40 @@
                 'renewUser',
                 'removeUser']),
 
+            onPageChange(page) {
+                console.log(page);
+                this.currentPage = page;
+            },
+
+            sortBy: function(key) {
+                if (key === this.sortKey) {
+                    this.sortOrder = (this.sortOrder === 'asc') ? 'desc' : 'asc';
+                } else {
+                    this.sortKey = key;
+                    this.sortOrder = 'asc';
+                }
+            },
+
+/*            nextPage:function() {
+                if((this.currentPage*this.pageSize) < this.users.users.length) this.currentPage++;
+            },
+            prevPage:function() {
+                if(this.currentPage > 1) this.currentPage--;
+            },
+
+            sorti:function(s) {
+                if(s === this.currentSort) {
+                    this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+                }
+                this.currentSort = s;
+            },*/
+
             loadUsers() {
                 if(this.$gate.isAdmin()) {
                     /*              axios.get("api/user")
                                       .then(({ data }) => (this.users = data))
                                       .catch();*/
-                    this.fetchUsersP();
+                    this.fetchUsers();
                     this.users = this.$store.state.users;
                 }
             },
@@ -313,5 +423,25 @@
 </script>
 
 <style scoped>
+    a {
+        font-weight: normal;
+        color: blue;
+    }
 
+    a.active {
+        font-weight: bold;
+        color: black;
+    }
+
+    td, th {
+        padding: 5px;
+    }
+
+    th {
+        cursor:pointer;
+    }
+
+    .ic {
+        color: #4cb2e9;
+    }
 </style>

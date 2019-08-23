@@ -4,7 +4,7 @@ const getDefaultState = () => {
     return {
         aboutDet: []
     }
-}
+};
 
 const state = {
     aboutDet: getDefaultState()
