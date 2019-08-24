@@ -4,7 +4,7 @@ const getDefaultState = () => {
     return {
         rep: []
     }
-}
+};
 
 const state = {
     reps: [],

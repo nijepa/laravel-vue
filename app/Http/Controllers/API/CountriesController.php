@@ -25,7 +25,7 @@ class CountriesController extends Controller
      */
     public function index()
     {
-        return Country::orderBy('name')->paginate(200);
+        return Country::orderBy('name')->paginate(10);
     }
 
     /**

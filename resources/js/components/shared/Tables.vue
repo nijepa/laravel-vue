@@ -1,28 +1,16 @@
 <template>
     <table class="table table-hover">
         <thead>
-        <!--         <tr>
-                     <th @click="sortBy('name')">Name</th>
-                     <th @click="sortBy('email')">Email</th>
-                 </tr>-->
-        <tr>
-            <th @click="sortBy('id')">ID <i v-if="sortKey === 'id'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-            <th>Photo</th>
-            <th @click="sortBy('name')">Name <i v-if="sortKey === 'name'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-            <th @click="sortBy('email')">Email <i v-if="sortKey === 'email'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-            <th>Type</th>
-            <th>Created At</th>
-            <th>Modify</th>
+
+        <tr v-for="column in columns" :key="id">
+            <th v-if="sortable.includes(column) ? `<i v-if='sortKey === column' :class='sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'' class='ic'></i>`" : "">{{ column }}</th>
         </tr>
+
         </thead>
         <tbody>
 
-        <!--       <tr  v-for="user in usersSorted">
-                   <td>{{ user.name }}</td>
-                   <td>{{ user.email }}</td>
-               </tr>-->
-        <!--                            <tr v-for="user in users.users.data" :key="user.id">-->
-        <tr v-for="user in usersSorted" :key="user.id">
+        <tr v-for="item in model" :key="item.id">
+            <td>{{ item.id }}</td>
             <td>{{ user.id }}</td>
             <td><img :src="'img/profile/'+user.photo" alt="" style="height: 50px"></td>
             <td>{{ user.name }}</td>
@@ -49,6 +37,9 @@
 
         props: {
             columns: [],
+            sortable: [],
+            model: [],
+            fields: []
 
         }
     }

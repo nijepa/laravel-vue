@@ -6,9 +6,13 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Traits\StoreImageTrait;
 
 class UserController extends Controller
 {
+
+    use StoreImageTrait;
+
     /**
      * UserController constructor.
      *
@@ -48,14 +52,17 @@ class UserController extends Controller
             'type' => 'required',
         ]);
 
-        $name = time().'.' . explode('/',
+        $name = $this->savePhoto($request,'profile', 'photo');
+        //dd($name);
+        $request->merge(['photo' => $name]);
+/*        $name = time().'.' . explode('/',
                 explode(':',
                     substr($request->photo, 0,
                         strpos($request->photo, ';')))[1])[1];
 
         \Image::make($request->photo)->save(public_path('img/profile/').$name);
 
-        $request->merge(['photo' => $name]);
+        $request->merge(['photo' => $name]);*/
 
 
         return User::create([
@@ -100,8 +107,10 @@ class UserController extends Controller
             'password' => 'sometimes|min:6',
             'type' => 'required',
         ]);
-
-        $this->savePhoto($request, $user);
+        $name = $this->savePhoto($request, 'profile', 'photo', $user );
+        //dd($name);
+        $request->merge(['photo' => $name]);
+        //$this->savePhoto($request, $user);
         /*$currentPhoto = $user->photo;
 
         if($request->photo !== $currentPhoto){
@@ -172,7 +181,9 @@ class UserController extends Controller
             'password' => 'sometimes|required|min:6'
         ]);
 
-        $this->savePhoto($request, $user);
+        $name = $this->savePhoto($request, 'profile', 'photo', $user );
+        $request->merge(['photo' => $name]);
+        //$this->savePhoto($request, $user);
 
         /*$currentPhoto = $user->photo;
 
@@ -221,7 +232,13 @@ class UserController extends Controller
         return $users;
     }
 
-    public function savePhoto($request, $user)
+    /**
+     * Save photo
+     *
+     * @param $request
+     * @param $user
+     */
+    /*public function savePhoto($request, $user)
     {
         $currentPhoto = $user->photo;
 
@@ -241,5 +258,5 @@ class UserController extends Controller
                 @unlink($userPhoto);
             }
         }
-    }
+    }*/
 }

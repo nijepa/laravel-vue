@@ -26,7 +26,7 @@ class CitiesController extends Controller
      */
     public function index()
     {
-        $cities = City::orderBy('name')->with('Country')->paginate(5);//To get the output in array
+        $cities = City::orderBy('name')->with('Country')->paginate(10);//To get the output in array
         /*        ^               ^
          This will get the user | This will get all the Orders related to the user*/
 

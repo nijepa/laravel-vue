@@ -5,10 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-users fa-2x icolor"></i> USERS</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-building fa-2x icolor"></i> COMPANIES</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
-                                Add User <span><i class="fas fa-user-plus"></i></span>
+                                Add Company <span><i class="cap-icon ci-plus"></i></span>
                             </button>
                         </div>
                     </div>
@@ -18,22 +18,8 @@
                             :pageSize.sync="pageSize"
                             @pageSizeChanged="pageSize = Number($event)"
                             @searchChanged="search = $event"
-                    >
-                    </appTableOptions>
-     <!--               <div class="d-flex align-items-center">
-                        <div class="form-group ml-3 mt-3">
-                            <i class="fas fa-search"></i>
-                            <input type="text" class="form-control" v-model="search" placeholder="Search">
-                        </div>
-                        <div class="form-group ml-auto mr-3 mt-3">
-                            <label>Items per page</label>
-                            <select v-model="pageSize" name="type" class="form-control" id="ps">
-                                <option value="5">5</option>
-                                <option value="3">3</option>
-                                <option value="10">10</option>
-                            </select>
-                        </div>
-                    </div>-->
+                    ></appTableOptions>
+
                     <hr>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
@@ -42,45 +28,36 @@
                                     <th @click="sortBy('id')">ID <i v-if="sortKey === 'id'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
                                     <th>Photo</th>
                                     <th @click="sortBy('name')">Name <i v-if="sortKey === 'name'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-                                    <th @click="sortBy('email')">Email <i v-if="sortKey === 'email'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-                                    <th @click="sortBy('type')">Type <i v-if="sortKey === 'type'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
+                                    <th @click="sortBy('short_desc')">Description <i v-if="sortKey === 'short_desc'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
+                                    <th @click="sortBy('website')">Web Site <i v-if="sortKey === 'website'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
                                     <th @click="sortBy('created_at')">Created At <i v-if="sortKey === 'created_at'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
                                     <th>Modify</th>
                                 </tr>
                             </thead>
-                            <tbody>
-<!--                            <tr v-for="user in users.users.data" :key="user.id">-->
-                            <tr v-for="user in usersSorted" :key="user.id">
-                                <td>{{ user.id }}</td>
-                                <td><img :src="'img/profile/'+user.photo" alt="" style="height: 50px"></td>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.email }}</td>
-                                <td><span class="tag tag-success">{{ user.type | upText }}</span></td>
-                                <td>{{ user.created_at | customDate }}</td>
-                                <td>
-                                    <button @click="editModal(user)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
-                                        <i class="fas fa-user-edit"></i>
-                                    </button>
-                                    /
-                                    <button  @click="deleteUser(user)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
-                                        <i class="fas fa-user-minus"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                                <tbody>
+                                <tr v-for="rep in repsSorted" :key="rep.id">
+                                    <td>{{ rep.id }}</td>
+                                    <td><img :src="'img/companies/'+rep.logo_small_id" alt="" style="max-width:100%; max-height:100%"></td>
+                                    <td>{{ rep.name }}</td>
+                                    <td>{{ rep.short_desc }}</td>
+                                    <td><span class="tag tag-success">{{ rep.website | upText }}</span></td>
+                                    <td>{{ rep.created_at | customDate }}</td>
+                                    <td>
+                                        <button @click="editModal(rep)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Company">
+                                            <i class="cap-icon ci-file-edit"></i>
+                                        </button>
+                                        /
+                                        <button  @click="deleteRep(rep)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete Company">
+                                            <i class="cap-icon ci-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- /.card-body -->
                     <div class="card-footer">
-        <!--                <div>
-                            <button @click="prevPage" class="float-left btn btn-outline-info btn-sm"><i class="fas fa-arrow-left"></i> Previous</button>
-                            <button @click="nextPage" class="float-right btn btn-outline-info btn-sm">Next <i class="fas fa-arrow-right"></i></button>
-                        </div>-->
-<!--                        <pagination :data="users.users" @pagination-change-page="getResults">-->
-<!--                            <span slot="prev-nav">&lt; Previous</span>-->
-<!--                            <span slot="next-nav">Next &gt;</span>-->
-<!--                        </pagination>-->
                         <appPagination
                                 :maxVisibleButtons="totalPages"
                                 :total-pages="totalPages"
@@ -99,16 +76,16 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header" v-if="editMode ? classes='edit' : classes='add'" :class="classes">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="fas fa-user-plus icolor"></i> ADD NEW USER</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="fas fa-user-edit icolor"></i> UPDATE USER</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="cap-icon ci-plus icolor"></i> ADD NEW COMPANY</h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="cap-icon ci-file-edit icolor"></i> UPDATE COMPANY</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div><!-- /.modal-header -->
-                        <form @submit.prevent="editMode ? updateUser() : createUser()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? updateRep() : createRep()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div  class="form-group">
-                                    <img :src="'img/profile/'+form.photo" alt="" style="height: 50px" alt="User Avatar">
+                                    <img :src="'img/companies/'+form.logo_small_id" alt="" style="max-height: 100%; max-width:100%" alt="User Avatar">
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Name</label>
@@ -117,27 +94,60 @@
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input v-model="form.email" id="email" type="email" name="email" placeholder="Email"
+                                    <label for="email">Short Description</label>
+                                    <input v-model="form.short_desc" id="short_desc" type="text" name="short_desc" placeholder="Short Description"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('short_desc') }">
+                                    <has-error :form="form" field="short_desc"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Description</label>
+                                    <textarea v-model="form.description" id="description" rows="3" name="description" placeholder="Description"
+                                              class="form-control" :class="{ 'is-invalid': form.errors.has('short_desc') }"></textarea>
+                                    <has-error :form="form" field="description"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input v-model="form.address" id="address" type="text" name="address" placeholder="Address"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('address') }">
+                                    <has-error :form="form" field="address"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input v-model="form.phone" id="phone" type="text" name="phone" placeholder="Phone"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('phone') }">
+                                    <has-error :form="form" field="phone"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Mobile</label>
+                                    <input v-model="form.mobile" id="mobile" type="text" name="mobile" placeholder="Mobile"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('mobile') }">
+                                    <has-error :form="form" field="mobile"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Email</label>
+                                    <input v-model="form.email" id="email" type="email" name="email" placeholder="E-mail"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
                                     <has-error :form="form" field="email"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pass">Password</label>
-                                    <input v-model="form.password" id="pass" type="password" name="password" placeholder="Password"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
-                                    <has-error :form="form" field="password"></has-error>
+                                    <label for="phone">Website</label>
+                                    <input v-model="form.website" id="website" type="text" name="website" placeholder="Website"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('website') }">
+                                    <has-error :form="form" field="website"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label for="bio">Short bio for user (optional)</label>
-                                    <input v-model="form.bio" id="bio" type="text" name="bio" placeholder="Short bio for user (optional)"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
-                                    <has-error :form="form" field="bio"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="photo" class="col-sm-2 control-label">Photo</label>
+                                    <label for="logo_small_id" class="col-sm-2 control-label">Small Logo</label>
                                     <div class="col-sm-12">
-                                        <input type="file" @change="updatePhoto" name="photo" class="form-input" id="photo">
+                                        <input type="file" @change="updatePhoto" name="logo_small_id" class="form-input" id="logo_small_id">
+                                    </div>
+                                </div>
+                                <div  class="form-group">
+                                    <img :src="'img/companies/'+form.photo_id" alt="" style="max-height: 100%; max-width:100%" alt="User Avatar">
+                                </div>
+                                <div class="form-group">
+                                    <label for="logo_id" class="col-sm-2 control-label">Photo</label>
+                                    <div class="col-sm-12">
+                                        <input type="file" @change="updatePhoto" name="logo_id" class="form-input" id="logo_id">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -178,7 +188,7 @@
 
     export default {
 
-        name: "Users",
+        name: "Reps",
 
         components: {
             appPagination: Paginations,
@@ -187,25 +197,30 @@
 
         data() {
             return {
-                users: [],
+                representations: [],
 
                 sortKey: ['name'],
                 sortOrder: ['asc'],
                 currentPage: 1,
-                pageSize: 3,
+                pageSize: 5,
                 totalPages: 1,
                 search: '',
-                columns: ['name', 'email'],
+                columns: ['name', 'short_desc'],
                 sorting: 'name',
 
                 form: new Form({
                     id: '',
                     name: '',
+                    short_desc: '',
+                    description: '',
+                    address: '',
+                    phone: '',
+                    mobile: '',
                     email: '',
-                    password: '',
-                    type: '',
-                    bio: '',
-                    photo: ''
+                    website: '',
+                    photo_id: '',
+                    logo_id: '',
+                    logo_small_id: ''
                 }),
 
                 editMode: true,
@@ -215,10 +230,10 @@
 
         computed: {
 
-            ...mapGetters(['allUsers']),
+            ...mapGetters(['allReps']),
 
-            usersSorted: function() {
-                let result = this.users.users;
+            repsSorted: function() {
+                let result = this.representations.reps;
                 //this.totalPages = Math.ceil(result.length / this.pageSize);
                 if (this.search) {
                     result = result.filter(item => item.name.toLowerCase().includes(this.search));
@@ -236,12 +251,9 @@
 
         methods: {
 
-            ...mapActions(['fetchUsers',
-                'fetchUsersP',
-                'fetchUsersS',
-                'addUser',
-                'renewUser',
-                'removeUser']),
+            ...mapActions(['fetchReps',
+                'fetchRepsP',
+                'fetchRepsS']),
 
             onPageChange(page) {
                 console.log(page);
@@ -257,38 +269,11 @@
                 }
             },
 
-/*            nextPage:function() {
-                if((this.currentPage*this.pageSize) < this.users.users.length) this.currentPage++;
-            },
-            prevPage:function() {
-                if(this.currentPage > 1) this.currentPage--;
-            },
-
-            sorti:function(s) {
-                if(s === this.currentSort) {
-                    this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
-                }
-                this.currentSort = s;
-            },*/
-
-            loadUsers() {
+            loadReps() {
                 if(this.$gate.isAdmin()) {
-                    /*              axios.get("api/user")
-                                      .then(({ data }) => (this.users = data))
-                                      .catch();*/
-                    this.fetchUsers();
-                    this.users = this.$store.state.users;
+                    this.fetchReps();
+                    this.representations = this.$store.state.representations;
                 }
-            },
-
-            getResults(page = 1) {
-                this.fetchUsersP(page);
-                this.users = this.$store.state.users;
-        /*        axios.get('api/user?page=' + page)
-                    .then(response => {
-                        console.log(response.data);
-                        this.users = response.data;
-                    });*/
             },
 
             newModal() {
@@ -297,38 +282,38 @@
                 $('#addNew').modal('show');
             },
 
-            editModal(user) {
+            editModal(rep) {
                 this.editMode = true;
                 $('#addNew').modal('show');
-                this.form.fill(user);
+                this.form.fill(rep);
             },
 
-            createUser() {
+            createRep() {
                 this.$Progress.start();
                 //this.addUser(this.form);
-                 this.form.post('api/user')
-                     .then(({ data }) => {
+                this.form.post('api/representation')
+                    .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'User added successfully'
+                            title: 'Company added successfully'
                         });
                         this.$Progress.finish();
-                     })
-                     .catch(() => {})
+                    })
+                    .catch(() => {})
             },
 
-            updateUser(id) {
+            updateRep(id) {
                 this.$Progress.start();
                 //this.renewUser(this.form);
-                this.form.put('api/user/'+this.form.id)
+                this.form.put('api/representation/'+this.form.id)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'User updated successfully'
+                            title: 'Company updated successfully'
                         });
                         this.$Progress.finish();
 
@@ -338,7 +323,7 @@
                     })
             },
 
-            deleteUser(user){
+            deleteRep(rep){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -351,26 +336,22 @@
                     // Send request to the server
                     if (result.value) {
                         //this.removeUser(user);
-                        this.form.delete('api/user/'+user.id).then(()=>{
+                        this.form.delete('api/representation/'+rep.id).then(()=>{
                             swal.fire(
                                 'Deleted!',
-                                'User has been deleted.',
+                                'Company has been deleted.',
                                 'success'
                             );
                             Fire.$emit('AfterCreate');
-                         }).catch(()=> {
-                             swal("Failed!", "There was something wrong.", "warning");
-                         });
+                        }).catch(()=> {
+                            swal("Failed!", "There was something wrong.", "warning");
+                        });
                     } else {
                         console.log('error');
                     }
                 })
             },
 
-            getProfilePhoto() {
-                let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
-                return photo;
-            },
 
             updatePhoto(e){
                 let file = e.target.files[0];
@@ -394,21 +375,21 @@
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                this.fetchUsersS(query);
-        /*        axios.get('api/findUser?q=' + query)
-                    .then((data) => {
-                        console.log(data);
-                        this.users = data.data
-                    })
-                    .catch(() => {
+                this.fetchRepsS(query);
+                /*        axios.get('api/findUser?q=' + query)
+                            .then((data) => {
+                                console.log(data);
+                                this.users = data.data
+                            })
+                            .catch(() => {
 
-                    })*/
+                            })*/
             });
             // this.fetchUsers();
             // this.users = this.$store.state.users;
-            this.loadUsers();
+            this.loadReps();
             Fire.$on('AfterCreate', () => {
-                this.loadUsers();
+                this.loadReps();
             });
         }
     }

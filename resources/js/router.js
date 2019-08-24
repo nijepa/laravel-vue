@@ -33,6 +33,7 @@ export default new Router({
         {path: '/products', component: () => import('./components/Products.vue')},
         {path: '/contacts', component: () => import('./components/Contacts.vue')},
         {path: '/abouts', component: () => import('./components/Abouts.vue')},
+        {path: '/reps', component: () => import('./components/back/Reps.vue')},
         {path: '*', component: () => import('./components/NotFound.vue')}
     ]
 })

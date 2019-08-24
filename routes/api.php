@@ -38,6 +38,7 @@ Route::apiResources(['country' => 'API\CountriesController']);
 Route::apiResources(['product' => 'API\ProductsController']);
 Route::apiResources(['contact' => 'API\ContactsController']);
 Route::apiResources(['about' => 'API\AboutsController']);
+Route::apiResources(['reps' => 'API\RepresentationsController']);
 
 Route::get('profile', 'API\UserController@profile');
 Route::put('profile', 'API\UserController@updateProfile');

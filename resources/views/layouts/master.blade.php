@@ -225,7 +225,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </router-link>
                                 </li>
                                 <li class="nav-item">
-                                    <router-link to="/representations" class="nav-link">
+                                    <router-link to="/reps" class="nav-link">
                                         <i class="fas fa-hands-helping nav-icon text-purp"></i>
                                         <p>Representations</p>
                                     </router-link>
