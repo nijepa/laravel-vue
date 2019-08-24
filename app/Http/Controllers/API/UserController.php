@@ -107,8 +107,9 @@ class UserController extends Controller
             'password' => 'sometimes|min:6',
             'type' => 'required',
         ]);
+
         $name = $this->savePhoto($request, 'profile', 'photo', $user );
-        //dd($name);
+
         $request->merge(['photo' => $name]);
         //$this->savePhoto($request, $user);
         /*$currentPhoto = $user->photo;

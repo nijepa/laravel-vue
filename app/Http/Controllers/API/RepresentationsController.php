@@ -5,10 +5,23 @@ namespace App\Http\Controllers\API;
 use App\Representation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\StoreImageTrait;
 use Illuminate\Support\Facades\DB;
 
 class RepresentationsController extends Controller
 {
+    use StoreImageTrait;
+
+    /**
+     * RepresentationsController constructor.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +29,7 @@ class RepresentationsController extends Controller
      */
     public function index()
     {
-        $reps = Representation::orderBy('name')->get();//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
+        $reps = Representation::orderBy('name')->get();
 
         return response()->json($reps);
     }
@@ -31,7 +42,31 @@ class RepresentationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $this->validate($request, [
+            'name' => 'required|string|max:191'
+        ]);
+
+        $name = $this->savePhoto($request,'companies', 'logo_small_id');
+
+        $request->merge(['logo_small_id' => $name]);
+
+        return Representation::create([
+            'name' => $request['name'],
+            'category_id' => $request['category_id'],
+            'short_desc' => $request['short_desc'],
+            'description' => $request['description'],
+            'address' => $request['address'],
+            'city_id' => $request['city_id'],
+            'phone' => $request['phone'],
+            'mobile' => $request['mobile'],
+            'email' => $request['email'],
+            'website' => $request['password'],
+            'photo_id' => $request['photo_id'],
+            'logo_id' => $request['logo_id'],
+            'logo_small_id' => $request['logo_small_id']
+        ]);
     }
 
     /**
@@ -56,7 +91,20 @@ class RepresentationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $rep = Representation::findOrFail($id);
+
+        $this->validate($request, [
+            'name' => 'required|string|max:191'
+        ]);
+
+        $name = $this->savePhoto($request, 'companies', 'logo_id', $rep );
+        $request->merge(['logo_id' => $name]);
+
+        $rep->update($request->all());
+
+        return ['rep' => $rep];
     }
 
     /**
@@ -67,7 +115,13 @@ class RepresentationsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $rep = Representation::findOrFail($id);
+
+        $rep->delete();
+
+        return ['message' => 'Company deleted'];
     }
 
     /**
@@ -78,9 +132,7 @@ class RepresentationsController extends Controller
      */
     public function reps($id)
     {
-        //dd($request);
         $rep = Representation::findOrFail($id);
-        //$rep = Representation::where('id', $id)->get();//To get the output in array
 
         return response()->json($rep);
     }

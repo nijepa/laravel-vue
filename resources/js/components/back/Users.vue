@@ -107,8 +107,8 @@
                         </div><!-- /.modal-header -->
                         <form @submit.prevent="editMode ? updateUser() : createUser()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
-                                <div  class="form-group">
-                                    <img :src="'img/profile/'+form.photo" alt="" style="height: 50px" alt="User Avatar">
+                                <div class="form-group">
+                                    <img :src="'img/profile/'+form.photo" style="height: 50px" alt="User Avatar">
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Name</label>
@@ -134,8 +134,12 @@
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
                                     <has-error :form="form" field="bio"></has-error>
                                 </div>
+<!--                                <appUploadFiles :form="form.photo"></appUploadFiles>-->
                                 <div class="form-group">
-                                    <label for="photo" class="col-sm-2 control-label">Photo</label>
+                                    <label for="photo" >Photo</label>
+                                    <div class="col-md-2">
+                                        <img :src="image" class="img-responsive" style="max-height: 100%; max-width:100%">
+                                    </div>
                                     <div class="col-sm-12">
                                         <input type="file" @change="updatePhoto" name="photo" class="form-input" id="photo">
                                     </div>
@@ -175,6 +179,8 @@
     import { mapGetters, mapActions } from 'vuex';
     import Paginations from '../shared/Paginations';
     import TableOptions from '../shared/TableOptions';
+    //import UploadFiles from '../shared/UploadFiles';
+    import updatePhoto from '../../mixins/updatePhoto';
 
     export default {
 
@@ -182,8 +188,11 @@
 
         components: {
             appPagination: Paginations,
-            appTableOptions: TableOptions
+            appTableOptions: TableOptions,
+            //appUploadFiles: UploadFiles
         },
+
+        mixins: [updatePhoto],
 
         data() {
             return {
@@ -207,7 +216,7 @@
                     bio: '',
                     photo: ''
                 }),
-
+                image: '',
                 editMode: true,
                 classes: ''
             }
@@ -255,6 +264,13 @@
                     this.sortKey = key;
                     this.sortOrder = 'asc';
                 }
+            },
+
+            fillPhoto(file, reader) {
+                reader.onloadend = (file) => {
+                    this.form.photo = reader.result;
+                };
+                reader.readAsDataURL(file);
             },
 
 /*            nextPage:function() {
@@ -321,6 +337,7 @@
 
             updateUser(id) {
                 this.$Progress.start();
+                console.log(this.form.name);
                 //this.renewUser(this.form);
                 this.form.put('api/user/'+this.form.id)
                     .then(() => {
@@ -372,23 +389,44 @@
                 return photo;
             },
 
-            updatePhoto(e){
+           /* updatePhoto(e){
                 let file = e.target.files[0];
+                console.log(file);
                 let reader = new FileReader();
                 let limit = 1024 * 1024 * 2;
+                let type = ['image/jpeg','image/png','image/jpg','image/gif','image/svg'];
+                console.log(limit);
+                console.log(file['size']);
                 if(file['size'] > limit){
-                    swal({
+                    swal.fire({
                         type: 'error',
                         title: 'Oops...',
                         text: 'You are uploading a large file',
                     });
+
                     return false;
                 }
+                console.log(file['type']);
+                if(!type.includes(file['type'])){
+                    swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You need to upload image file',
+                    });
+
+                    return false;
+                }
+
+                let vm = this;
+                reader.onload = (e) => {
+                    vm.image = e.target.result;
+                };
+                // reader.readAsDataURL(file);
                 reader.onloadend = (file) => {
                     this.form.photo = reader.result;
                 };
                 reader.readAsDataURL(file);
-            },
+            },*/
         },
 
         created() {

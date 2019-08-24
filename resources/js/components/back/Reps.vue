@@ -352,7 +352,6 @@
                 })
             },
 
-
             updatePhoto(e){
                 let file = e.target.files[0];
                 let reader = new FileReader();
