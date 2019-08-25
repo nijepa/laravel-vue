@@ -28,11 +28,6 @@ export default
                 return false;
             }
 
-            let vm = this;
-            reader.onload = (e) => {
-                vm.image = e.target.result;
-            };
-
             this.fillPhoto(file, reader)
         },
     }

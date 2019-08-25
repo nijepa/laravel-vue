@@ -85,7 +85,7 @@
                         <form @submit.prevent="editMode ? updateRep() : createRep()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div  class="form-group">
-                                    <img :src="'img/companies/'+form.logo_small_id" alt="" style="max-height: 100%; max-width:100%" alt="User Avatar">
+                                    <img :src="'img/companies/'+form.logo_small_id" style="max-height: 100%; max-width:100%" alt="User Avatar">
                                 </div>
                                 <div class="form-group">
                                     <label for="name">Name</label>
@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                                 <div  class="form-group">
-                                    <img :src="'img/companies/'+form.photo_id" alt="" style="max-height: 100%; max-width:100%" alt="User Avatar">
+                                    <img :src="'img/companies/'+form.photo_id" style="max-height: 100%; max-width:100%" alt="User Avatar">
                                 </div>
                                 <div class="form-group">
                                     <label for="logo_id" class="col-sm-2 control-label">Photo</label>

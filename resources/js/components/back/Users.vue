@@ -18,8 +18,7 @@
                             :pageSize.sync="pageSize"
                             @pageSizeChanged="pageSize = Number($event)"
                             @searchChanged="search = $event"
-                    >
-                    </appTableOptions>
+                    ></appTableOptions>
      <!--               <div class="d-flex align-items-center">
                         <div class="form-group ml-3 mt-3">
                             <i class="fas fa-search"></i>
@@ -134,8 +133,12 @@
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
                                     <has-error :form="form" field="bio"></has-error>
                                 </div>
-<!--                                <appUploadFiles :form="form.photo"></appUploadFiles>-->
-                                <div class="form-group">
+                                <appUploadFiles
+                                        :forma="'photo'"
+                                        :imgsrc="image"
+                                        @onimageload="OnImageLoad">
+                                </appUploadFiles>
+                 <!--               <div class="form-group">
                                     <label for="photo" >Photo</label>
                                     <div class="col-md-2">
                                         <img :src="image" class="img-responsive" style="max-height: 100%; max-width:100%">
@@ -143,7 +146,7 @@
                                     <div class="col-sm-12">
                                         <input type="file" @change="updatePhoto" name="photo" class="form-input" id="photo">
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="type">User role</label>
                                     <select v-model="form.type" name="type" id="type"
@@ -179,7 +182,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import Paginations from '../shared/Paginations';
     import TableOptions from '../shared/TableOptions';
-    //import UploadFiles from '../shared/UploadFiles';
+    import UploadFiles from '../shared/UploadFiles';
     import updatePhoto from '../../mixins/updatePhoto';
 
     export default {
@@ -189,10 +192,10 @@
         components: {
             appPagination: Paginations,
             appTableOptions: TableOptions,
-            //appUploadFiles: UploadFiles
+            appUploadFiles: UploadFiles
         },
 
-        mixins: [updatePhoto],
+        //mixins: [updatePhoto],
 
         data() {
             return {
@@ -217,6 +220,7 @@
                     photo: ''
                 }),
                 image: '',
+                phot: '',
                 editMode: true,
                 classes: ''
             }
@@ -257,6 +261,13 @@
                 this.currentPage = page;
             },
 
+            OnImageLoad(imgName, forma) {
+                    console.log(imgName);
+                console.log(forma);
+
+                   this.form[forma] = imgName;
+
+            },
             sortBy: function(key) {
                 if (key === this.sortKey) {
                     this.sortOrder = (this.sortOrder === 'asc') ? 'desc' : 'asc';
@@ -267,6 +278,12 @@
             },
 
             fillPhoto(file, reader) {
+                let vm = this;
+
+                reader.onload = (e) => {
+                    vm.image = e.target.result;
+                };
+
                 reader.onloadend = (file) => {
                     this.form.photo = reader.result;
                 };
@@ -337,7 +354,6 @@
 
             updateUser(id) {
                 this.$Progress.start();
-                console.log(this.form.name);
                 //this.renewUser(this.form);
                 this.form.put('api/user/'+this.form.id)
                     .then(() => {
