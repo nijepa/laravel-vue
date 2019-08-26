@@ -19,12 +19,16 @@ class Representation extends Model
         'name',
         'email',
         'address',
+        'phone',
+        'mobile',
         'website',
         'short_desc',
         'description',
         'photo_id',
         'logo_id',
-        'logo_small_id'
+        'logo_small_id',
+        'city_id',
+        'category_id'
     ];
 
     /**
@@ -35,6 +39,16 @@ class Representation extends Model
     public function repdets()
     {
         return $this->hasMany(RepDet::class);
+    }
+
+    /**
+     * Relationship to city
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 
 }

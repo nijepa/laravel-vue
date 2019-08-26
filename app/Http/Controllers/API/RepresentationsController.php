@@ -19,7 +19,7 @@ class RepresentationsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
+        //$this->middleware('auth:api');
     }
 
     /**
@@ -29,7 +29,7 @@ class RepresentationsController extends Controller
      */
     public function index()
     {
-        $reps = Representation::orderBy('name')->get();
+        $reps = Representation::orderBy('name')->with('City')->get();
 
         return response()->json($reps);
     }
@@ -91,7 +91,7 @@ class RepresentationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('isAdmin');
+        //$this->authorize('isAdmin');
 
         $rep = Representation::findOrFail($id);
 
@@ -99,8 +99,20 @@ class RepresentationsController extends Controller
             'name' => 'required|string|max:191'
         ]);
 
-        $name = $this->savePhoto($request, 'companies', 'logo_id', $rep );
-        $request->merge(['logo_id' => $name]);
+        if ($request->logo_id !== null && strlen($request->logo_id) > 1000){
+            $name = $this->savePhoto($request, 'companies', 'logo_id', $rep);
+            $request->merge(['logo_id' => $name]);
+        }
+
+        if ($request->logo_small_id !== null && strlen($request->logo_small_id) > 1000) {
+            $name = $this->savePhoto($request, 'companies/logosSmall', 'logo_small_id', $rep);
+            $request->merge(['logo_small_id' => $name]);
+        }
+
+        if ($request->photo_id !== null && strlen($request->photo_id) > 1000) {
+            $name = $this->savePhoto($request, 'companies', 'photo_id', $rep);
+            $request->merge(['photo_id' => $name]);
+        }
 
         $rep->update($request->all());
 

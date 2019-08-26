@@ -7,8 +7,8 @@
         <div class="form-group ml-auto mr-3 mt-3">
             <label for="ps">Items per page</label>
             <select v-model="pageSize" @change="changePageSize()" name="type" class="form-control" id="ps">
-                <option value="5">2</option>
                 <option value="3">3</option>
+                <option value="5">5</option>
                 <option value="10">10</option>
             </select>
         </div>

@@ -14,11 +14,11 @@
                     </div>
                     <!-- /.card-header -->
                     <appTableOptions
-                            :search.sync="search"
-                            :pageSize.sync="pageSize"
-                            @pageSizeChanged="pageSize = Number($event)"
-                            @searchChanged="search = $event"
-                    ></appTableOptions>
+                        :search.sync="search"
+                        :pageSize.sync="pageSize"
+                        @pageSizeChanged="pageSize = Number($event)"
+                        @searchChanged="search = $event">
+                    </appTableOptions>
      <!--               <div class="d-flex align-items-center">
                         <div class="form-group ml-3 mt-3">
                             <i class="fas fa-search"></i>
@@ -81,13 +81,13 @@
 <!--                            <span slot="next-nav">Next &gt;</span>-->
 <!--                        </pagination>-->
                         <appPagination
-                                :maxVisibleButtons="totalPages"
-                                :total-pages="totalPages"
-                                :total="totalPages"
-                                :per-page="3"
-                                :current-page="currentPage"
-                                @pagechanged="onPageChange"
-                        ></appPagination>
+                            :maxVisibleButtons="totalPages"
+                            :total-pages="totalPages"
+                            :total="totalPages"
+                            :per-page="3"
+                            :current-page="currentPage"
+                            @pagechanged="onPageChange">
+                        </appPagination>
                     </div>
                 </div>
                 <!-- /.card -->
@@ -106,9 +106,17 @@
                         </div><!-- /.modal-header -->
                         <form @submit.prevent="editMode ? updateUser() : createUser()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
-                                <div class="form-group">
+                                <appUploadFiles
+                                        :title="'User photo'"
+                                        :fieldname="'photo'"
+                                        :imgsrc="image"
+                                        :imgplace="'image'"
+                                        @onimageselect="OnImageSelect"
+                                        @onimageload="OnImageLoad">
+                                </appUploadFiles>
+         <!--                       <div class="form-group">
                                     <img :src="'img/profile/'+form.photo" style="height: 50px" alt="User Avatar">
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input v-model="form.name" id="name" type="text" name="name" placeholder="Name"
@@ -133,11 +141,7 @@
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
                                     <has-error :form="form" field="bio"></has-error>
                                 </div>
-                                <appUploadFiles
-                                        :forma="'photo'"
-                                        :imgsrc="image"
-                                        @onimageload="OnImageLoad">
-                                </appUploadFiles>
+
                  <!--               <div class="form-group">
                                     <label for="photo" >Photo</label>
                                     <div class="col-md-2">
@@ -207,8 +211,6 @@
                 pageSize: 3,
                 totalPages: 1,
                 search: '',
-                columns: ['name', 'email'],
-                sorting: 'name',
 
                 form: new Form({
                     id: '',
@@ -219,8 +221,8 @@
                     bio: '',
                     photo: ''
                 }),
+
                 image: '',
-                phot: '',
                 editMode: true,
                 classes: ''
             }
@@ -235,6 +237,7 @@
                 //this.totalPages = Math.ceil(result.length / this.pageSize);
                 if (this.search) {
                     result = result.filter(item => item.name.toLowerCase().includes(this.search));
+                    this.currentPage = 1;
                 }
                 result =  _.orderBy(result, this.sortKey, this.sortOrder);
 
@@ -243,6 +246,7 @@
                     let start = (this.currentPage - 1) * this.pageSize;
                     let end = this.currentPage * this.pageSize;
                     if (index >= start && index < end) return true;
+                    this.currentPage = 1;
                 });
             },
         },
@@ -261,13 +265,14 @@
                 this.currentPage = page;
             },
 
-            OnImageLoad(imgName, forma) {
-                    console.log(imgName);
-                console.log(forma);
-
-                   this.form[forma] = imgName;
-
+            OnImageSelect(imgSelected, fieldname) {
+                this[fieldname] = imgSelected;
             },
+
+            OnImageLoad(imgName, fieldname) {
+                this.form[fieldname] = imgName;
+            },
+
             sortBy: function(key) {
                 if (key === this.sortKey) {
                     this.sortOrder = (this.sortOrder === 'asc') ? 'desc' : 'asc';
@@ -277,7 +282,7 @@
                 }
             },
 
-            fillPhoto(file, reader) {
+/*            fillPhoto(file, reader) {
                 let vm = this;
 
                 reader.onload = (e) => {
@@ -288,7 +293,7 @@
                     this.form.photo = reader.result;
                 };
                 reader.readAsDataURL(file);
-            },
+            },*/
 
 /*            nextPage:function() {
                 if((this.currentPage*this.pageSize) < this.users.users.length) this.currentPage++;
@@ -314,15 +319,15 @@
                 }
             },
 
-            getResults(page = 1) {
+/*            getResults(page = 1) {
                 this.fetchUsersP(page);
                 this.users = this.$store.state.users;
-        /*        axios.get('api/user?page=' + page)
+        /!*        axios.get('api/user?page=' + page)
                     .then(response => {
                         console.log(response.data);
                         this.users = response.data;
-                    });*/
-            },
+                    });*!/
+            },*/
 
             newModal() {
                 this.editMode = false;
@@ -334,6 +339,7 @@
                 this.editMode = true;
                 $('#addNew').modal('show');
                 this.form.fill(user);
+                this.image = 'img/profile/'+this.form.photo;
             },
 
             createUser() {
@@ -355,6 +361,7 @@
             updateUser(id) {
                 this.$Progress.start();
                 //this.renewUser(this.form);
+
                 this.form.put('api/user/'+this.form.id)
                     .then(() => {
                         Fire.$emit('AfterCreate');
@@ -400,10 +407,10 @@
                 })
             },
 
-            getProfilePhoto() {
+/*            getProfilePhoto() {
                 let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
                 return photo;
-            },
+            },*/
 
            /* updatePhoto(e){
                 let file = e.target.files[0];

@@ -27,9 +27,9 @@
                                 <tr>
                                     <th @click="sortBy('id')">ID <i v-if="sortKey === 'id'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
                                     <th>Photo</th>
-                                    <th @click="sortBy('name')">Name <i v-if="sortKey === 'name'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
+                                    <th @click="sortBy('name')">Name / Site <i v-if="sortKey === 'name'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
                                     <th @click="sortBy('short_desc')">Description <i v-if="sortKey === 'short_desc'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-                                    <th @click="sortBy('website')">Web Site <i v-if="sortKey === 'website'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
+<!--                                    <th @click="sortBy('website')">Web Site <i v-if="sortKey === 'website'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>-->
                                     <th @click="sortBy('created_at')">Created At <i v-if="sortKey === 'created_at'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
                                     <th>Modify</th>
                                 </tr>
@@ -37,10 +37,10 @@
                                 <tbody>
                                 <tr v-for="rep in repsSorted" :key="rep.id">
                                     <td>{{ rep.id }}</td>
-                                    <td><img :src="'img/companies/'+rep.logo_small_id" alt="" style="max-width:100%; max-height:100%"></td>
-                                    <td>{{ rep.name }}</td>
+                                    <td><img :src="'img/companies/logosSmall/'+rep.logo_small_id" alt="" style="max-width:100%; max-height:100%"></td>
+                                    <td><a :href="rep.website" data-toggle="tooltip" :title="rep.website">{{ rep.name }}</a></td>
                                     <td>{{ rep.short_desc }}</td>
-                                    <td><span class="tag tag-success">{{ rep.website | upText }}</span></td>
+<!--                                    <td><span class="tag tag-success">{{ rep.website | upText }}</span></td>-->
                                     <td>{{ rep.created_at | customDate }}</td>
                                     <td>
                                         <button @click="editModal(rep)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Company">
@@ -84,9 +84,17 @@
                         </div><!-- /.modal-header -->
                         <form @submit.prevent="editMode ? updateRep() : createRep()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
-                                <div  class="form-group">
-                                    <img :src="'img/companies/'+form.logo_small_id" style="max-height: 100%; max-width:100%" alt="User Avatar">
-                                </div>
+                                <appUploadFiles
+                                        :title="'Logo (small)'"
+                                        :fieldname="'logo_small_id'"
+                                        :imgsrc="logoSmall"
+                                        :imgplace="'logoSmall'"
+                                        @onimageselect="OnImageSelect"
+                                        @onimageload="OnImageLoad">
+                                </appUploadFiles>
+                    <!--            <div  class="form-group">
+                                    <img :src="'img/companies/'+form.logo_small_id" style="max-height: 100%; max-width:100%" alt="Company Logo">
+                                </div>-->
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input v-model="form.name" id="name" type="text" name="name" placeholder="Name"
@@ -104,6 +112,18 @@
                                     <textarea v-model="form.description" id="description" rows="3" name="description" placeholder="Description"
                                               class="form-control" :class="{ 'is-invalid': form.errors.has('short_desc') }"></textarea>
                                     <has-error :form="form" field="description"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city_id">City</label>
+                                    <select v-model="form.city_id" name="city_id" id="city_id"
+                                            class="form-control"
+                                            :class="{ 'is-invalid': form.errors.has('city_id') }">
+                                        <option v-bind:value="co_name.id"
+                                                :key="co_name.id"
+                                                v-for="co_name in cities.cities.data">{{ co_name.name }}
+                                        </option>
+                                    </select>
+                                    <has-error :form="form" field="city_id"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Address</label>
@@ -135,32 +155,41 @@
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('website') }">
                                     <has-error :form="form" field="website"></has-error>
                                 </div>
-                                <div class="form-group">
+                        <!--        <div class="form-group">
                                     <label for="logo_small_id" class="col-sm-2 control-label">Small Logo</label>
                                     <div class="col-sm-12">
                                         <input type="file" @change="updatePhoto" name="logo_small_id" class="form-input" id="logo_small_id">
                                     </div>
-                                </div>
-                                <div  class="form-group">
-                                    <img :src="'img/companies/'+form.photo_id" style="max-height: 100%; max-width:100%" alt="User Avatar">
-                                </div>
-                                <div class="form-group">
+                                </div>-->
+                      <!--          <div  class="form-group">
+                                    <img :src="'img/companies/'+form.photo_id" style="max-height: 100%; max-width:100%" alt="Company photo">
+                                </div>-->
+                                <appUploadFiles
+                                        :title="'Photo'"
+                                        :fieldname="'photo_id'"
+                                        :imgsrc="image"
+                                        :imgplace="'image'"
+                                        @onimageselect="OnImageSelect"
+                                        @onimageload="OnImageLoad">
+                                </appUploadFiles>
+             <!--                   <div class="form-group">
                                     <label for="logo_id" class="col-sm-2 control-label">Photo</label>
                                     <div class="col-sm-12">
                                         <input type="file" @change="updatePhoto" name="logo_id" class="form-input" id="logo_id">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="type">User role</label>
-                                    <select v-model="form.type" name="type" id="type"
-                                            class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
-                                        <option value="">Select user role</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="author">Author</option>
-                                        <option value="user">Standar user</option>
-                                    </select>
-                                    <has-error :form="form" field="type"></has-error>
-                                </div>
+                                </div>-->
+                         <!--       <div  class="form-group">
+                                    <img :src="'img/companies/'+form.logo_id" style="max-height: 100%; max-width:100%" alt="Company logo">
+                                </div>-->
+                                <appUploadFiles
+                                        :title="'Logo'"
+                                        :fieldname="'logo_id'"
+                                        :imgsrc="logo"
+                                        :imgplace="'logo'"
+                                        @onimageselect="OnImageSelect"
+                                        @onimageload="OnImageLoad">
+                                </appUploadFiles>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="cap-icon ci-times"></i></span></button>
@@ -185,6 +214,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import Paginations from '../shared/Paginations';
     import TableOptions from '../shared/TableOptions';
+    import UploadFiles from '../shared/UploadFiles';
 
     export default {
 
@@ -192,12 +222,14 @@
 
         components: {
             appPagination: Paginations,
-            appTableOptions: TableOptions
+            appTableOptions: TableOptions,
+            appUploadFiles: UploadFiles
         },
 
         data() {
             return {
                 representations: [],
+                cities: {},
 
                 sortKey: ['name'],
                 sortOrder: ['asc'],
@@ -218,11 +250,16 @@
                     mobile: '',
                     email: '',
                     website: '',
+                    city_id: '',
+                    category_id: '',
                     photo_id: '',
                     logo_id: '',
                     logo_small_id: ''
                 }),
 
+                logoSmall: '',
+                logo: '',
+                image: '',
                 editMode: true,
                 classes: ''
             }
@@ -230,9 +267,9 @@
 
         computed: {
 
-            ...mapGetters(['allReps']),
+            ...mapGetters(['allReps', 'allCities']),
 
-            repsSorted: function() {
+            repsSorted() {
                 let result = this.representations.reps;
                 //this.totalPages = Math.ceil(result.length / this.pageSize);
                 if (this.search) {
@@ -253,20 +290,29 @@
 
             ...mapActions(['fetchReps',
                 'fetchRepsP',
-                'fetchRepsS']),
+                'fetchRepsS',
+                'fetchCities']),
 
             onPageChange(page) {
                 console.log(page);
                 this.currentPage = page;
             },
 
-            sortBy: function(key) {
+            sortBy(key) {
                 if (key === this.sortKey) {
                     this.sortOrder = (this.sortOrder === 'asc') ? 'desc' : 'asc';
                 } else {
                     this.sortKey = key;
                     this.sortOrder = 'asc';
                 }
+            },
+
+            OnImageSelect(imgSelected, fieldname) {
+                this[fieldname] = imgSelected;
+            },
+
+            OnImageLoad(imgName, fieldname) {
+                this.form[fieldname] = imgName;
             },
 
             loadReps() {
@@ -286,6 +332,9 @@
                 this.editMode = true;
                 $('#addNew').modal('show');
                 this.form.fill(rep);
+                this.logoSmall = 'img/companies/logosSmall/'+this.form.logo_small_id;
+                this.logo = 'img/companies/'+this.form.logo_id;
+                this.image = 'img/companies/'+this.form.photo_id;
             },
 
             createRep() {
@@ -316,7 +365,6 @@
                             title: 'Company updated successfully'
                         });
                         this.$Progress.finish();
-
                     })
                     .catch(() => {
                         this.$Progress.fail();
@@ -387,6 +435,8 @@
             // this.fetchUsers();
             // this.users = this.$store.state.users;
             this.loadReps();
+            this.fetchCities();
+            this.cities = this.$store.state.cities;
             Fire.$on('AfterCreate', () => {
                 this.loadReps();
             });
@@ -396,13 +446,14 @@
 
 <style scoped>
     a {
-        font-weight: normal;
-        color: blue;
+        font-weight: bold;
+        color: #3a68c1;
+        text-decoration: none;
     }
 
-    a.active {
+    a:hover {
         font-weight: bold;
-        color: black;
+        color: #4cb2e9;
     }
 
     td, th {

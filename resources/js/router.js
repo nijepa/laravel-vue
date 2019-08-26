@@ -18,7 +18,7 @@ export default new Router({
         {path: '/representations', component: () => import('./views/front/Representations.vue')},
         {path: '/about', component: () => import('./views/front/About.vue')},
         {path: '/contact', component: () => import('./views/front/Contact.vue')},
-        {path: '/products', component: () => import('./views/front/Product.vue')},
+        {path: '/product', component: () => import('./views/front/Product.vue')},
         {path: '/news', component: () => import('./views/front/News.vue')},
         {path: '/production', component: () => import('./views/front/Production.vue')},
         {path: '/exports', component: () => import('./views/front/Exports.vue')},
@@ -26,13 +26,13 @@ export default new Router({
         //backend routes
         {path: '/home', component: () => import('./components/Dashboard.vue')},
         {path: '/dashboard', component: () => import('./components/Dashboard.vue')},
-        {path: '/profile', component: () => import('./components/Profile.vue')},
+        {path: '/profile', component: () => import('./components/back/Profile.vue')},
         {path: '/users', component: () => import('./views/back/Users.vue')},
-        {path: '/cities', component: () => import('./components/Cities.vue')},
-        {path: '/countries', component: () => import('./components/Countries.vue')},
-        {path: '/products', component: () => import('./components/Products.vue')},
-        {path: '/contacts', component: () => import('./components/Contacts.vue')},
-        {path: '/abouts', component: () => import('./components/Abouts.vue')},
+        {path: '/cities', component: () => import('./components/back/Cities.vue')},
+        {path: '/countries', component: () => import('./components/back/Countries.vue')},
+        {path: '/products', component: () => import('./components/back/Products.vue')},
+        {path: '/contacts', component: () => import('./components/back/Contacts.vue')},
+        {path: '/abouts', component: () => import('./components/back/Abouts.vue')},
         {path: '/reps', component: () => import('./components/back/Reps.vue')},
         {path: '*', component: () => import('./components/NotFound.vue')}
     ]

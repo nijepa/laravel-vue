@@ -16,7 +16,7 @@
                     <router-link to="/about" activeClass="active" tag="li" class="nav-item nav-link">O Nama</router-link>
                     <router-link to="/representations" activeClass="active" tag="li" class="nav-item nav-link">Zastupanja</router-link>
                     <router-link to="/news" activeClass="active" tag="li" class="nav-item nav-link">Vesti</router-link>
-                    <router-link to="/products" activeClass="active" tag="li" class="nav-item nav-link">Proizvodi</router-link>
+                    <router-link to="/product" activeClass="active" tag="li" class="nav-item nav-link">Proizvodi</router-link>
                     <router-link to="/contact" activeClass="active" tag="li" class="nav-item nav-link">Kontakt</router-link>
                 </ul>
             </div>

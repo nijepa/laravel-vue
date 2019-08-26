@@ -108,9 +108,10 @@ class UserController extends Controller
             'type' => 'required',
         ]);
 
-        $name = $this->savePhoto($request, 'profile', 'photo', $user );
-
-        $request->merge(['photo' => $name]);
+        if ($request->photo !== null && strlen($request->photo) > 1000) {
+            $name = $this->savePhoto($request, 'profile', 'photo', $user);
+            $request->merge(['photo' => $name]);
+        }
         //$this->savePhoto($request, $user);
         /*$currentPhoto = $user->photo;
 

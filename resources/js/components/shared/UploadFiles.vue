@@ -1,10 +1,10 @@
 <template>
-    <div class="form-group">
-        <label for="photo" >Photo</label>
-        <div class="col-md-2">
-            <img :src="imgsrc" class="img-responsive" style="max-height: 100%; max-width:100%">
+    <div class="form-group row">
+        <label class="col-3" for="photo">{{ title }}</label>
+        <div class="col-3 inline-block">
+            <img :src="imgsrc" class="img-responsive" alt="" style="max-height: 100%; max-width:100%">
         </div>
-        <div class="col-sm-10">
+        <div class="col-6 inline-block">
             <input type="file" @change="updatePhoto" name="photo" class="form-input" id="photo">
         </div>
     </div>
@@ -21,14 +21,25 @@
         },
 
         props: {
-            forma: {
+            title: {
                 type: String,
                 required: true
             },
+
+            fieldname: {
+                type: String,
+                required: true
+            },
+
             imgsrc: {
                 type: String,
                 required: true
-            }
+            },
+
+            imgplace: {
+                type: String,
+                required: true
+            },
         },
 
         methods: {
@@ -60,13 +71,15 @@
 
                 let vm = this;
                 reader.onload = (e) => {
-                    vm.imgsrc = e.target.result;
+                    //vm.imgsrc = e.target.result;
+                    let imageSelected = e.target.result;
+                    this.$emit('onimageselect', imageSelected, this.imgplace);
                 };
 
                 reader.onloadend = (file) => {
                     //this.form.forma = reader.result;
                     let imageName = reader.result;
-                    this.$emit('onimageload', reader.result, this.forma);
+                    this.$emit('onimageload', reader.result, this.fieldname);
                 };
 
                 reader.readAsDataURL(file);

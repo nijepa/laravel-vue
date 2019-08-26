@@ -29,4 +29,14 @@ class City extends Model
     {
         return $this->belongsTo(Country::class);
     }
+
+    /**
+     * Relationship to reps
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function representations()
+    {
+        return $this->hasMany(Representation::class);
+    }
 }
