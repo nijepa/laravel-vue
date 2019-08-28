@@ -1,18 +1,29 @@
 <template>
     <div class="container">
-<!--        <div data-aos="fade-right">-->
+<!--        <div data-aos="flip-up">-->
         <div class="row" v-if="$gate.isAdmin()">
             <div class="col-12">
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3">
-                            <i class="fas fa-building fa-2x icolor"></i> COMPANIES
+                        <h3 class="card-title text-blue font-weight-bold">
+<!--                            <img :src="'img/companies/logosSmall/'+rep.logo_small_id" alt=""> -->
+                            {{ rep.name}} - DOCUMENTS
                         </h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
-                                Add Company <span><i class="cap-icon ci-plus"></i></span>
+                                Add Document <span><i class="cap-icon ci-plus"></i></span>
                             </button>
+                        </div>
+                        <hr>
+                        <div class="">
+                            <router-link to="/reps" class="nav-link btn btn-outline-secondary" tag="button">
+                                <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
+                            </router-link>
+                            <div class=" card-tools mt-3">
+                                <p>{{ rep.name }}</p>
+                                <p>{{ rep.short_desc }}</p>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -32,15 +43,14 @@
                                            class="ic">
                                         </i>
                                     </th>
-                                    <th>Photo</th>
-                                    <th @click="sortBy('name')">Name / Site
-                                        <i v-if="sortKey === 'name'"
+                                    <th @click="sortBy('title')">Title
+                                        <i v-if="sortKey === 'title'"
                                            :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
                                            class="ic">
                                         </i>
                                     </th>
-                                    <th @click="sortBy('short_desc')">Description
-                                        <i v-if="sortKey === 'short_desc'"
+                                    <th @click="sortBy('doc_id')">Document
+                                        <i v-if="sortKey === 'doc_id'"
                                            :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
                                            class="ic">
                                         </i>
@@ -54,31 +64,20 @@
                                     <th>Modify</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr  v-for="rep in repsSorted" :key="rep.id">
-                                    <td><router-link
-                                            :to="{ name: 'repd', params: { repID: rep }}"
-                                            activeClass="active" tag="a" class="nav-item nav-link">
-                                            {{ rep.id }}
-                                        </router-link>
-                                    </td>
+                                <tbody>
+                                <tr v-for="repDet in repsSorted" :key="repDet.id">
+                                    <td>{{ repDet.id }}</td>
+                                    <td>{{ repDet.title }}</td>
+                                    <td>{{ repDet.doc_id }}</td>
+                                    <td>{{ repDet.created_at | customDate }}</td>
                                     <td>
-                                        <img :src="'img/companies/logosSmall/'+rep.logo_small_id"
-                                             alt="" style="max-width:100%; max-height:100%">
-                                    </td>
-                                    <td>
-                                        <a :href="rep.website" data-toggle="tooltip" :title="rep.website">{{ rep.name }}</a>
-                                    </td>
-                                    <td>{{ rep.short_desc }}</td>
-                                    <td>{{ rep.created_at | customDate }}</td>
-                                    <td>
-                                        <button @click="editModal(rep)"
+                                        <button @click="editModal(repDet)"
                                                 class="btn btn-info btn-sm"
                                                 data-toggle="tooltip" data-placement="top" title="Edit Company">
                                             <i class="cap-icon ci-file-edit"></i>
                                         </button>
                                         /
-                                        <button  @click="deleteRep(rep)"
+                                        <button  @click="deleteRep(repDet)"
                                                  class="btn btn-danger btn-sm"
                                                  data-toggle="tooltip" data-placement="top" title="Delete Company">
                                             <i class="cap-icon ci-trash"></i>
@@ -110,105 +109,40 @@
                     <div class="modal-content">
                         <div class="modal-header" v-if="editMode ? classes='edit' : classes='add'" :class="classes">
                             <h5 class="modal-title" v-show="!editMode" id="addNewLabel">
-                                <i class="cap-icon ci-plus icolor"></i> ADD NEW COMPANY
+                                <i class="cap-icon ci-plus icolor"></i> ADD NEW DOCUMENT
                             </h5>
                             <h5 class="modal-title" v-show="editMode" id="addNewLabel">
-                                <i class="cap-icon ci-file-edit icolor"></i> UPDATE COMPANY
+                                <i class="cap-icon ci-file-edit icolor"></i> UPDATE DOCUMENT
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div><!-- /.modal-header -->
-                        <form @submit.prevent="editMode ? updateRep() : createRep()" @keydown="form.onKeydown($event)">
+                        <form enctype="multipart/form-data" @submit.prevent="editMode ? updateRep() : createRep()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
-                                <appUploadFiles
-                                        :title="'Logo (small)'"
-                                        :fieldname="'logo_small_id'"
-                                        :imgsrc="logoSmall"
-                                        :imgplace="'logoSmall'"
+                                <input v-model="form.rep_id" name="rep_id" id="rep_id">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input v-model="form.title" id="title" type="text" name="title" placeholder="Title"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                    <has-error :form="form" field="title"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doc_id" >Document</label>
+                                    <input type="text" class="form-control" v-model="form.doc_id" name="doc_id" id="doc_id">
+                                    <div class="col-sm-12">
+                                        <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
+                                    </div>
+                                </div>
+  <!--                              <appUploadFiles
+                                        :title="'Document'"
+                                        :fieldname="'doc_id'"
+                                        :imgsrc="docID"
+                                        :imgplace="'docID'"
+                                        :filetype="'doc'"
                                         @onimageselect="OnImageSelect"
                                         @onimageload="OnImageLoad">
-                                </appUploadFiles>
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input v-model="form.name" id="name" type="text" name="name" placeholder="Name"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                                    <has-error :form="form" field="name"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="short_desc">Short Description</label>
-                                    <input v-model="form.short_desc"
-                                           id="short_desc" type="text" name="short_desc" placeholder="Short Description"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('short_desc') }">
-                                    <has-error :form="form" field="short_desc"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea v-model="form.description"
-                                              id="description" rows="3" name="description" placeholder="Description"
-                                              class="form-control" :class="{ 'is-invalid': form.errors.has('short_desc') }">
-                                    </textarea>
-                                    <has-error :form="form" field="description"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="city_id">City</label>
-                                    <select v-model="form.city_id" name="city_id" id="city_id"
-                                            class="form-control"
-                                            :class="{ 'is-invalid': form.errors.has('city_id') }">
-                                        <option v-bind:value="co_name.id"
-                                                :key="co_name.id"
-                                                v-for="co_name in cities.cities.data">{{ co_name.name }}
-                                        </option>
-                                    </select>
-                                    <has-error :form="form" field="city_id"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input v-model="form.address" id="address" type="text" name="address" placeholder="Address"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('address') }">
-                                    <has-error :form="form" field="address"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input v-model="form.phone" id="phone" type="text" name="phone" placeholder="Phone"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('phone') }">
-                                    <has-error :form="form" field="phone"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="mobile">Mobile</label>
-                                    <input v-model="form.mobile" id="mobile" type="text" name="mobile" placeholder="Mobile"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('mobile') }">
-                                    <has-error :form="form" field="mobile"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input v-model="form.email" id="email" type="email" name="email" placeholder="E-mail"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
-                                    <has-error :form="form" field="email"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label for="website">Website</label>
-                                    <input v-model="form.website" id="website" type="text" name="website" placeholder="Website"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('website') }">
-                                    <has-error :form="form" field="website"></has-error>
-                                </div>
-                                <appUploadFiles
-                                        :title="'Photo'"
-                                        :fieldname="'photo_id'"
-                                        :imgsrc="image"
-                                        :imgplace="'image'"
-                                        @onimageselect="OnImageSelect"
-                                        @onimageload="OnImageLoad">
-                                </appUploadFiles>
-                                <appUploadFiles
-                                        :title="'Logo'"
-                                        :fieldname="'logo_id'"
-                                        :imgsrc="logo"
-                                        :imgplace="'logo'"
-                                        @onimageselect="OnImageSelect"
-                                        @onimageload="OnImageLoad">
-                                </appUploadFiles>
-
+                                </appUploadFiles>-->
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close
@@ -237,7 +171,7 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex';
+    import { mapState, mapGetters, mapActions } from 'vuex';
     import Paginations from '../shared/Paginations';
     import TableOptions from '../shared/TableOptions';
     import UploadFiles from '../shared/UploadFiles';
@@ -246,7 +180,7 @@
 
     export default {
 
-        name: "Reps",
+        name: "RepDets",
 
         components: {
             appPagination: Paginations,
@@ -256,43 +190,39 @@
 
         mixins: [tableActions, modalForm],
 
+         props:
+             {repID : {
+                type: Object,
+                 required: true
+             }
+         },
+
         data() {
             return {
-                representations: [],
-                cities: {},
+                repDets: [],
+                rep: [],
 
                 form: new Form({
                     id: '',
-                    name: '',
-                    short_desc: '',
-                    description: '',
-                    address: '',
-                    phone: '',
-                    mobile: '',
-                    email: '',
-                    website: '',
-                    city_id: '',
-                    category_id: '',
-                    photo_id: '',
-                    logo_id: '',
-                    logo_small_id: ''
+                    title: '',
+                    rep_id: '',
+                    doc_id: '',
+                    doc: null
                 }),
 
-                logoSmall: '',
-                logo: '',
-                image: '',
+                docID: ''
             }
         },
 
         computed: {
 
-            ...mapGetters(['allReps', 'allCities']),
+            ...mapGetters(['allReps', 'allRepDet', 'oneRep', 'allCities']),
 
             repsSorted() {
-                let result = this.representations.reps;
+                let result = this.repDets.repDet;
 
                 if (this.search) {
-                    result = result.filter(item => item.name.toLowerCase().includes(this.search));
+                    result = result.filter(item => item.title.toLowerCase().includes(this.search));
                 }
 
                 result =  _.orderBy(result, this.sortKey, this.sortOrder);
@@ -309,20 +239,26 @@
         methods: {
 
             ...mapActions(['fetchReps',
-                'fetchRepsP',
-                'fetchRepsS',
-                'fetchRep',
                 'fetchRepDet',
+                'fetchRep',
                 'fetchCities']),
 
             loadReps() {
                 if(this.$gate.isAdmin()) {
-                    this.fetchReps();
-                    this.representations = this.$store.state.representations;
+                    let repi = this.repID;
+                    this.rep = repi;
+                    this.fetchRepDet(repi);
+                    this.repDets = this.$store.state.repDet;
                 }
             },
 
+            onFileChange(e){
+                this.form.doc = e.target.files[0];
+                console.log(this.form.doc);
+            },
+
             onPageChange(page) {
+                console.log(page);
                 this.currentPage = page;
             },
 
@@ -337,35 +273,41 @@
             },
 
             imagesPlaces() {
-                this.logoSmall = 'img/companies/logosSmall/'+this.form.logo_small_id;
-                this.logo = 'img/companies/'+this.form.logo_id;
-                this.image = 'img/companies/'+this.form.photo_id;
+                this.docID = 'img/companies/docs/'+this.form.doc_id;
             },
 
             createRep() {
                 this.$Progress.start();
-                this.form.post('api/representation')
+                this.form.rep_id = this.repID.id;
+                this.form.post('api/reps_det')
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'Company added successfully'
+                            title: 'Document added successfully'
                         });
                         this.$Progress.finish();
                     })
                     .catch(() => {})
             },
 
-            updateRep(id) {
+            updateRep() {
                 this.$Progress.start();
-                this.form.put('api/representation/'+this.form.id)
+                let header = 'Accept: application/x-www-form-urlencoded';
+                let data = new FormData();
+                data.append('title', this.form.title);
+                data.append('rep_id', this.form.rep_id);
+                data.append('doc_id', this.form.doc_id);
+                data.append('doc', this.form.doc);
+                data.append('_method', 'put'); // add this
+                axios.post('api/reps_det/'+this.form.id, data)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'Company updated successfully'
+                            title: 'Document updated successfully'
                         });
                         this.$Progress.finish();
                     })
@@ -386,10 +328,10 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.form.delete('api/representation/'+rep.id).then(()=>{
+                        this.form.delete('api/reps_det/'+rep.id).then(()=>{
                             swal.fire(
                                 'Deleted!',
-                                'Company has been deleted.',
+                                'Document has been deleted.',
                                 'success'
                             );
                             Fire.$emit('AfterCreate');

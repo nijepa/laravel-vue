@@ -6,9 +6,12 @@ use App\RepDet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Traits\StoreImageTrait;
 
 class RepresentationDetsController extends Controller
 {
+    use StoreImageTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -16,9 +19,7 @@ class RepresentationDetsController extends Controller
      */
     public function index()
     {
-        $repdets = RepDet::orderBy('title')->get();//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
+        $repdets = RepDet::orderBy('title')->get();
 
         return response()->json($repdets);
     }
@@ -28,10 +29,24 @@ class RepresentationDetsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @throws
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            //'title' => 'required|string|max:191'
+        ]);
+
+        if ($request->doc_id !== null) {
+            $this->savePhoto($request, 'companies/docs', 'doc_id');
+        }
+
+        return RepDet::create([
+            'title' => $request['title'],
+            'rep_id' => $request['rep_id'],
+            'doc_id' => $request['doc_id'],
+        ]);
     }
 
     /**
@@ -54,10 +69,30 @@ class RepresentationDetsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     *
+     * @throws
      */
     public function update(Request $request, $id)
     {
-        //
+        //$this->authorize('isAdmin');
+
+        $rep = RepDet::findOrFail($id);
+
+        $this->validate($request, [
+            'title' => 'required|string|max:191'
+        ]);
+
+
+        $imageName = time().'.'.$request->doc->getClientOriginalExtension();
+       // dd($imageName);
+        $request->doc->move(public_path('img/companies/docs'), $imageName);
+  /*      if ($request->doc_id !== null) {
+            $this->savePhoto($request, 'companies/docs', 'doc_id');
+        }*/
+
+        $rep->update($request->all());
+
+        return ['rep' => $rep];
     }
 
     /**
@@ -68,7 +103,13 @@ class RepresentationDetsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //$this->authorize('isAdmin');
+
+        $rep = RepDet::findOrFail($id);
+
+        $rep->delete();
+
+        return ['message' => 'Document deleted'];
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Representation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\StoreImageTrait;
-use Illuminate\Support\Facades\DB;
 
 class RepresentationsController extends Controller
 {
@@ -39,18 +38,18 @@ class RepresentationsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @throws
      */
     public function store(Request $request)
     {
-        $this->authorize('isAdmin');
+        //$this->authorize('isAdmin');
 
         $this->validate($request, [
             'name' => 'required|string|max:191'
         ]);
 
-        $name = $this->savePhoto($request,'companies', 'logo_small_id');
-
-        $request->merge(['logo_small_id' => $name]);
+        $this->uploadFiles($request);
 
         return Representation::create([
             'name' => $request['name'],
@@ -88,6 +87,8 @@ class RepresentationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     *
+     * @throws
      */
     public function update(Request $request, $id)
     {
@@ -99,20 +100,7 @@ class RepresentationsController extends Controller
             'name' => 'required|string|max:191'
         ]);
 
-        if ($request->logo_id !== null && strlen($request->logo_id) > 1000){
-            $name = $this->savePhoto($request, 'companies', 'logo_id', $rep);
-            $request->merge(['logo_id' => $name]);
-        }
-
-        if ($request->logo_small_id !== null && strlen($request->logo_small_id) > 1000) {
-            $name = $this->savePhoto($request, 'companies/logosSmall', 'logo_small_id', $rep);
-            $request->merge(['logo_small_id' => $name]);
-        }
-
-        if ($request->photo_id !== null && strlen($request->photo_id) > 1000) {
-            $name = $this->savePhoto($request, 'companies', 'photo_id', $rep);
-            $request->merge(['photo_id' => $name]);
-        }
+        $this->uploadFiles($request);
 
         $rep->update($request->all());
 
@@ -127,7 +115,7 @@ class RepresentationsController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize('isAdmin');
+        //$this->authorize('isAdmin');
 
         $rep = Representation::findOrFail($id);
 
@@ -147,5 +135,22 @@ class RepresentationsController extends Controller
         $rep = Representation::findOrFail($id);
 
         return response()->json($rep);
+    }
+
+    /**
+     * Upload files and save names in specified fields
+     *
+     * @param Request $request
+     */
+    public function uploadFiles(Request $request)
+    {
+        $imgFields = ['logo_id', 'logo_small_id', 'photo_id'];
+
+        foreach ($imgFields as $imgField) {
+
+            if ($request->$imgField !== null) {
+                $this->savePhoto($request, 'companies', $imgField);
+            }
+        }
     }
 }

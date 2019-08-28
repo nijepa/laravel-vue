@@ -16,7 +16,10 @@ window.Vue = require('vue');
  * Load vForm
  */
 import { Form, HasError, AlertError } from 'vform'
+import objectToFormData from 'object-to-formdata'
 window.Form = Form;
+window.objectToFormData = objectToFormData;
+
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
 

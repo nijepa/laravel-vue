@@ -14,10 +14,8 @@
                     </div>
                     <!-- /.card-header -->
                     <appTableOptions
-                        :search.sync="search"
-                        :pageSize.sync="pageSize"
-                        @pageSizeChanged="pageSize = Number($event)"
-                        @searchChanged="search = $event">
+                        @pageSizeChanged="onPageSizeChanged"
+                        @searchChanged="onSearchChanged">
                     </appTableOptions>
      <!--               <div class="d-flex align-items-center">
                         <div class="form-group ml-3 mt-3">
@@ -187,7 +185,8 @@
     import Paginations from '../shared/Paginations';
     import TableOptions from '../shared/TableOptions';
     import UploadFiles from '../shared/UploadFiles';
-    import updatePhoto from '../../mixins/updatePhoto';
+    import tableActions from '../../mixins/tableActions';
+    import modalForm from '../../mixins/modalForm';
 
     export default {
 
@@ -199,18 +198,18 @@
             appUploadFiles: UploadFiles
         },
 
-        //mixins: [updatePhoto],
+        mixins: [tableActions, modalForm],
 
         data() {
             return {
                 users: [],
 
-                sortKey: ['name'],
+/*                sortKey: ['name'],
                 sortOrder: ['asc'],
                 currentPage: 1,
                 pageSize: 3,
                 totalPages: 1,
-                search: '',
+                search: '',*/
 
                 form: new Form({
                     id: '',
@@ -223,8 +222,8 @@
                 }),
 
                 image: '',
-                editMode: true,
-                classes: ''
+                /*editMode: true,
+                classes: ''*/
             }
         },
 
@@ -239,6 +238,7 @@
                     result = result.filter(item => item.name.toLowerCase().includes(this.search));
                     this.currentPage = 1;
                 }
+
                 result =  _.orderBy(result, this.sortKey, this.sortOrder);
 
                 return result.filter((row, index) => {
@@ -246,7 +246,7 @@
                     let start = (this.currentPage - 1) * this.pageSize;
                     let end = this.currentPage * this.pageSize;
                     if (index >= start && index < end) return true;
-                    this.currentPage = 1;
+                    //this.currentPage = 1;
                 });
             },
         },
@@ -265,7 +265,17 @@
                 this.currentPage = page;
             },
 
-            OnImageSelect(imgSelected, fieldname) {
+            onPageSizeChanged(ps) {
+                this.onPageChange(1);
+                this.pageSize = ps;
+            },
+
+            onSearchChanged(s) {
+                this.onPageChange(1);
+                this.search = s;
+            },
+
+     /*       OnImageSelect(imgSelected, fieldname) {
                 this[fieldname] = imgSelected;
             },
 
@@ -280,7 +290,7 @@
                     this.sortKey = key;
                     this.sortOrder = 'asc';
                 }
-            },
+            },*/
 
 /*            fillPhoto(file, reader) {
                 let vm = this;
@@ -329,16 +339,19 @@
                     });*!/
             },*/
 
-            newModal() {
+/*            newModal() {
                 this.editMode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
-            },
+            },*/
 
-            editModal(user) {
+      /*      editModal(user) {
                 this.editMode = true;
                 $('#addNew').modal('show');
                 this.form.fill(user);
+                this.image = 'img/profile/'+this.form.photo;
+            },*/
+            imagesPlaces() {
                 this.image = 'img/profile/'+this.form.photo;
             },
 

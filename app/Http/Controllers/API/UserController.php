@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::latest()->get();
+        return User::orderBy('name')->get();
     }
 
     /**
@@ -52,9 +52,14 @@ class UserController extends Controller
             'type' => 'required',
         ]);
 
-        $name = $this->savePhoto($request,'profile', 'photo');
-        //dd($name);
-        $request->merge(['photo' => $name]);
+        if ($request->photo !== null) {
+            $this->savePhoto($request, 'profile', 'photo');
+        }
+ /*       if ($request->photo !== null && strlen($request->photo) > 1000) {
+            $name = $this->savePhoto($request, 'profile', 'photo');
+            //dd($name);
+            $request->merge(['photo' => $name]);
+        }*/
 /*        $name = time().'.' . explode('/',
                 explode(':',
                     substr($request->photo, 0,
@@ -63,7 +68,6 @@ class UserController extends Controller
         \Image::make($request->photo)->save(public_path('img/profile/').$name);
 
         $request->merge(['photo' => $name]);*/
-
 
         return User::create([
             'name' => $request['name'],
@@ -108,10 +112,15 @@ class UserController extends Controller
             'type' => 'required',
         ]);
 
-        if ($request->photo !== null && strlen($request->photo) > 1000) {
+        if ($request->photo !== null) {
+           // dd($request->photo);
+            $this->savePhoto($request, 'profile', 'photo');
+            //$request->merge(['photo' => $name]);
+        }
+/*        if ($request->photo !== null && strlen($request->photo) > 1000) {
             $name = $this->savePhoto($request, 'profile', 'photo', $user);
             $request->merge(['photo' => $name]);
-        }
+        }*/
         //$this->savePhoto($request, $user);
         /*$currentPhoto = $user->photo;
 
@@ -183,8 +192,11 @@ class UserController extends Controller
             'password' => 'sometimes|required|min:6'
         ]);
 
-        $name = $this->savePhoto($request, 'profile', 'photo', $user );
-        $request->merge(['photo' => $name]);
+        if ($request->photo !== null) {
+            $this->savePhoto($request, 'profile', 'photo');
+        }
+   /*     $name = $this->savePhoto($request, 'profile', 'photo', $user );
+        $request->merge(['photo' => $name]);*/
         //$this->savePhoto($request, $user);
 
         /*$currentPhoto = $user->photo;

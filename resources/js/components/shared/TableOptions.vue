@@ -5,8 +5,8 @@
             <input @keyup="changeSearch()" type="text" class="form-control" v-model="search" placeholder="Search">
         </div>
         <div class="form-group ml-auto mr-3 mt-3">
-            <label for="ps">Items per page</label>
-            <select v-model="pageSize" @change="changePageSize()" name="type" class="form-control" id="ps">
+            <label for="selPageSize">Items per page</label>
+            <select v-model="selPageSize" @change="changePageSize()" name="selPageSize" class="form-control" id="selPageSize">
                 <option value="3">3</option>
                 <option value="5">5</option>
                 <option value="10">10</option>
@@ -19,20 +19,27 @@
     export default {
         name: "TableOptions",
 
+        data() {
+            return {
+                selPageSize: 3,
+                search: ''
+            }
+        },
+
         props: {
-            search: {
+  /*          search: {
                 type: String,
                 required: true
-            },
-            pageSize: {
+            },*/
+     /*       pageSize: {
                 type: Number,
                 required: true
-            }
+            }*/
         },
 
         methods: {
             changePageSize() {
-                this.$emit("pageSizeChanged", this.pageSize);
+                this.$emit("pageSizeChanged", this.selPageSize);
             },
 
             changeSearch() {

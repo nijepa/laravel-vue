@@ -4,7 +4,7 @@ const getDefaultState = () => {
     return {
         repDet: []
     }
-}
+};
 
 const state = {
     repDet: getDefaultState()

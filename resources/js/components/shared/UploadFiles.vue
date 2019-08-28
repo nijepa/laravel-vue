@@ -40,6 +40,10 @@
                 type: String,
                 required: true
             },
+
+            filetype: {
+                type: String,
+            },
         },
 
         methods: {
@@ -48,7 +52,12 @@
                 let reader = new FileReader();
                 let limit = 1024 * 1024 * 2;
                 let type = ['image/jpeg','image/png','image/jpg','image/gif','image/svg'];
-
+ /*               let typeDoc = [
+                    'application/pdf',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                ];
+                console.log(file['type']);*/
                 if(file['size'] > limit){
                     swal.fire({
                         type: 'error',
@@ -59,30 +68,58 @@
                     return false;
                 }
 
-                if(!type.includes(file['type'])){
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You need to upload image file',
-                    });
+/*                if (this.filetype === 'doc') {
+                    if(!typeDoc.includes(file['type'])){
+                        swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'You need to upload document file',
+                        });
 
-                    return false;
+                        return false;
+                    }else {
+                    let vm = this;
+                    reader.onload = (e) => {
+                        //vm.imgsrc = e.target.result;
+                        let imageSelected = e.target.result;
+                        this.$emit('onimageselect', imageSelected, this.imgplace);
+                    };
+
+                    reader.onloadend = (file) => {
+                        //this.form.forma = reader.result;
+                        let imageName = reader.result;
+                        this.$emit('onimageload', reader.result, this.fieldname);
+                    };
+
+                    reader.readAsDataURL(file);
                 }
+                } else {*/
+                    if(!type.includes(file['type'])){
+                        swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'You need to upload image file',
+                        });
 
-                let vm = this;
-                reader.onload = (e) => {
-                    //vm.imgsrc = e.target.result;
-                    let imageSelected = e.target.result;
-                    this.$emit('onimageselect', imageSelected, this.imgplace);
-                };
+                        return false;
+                    } else {
+                        let vm = this;
+                        reader.onload = (e) => {
+                            //vm.imgsrc = e.target.result;
+                            let imageSelected = e.target.result;
+                            this.$emit('onimageselect', imageSelected, this.imgplace);
+                        };
 
-                reader.onloadend = (file) => {
-                    //this.form.forma = reader.result;
-                    let imageName = reader.result;
-                    this.$emit('onimageload', reader.result, this.fieldname);
-                };
+                        reader.onloadend = (file) => {
+                            //this.form.forma = reader.result;
+                            let imageName = reader.result;
+                            this.$emit('onimageload', reader.result, this.fieldname);
+                        };
 
-                reader.readAsDataURL(file);
+                        reader.readAsDataURL(file);
+                    }
+                // }
+
             },
         }
     }
