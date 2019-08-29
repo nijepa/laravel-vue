@@ -80527,7 +80527,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   }, {
     path: '/profile',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./components/back/Profile.vue */ "./resources/js/components/back/Profile.vue"));
+      return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./components/back/Profile.vue */ "./resources/js/components/back/Profile.vue"));
     }
   }, {
     path: '/users',
@@ -80569,7 +80569,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: 'repd',
     path: '/repDets/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./components/back/RepDets.vue */ "./resources/js/components/back/RepDets.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./components/back/RepDets.vue */ "./resources/js/components/back/RepDets.vue"));
     },
     props: true
   }, {
@@ -81267,7 +81267,6 @@ var actions = {
 
             case 3:
               response = _context.sent;
-              //console.log(repDet);
               commit('setAboutDet', response.data);
 
             case 5:

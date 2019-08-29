@@ -4,6 +4,7 @@
         <div class="row" v-if="$gate.isAdmin()">
             <div class="col-12">
 
+            <!-- Card -->
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title text-blue font-weight-bold">
@@ -21,12 +22,13 @@
                                 <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
                             </router-link>
                             <div class=" card-tools mt-3">
-                                <p>{{ rep.name }}</p>
-                                <p>{{ rep.short_desc }}</p>
+                                <h3>{{ rep.name }}</h3>
+                                <h4>{{ rep.short_desc }}</h4>
                             </div>
                         </div>
                     </div>
-                    <!-- /.card-header -->
+            <!-- /.card-header -->
+                    <div v-if="repDets.repDet.length">
                     <appTableOptions
                             @pageSizeChanged="onPageSizeChanged"
                             @searchChanged="onSearchChanged"
@@ -68,7 +70,9 @@
                                 <tr v-for="repDet in repsSorted" :key="repDet.id">
                                     <td>{{ repDet.id }}</td>
                                     <td>{{ repDet.title }}</td>
-                                    <td>{{ repDet.doc_id }}</td>
+                                    <td>
+                                        <a :href="'img/companies/docs/'+repDet.doc_id" target="_blank">{{ repDet.doc_id }}</a>
+                                    </td>
                                     <td>{{ repDet.created_at | customDate }}</td>
                                     <td>
                                         <button @click="editModal(repDet)"
@@ -87,8 +91,7 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- /.card-body -->
+            <!-- /.card-body -->
                     <div class="card-footer">
                         <appPagination
                                 :maxVisibleButtons="totalPages"
@@ -100,7 +103,13 @@
                         ></appPagination>
                     </div>
                 </div>
-                <!-- /.card -->
+                    <div v-else class="card">
+                        <h3 class="text-blue font-weight-bold m-3">
+                            No files uploaded !
+                        </h3>
+                    </div>
+                </div>
+            <!-- /.card -->
             </div>
 
             <!-- Modal -->
@@ -117,10 +126,13 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div><!-- /.modal-header -->
-                        <form enctype="multipart/form-data" @submit.prevent="editMode ? updateRep() : createRep()" @keydown="form.onKeydown($event)">
+                        </div>
+            <!-- /.modal-header -->
+                        <form enctype="multipart/form-data"
+                              @submit.prevent="editMode ? updateRep() : createRep()"
+                              @keydown="form.onKeydown($event)">
                             <div class="modal-body">
-                                <input v-model="form.rep_id" name="rep_id" id="rep_id">
+                                <input v-model="form.rep_id" type="hidden" name="rep_id" id="rep_id">
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input v-model="form.title" id="title" type="text" name="title" placeholder="Title"
@@ -129,21 +141,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="doc_id" >Document</label>
-                                    <input type="text" class="form-control" v-model="form.doc_id" name="doc_id" id="doc_id">
-                                    <div class="col-sm-12">
-                                        <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
-                                    </div>
+                                    <input type="text" class="form-control" v-model="form.doc_id" name="doc_id" id="doc_id" disabled>
+                                    <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
                                 </div>
-  <!--                              <appUploadFiles
-                                        :title="'Document'"
-                                        :fieldname="'doc_id'"
-                                        :imgsrc="docID"
-                                        :imgplace="'docID'"
-                                        :filetype="'doc'"
-                                        @onimageselect="OnImageSelect"
-                                        @onimageload="OnImageLoad">
-                                </appUploadFiles>-->
                             </div>
+            <!-- /.modal-body -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close
                                     <span><i class="cap-icon ci-times"></i></span>
@@ -155,9 +157,9 @@
                                     <span><i class="cap-icon ci-save"></i></span>
                                 </button>
                             </div>
-                            <!-- /.modal-body -->
+            <!-- /.modal-footer -->
                         </form>
-                        <!-- /.form -->
+            <!-- /.form -->
                     </div>
                 </div>
             </div>
@@ -171,12 +173,12 @@
 </template>
 
 <script>
-    import { mapState, mapGetters, mapActions } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
     import Paginations from '../shared/Paginations';
     import TableOptions from '../shared/TableOptions';
-    import UploadFiles from '../shared/UploadFiles';
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
+    import UploadFiles from '../shared/UploadFiles';
 
     export default {
 
@@ -209,8 +211,6 @@
                     doc_id: '',
                     doc: null
                 }),
-
-                docID: ''
             }
         },
 
@@ -253,8 +253,34 @@
             },
 
             onFileChange(e){
+                let file = e.target.files[0];
+                let limit = 1024 * 1024 * 2;
+                let type = [
+                    'application/pdf',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
+
+                if(file['size'] > limit){
+                    swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You are uploading a large file',
+                    });
+                    return false;
+                }
+
+                if(!type.includes(file['type'])) {
+                    swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You need to upload document file',
+                    });
+                    return false;
+                }
+
                 this.form.doc = e.target.files[0];
-                console.log(this.form.doc);
+                this.form.doc_id = this.form.doc.name;
             },
 
             onPageChange(page) {
@@ -273,13 +299,16 @@
             },
 
             imagesPlaces() {
-                this.docID = 'img/companies/docs/'+this.form.doc_id;
+                this.logo = 'img/companies/'+this.form.logo_id;
             },
 
             createRep() {
                 this.$Progress.start();
                 this.form.rep_id = this.repID.id;
-                this.form.post('api/reps_det')
+                let formData = this.prepareData();
+
+                axios.post('api/reps_det', formData)
+               // this.form.post('api/reps_det')
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -294,14 +323,9 @@
 
             updateRep() {
                 this.$Progress.start();
-                let header = 'Accept: application/x-www-form-urlencoded';
-                let data = new FormData();
-                data.append('title', this.form.title);
-                data.append('rep_id', this.form.rep_id);
-                data.append('doc_id', this.form.doc_id);
-                data.append('doc', this.form.doc);
-                data.append('_method', 'put'); // add this
-                axios.post('api/reps_det/'+this.form.id, data)
+                let formData = this.prepareData(1);
+
+                axios.post('api/reps_det/'+this.form.id, formData)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -314,6 +338,16 @@
                     .catch(() => {
                         this.$Progress.fail();
                     })
+            },
+
+            prepareData(action = '') {
+                let data = new FormData();
+                data.append('title', this.form.title);
+                data.append('rep_id', this.form.rep_id);
+                data.append('doc_id', this.form.doc_id);
+                data.append('doc', this.form.doc);
+                if (action) data.append('_method', 'put');
+                return data;
             },
 
             deleteRep(rep){
@@ -361,6 +395,14 @@
 </script>
 
 <style scoped>
+    .table-hover tbody tr:nth-of-type(odd) {
+        background-color: rgb(187, 238, 255);
+    }
+
+    .table-hover tbody tr:nth-of-type(odd):hover {
+        background-color: rgb(34, 61, 82);
+    }
+
     a {
         font-weight: bold;
         color: #3a68c1;

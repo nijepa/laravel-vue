@@ -20,7 +20,6 @@ const actions = {
             `api/about_dets/`,
             aboutDet
         );
-        //console.log(repDet);
         commit('setAboutDet', response.data);
     },
     resetAboutState ({ commit }) {

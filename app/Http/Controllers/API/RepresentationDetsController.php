@@ -35,12 +35,10 @@ class RepresentationDetsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            //'title' => 'required|string|max:191'
+            'title' => 'required|string|max:191'
         ]);
 
-        if ($request->doc_id !== null) {
-            $this->savePhoto($request, 'companies/docs', 'doc_id');
-        }
+        $this->uploadFile($request);
 
         return RepDet::create([
             'title' => $request['title'],
@@ -82,13 +80,7 @@ class RepresentationDetsController extends Controller
             'title' => 'required|string|max:191'
         ]);
 
-
-        $imageName = time().'.'.$request->doc->getClientOriginalExtension();
-       // dd($imageName);
-        $request->doc->move(public_path('img/companies/docs'), $imageName);
-  /*      if ($request->doc_id !== null) {
-            $this->savePhoto($request, 'companies/docs', 'doc_id');
-        }*/
+        $this->uploadFile($request);
 
         $rep->update($request->all());
 
@@ -120,8 +112,22 @@ class RepresentationDetsController extends Controller
      */
     public function repsD(Request $request)
     {
-        $repdets = DB::table('rep_dets')->where($request);//To get the output in array
+        $repdets = DB::table('rep_dets')->where($request);
 
         return response()->json($repdets);
+    }
+
+    /**
+     * Upload file and set fle name
+     *
+     * @param Request $request
+     */
+    public function uploadFile(Request $request)
+    {
+        If ($request->hasFile('doc')) {
+            $fileName = time().'.'.$request->doc->getClientOriginalExtension();
+            $request->offsetSet('doc_id', $fileName);
+            $request->doc->move(public_path('img/companies/docs'), $fileName);
+        }
     }
 }
