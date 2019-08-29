@@ -17,7 +17,7 @@ const getters = {
 const actions = {
     async fetchRepDet ({ commit }, repDet) {
         const response = await axios.get(
-            `api/reps_det/${repDet.id}`,
+            `../api/reps_det/${repDet}`,
             repDet
         );
         commit('setRepDet', response.data);

@@ -11,7 +11,7 @@ const getters = {
 
 const actions = {
     async fetchCities ({ commit }) {
-        const response = await axios.get("api/city");
+        const response = await axios.get(`../api/city`);
         commit('setCities', response.data)
     },
     async fetchCitiesP ({ commit }, id) {

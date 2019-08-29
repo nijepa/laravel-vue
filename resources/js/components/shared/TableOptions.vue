@@ -1,11 +1,11 @@
 <template>
     <div class="d-flex align-items-center">
         <div class="form-group ml-3 mt-3">
-            <i class='cap-icon ci-search-plus'></i>
+            <label><i class='cap-icon ci-search-plus'></i></label>
             <input @keyup="changeSearch()" type="text" class="form-control" v-model="search" placeholder="Search">
         </div>
         <div class="form-group ml-auto mr-3 mt-3">
-            <label for="selPageSize">Items per page</label>
+            <label for="selPageSize"><i class='cap-icon ci-list-ol'></i></label>
             <select v-model="selPageSize" @change="changePageSize()" name="selPageSize" class="form-control" id="selPageSize">
                 <option value="3">3</option>
                 <option value="5">5</option>

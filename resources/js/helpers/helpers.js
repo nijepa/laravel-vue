@@ -33,8 +33,6 @@ Vue.use(VueProgressBar, {
     height: '5px'
 });
 
-
-
 /**
  * Load smooth scrolling plugin
  */
@@ -46,3 +44,9 @@ Vue.config.productionTip = false;
  * Load Laravel-Vue-Pagination
  */
 Vue.component('pagination', require('laravel-vue-pagination'));
+
+/**
+ * Load CKEditor
+ */
+import CKEditor from '@ckeditor/ckeditor5-vue';
+Vue.use( CKEditor );

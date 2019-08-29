@@ -1,32 +1,45 @@
 <template>
     <div class="container">
-<!--        <div data-aos="flip-up">-->
         <div class="row" v-if="$gate.isAdmin()">
             <div class="col-12">
 
             <!-- Card -->
-                <div class="card">
+                <div class="card" data-aos="flip-up">
                     <div class="card-header">
                         <h3 class="card-title text-blue font-weight-bold">
 <!--                            <img :src="'img/companies/logosSmall/'+rep.logo_small_id" alt=""> -->
-                            {{ rep.name}} - DOCUMENTS
+                            {{ oneRep.name}} - DOCUMENTS
                         </h3>
-                        <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal()">
+                    </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <router-link to="/reps" class="nav-link btn btn-outline-secondary ml-3" tag="button">
+                                <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
+                            </router-link>
+                            <button class="btn btn-success mr-3" @click="newModal()">
                                 Add Document <span><i class="cap-icon ci-plus"></i></span>
                             </button>
                         </div>
                         <hr>
-                        <div class="">
-                            <router-link to="/reps" class="nav-link btn btn-outline-secondary" tag="button">
+                     <!--   <div class="">
+                            <router-link to="/reps" class="nav-link btn btn-outline-secondary ml-3" tag="button">
                                 <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
                             </router-link>
-                            <div class=" card-tools mt-3">
-                                <h3>{{ rep.name }}</h3>
-                                <h4>{{ rep.short_desc }}</h4>
+                        </div>-->
+                        <div class="ml-3 mt-3">
+                            <div class="">
+                                <p class="d-inline p-2">Name :</p>
+                                <h4 class="d-inline p-2">{{ oneRep.name }}</h4>
+                            </div>
+                            <div class="mt-2">
+                                <p class="d-inline p-2">Short description :</p>
+                                <h5 class="d-inline p-2">{{ oneRep.short_desc }}</h5>
+                            </div>
+                            <div class="mt-2">
+                                <p class="d-inline p-2">Description :</p>
+                                <h5 class="d-inline p-2">{{ oneRep.description }}</h5>
                             </div>
                         </div>
-                    </div>
+                        <hr>
             <!-- /.card-header -->
                     <div v-if="repDets.repDet.length">
                     <appTableOptions
@@ -103,7 +116,7 @@
                         ></appPagination>
                     </div>
                 </div>
-                    <div v-else class="card">
+                    <div v-else class="card m-2">
                         <h3 class="text-blue font-weight-bold m-3">
                             No files uploaded !
                         </h3>
@@ -168,7 +181,6 @@
         <div class="row" v-else>
             <unauthorized></unauthorized>
         </div>
-<!--        </div>-->
     </div>
 </template>
 
@@ -192,17 +204,12 @@
 
         mixins: [tableActions, modalForm],
 
-         props:
-             {repID : {
-                type: Object,
-                 required: true
-             }
-         },
-
         data() {
             return {
                 repDets: [],
-                rep: [],
+                rep: {},
+                repId: this.$route.params.id,
+                selRep: this.$route.params.selRep,
 
                 form: new Form({
                     id: '',
@@ -245,9 +252,9 @@
 
             loadReps() {
                 if(this.$gate.isAdmin()) {
-                    let repi = this.repID;
-                    this.rep = repi;
-                    this.fetchRepDet(repi);
+                    this.fetchRep(this.repId);
+                    this.rep = this.$store.state.rep;
+                    this.fetchRepDet(this.repId);
                     this.repDets = this.$store.state.repDet;
                 }
             },
@@ -304,10 +311,10 @@
 
             createRep() {
                 this.$Progress.start();
-                this.form.rep_id = this.repID.id;
+                this.form.rep_id = this.oneRep.id;
                 let formData = this.prepareData();
 
-                axios.post('api/reps_det', formData)
+                axios.post('../api/reps_det', formData)
                // this.form.post('api/reps_det')
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
@@ -325,7 +332,7 @@
                 this.$Progress.start();
                 let formData = this.prepareData(1);
 
-                axios.post('api/reps_det/'+this.form.id, formData)
+                axios.post('../api/reps_det/'+this.form.id, formData)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -362,7 +369,7 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.form.delete('api/reps_det/'+rep.id).then(()=>{
+                        this.form.delete('../api/reps_det/'+rep.id).then(()=>{
                             swal.fire(
                                 'Deleted!',
                                 'Document has been deleted.',
@@ -384,6 +391,12 @@
                 let query = this.$parent.search;
                 this.fetchRepsS(query);
             });
+            /*axios.get(`../api/reps_det/${this.repId}`)
+                .then(({data}) => {
+                    console.log(data);
+                    this.repDets = data;
+                });*/
+
             this.loadReps();
             this.fetchCities();
             this.cities = this.$store.state.cities;
@@ -396,11 +409,11 @@
 
 <style scoped>
     .table-hover tbody tr:nth-of-type(odd) {
-        background-color: rgb(187, 238, 255);
+        background-color: rgb(217, 255, 251);
     }
 
     .table-hover tbody tr:nth-of-type(odd):hover {
-        background-color: rgb(34, 61, 82);
+        background-color: rgb(187, 215, 215);
     }
 
     a {

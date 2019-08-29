@@ -1,6 +1,5 @@
 <template>
-    <div class="container">
-<!--        <div data-aos="fade-right">-->
+    <div class="container" data-aos="fade-right">
         <div class="row" v-if="$gate.isAdmin()">
             <div class="col-12">
 
@@ -9,11 +8,16 @@
                         <h3 class="card-title text-blue font-weight-bold h3">
                             <i class="fas fa-building fa-2x icolor"></i> COMPANIES
                         </h3>
-                        <div class="card-tools">
+    <!--                    <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add Company <span><i class="cap-icon ci-plus"></i></span>
                             </button>
-                        </div>
+                        </div>-->
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button class="btn btn-success" @click="newModal()">
+                            Add Company <span><i class="cap-icon ci-plus"></i></span>
+                        </button>
                     </div>
                     <!-- /.card-header -->
                     <appTableOptions
@@ -56,18 +60,24 @@
                             </thead>
                             <tbody>
                                 <tr  v-for="rep in repsSorted" :key="rep.id">
-                                    <td><router-link
-                                            :to="{ name: 'repd', params: { repID: rep }}"
+<!--                                    :to="{ name: 'repd', params: { repID: rep }}"-->
+                                    <td>
+                                        <keep-alive>
+                                        <router-link
+                                            :to="{name:'repd', params: {id: rep.id, selRep: rep}}"
                                             activeClass="active" tag="a" class="nav-item nav-link">
                                             {{ rep.id }}
                                         </router-link>
+                                        </keep-alive>
                                     </td>
                                     <td>
                                         <img :src="'img/companies/logosSmall/'+rep.logo_small_id"
                                              alt="" style="max-width:100%; max-height:100%">
                                     </td>
                                     <td>
-                                        <a :href="rep.website" data-toggle="tooltip" :title="rep.website">{{ rep.name }}</a>
+                                        <a :href="rep.website" target="_blank"
+                                           data-toggle="tooltip" :title="rep.website">{{ rep.name }}
+                                        </a>
                                     </td>
                                     <td>{{ rep.short_desc }}</td>
                                     <td>{{ rep.created_at | customDate }}</td>
@@ -118,7 +128,8 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div><!-- /.modal-header -->
+                        </div>
+                        <!-- /.modal-header -->
                         <form @submit.prevent="editMode ? updateRep() : createRep()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <appUploadFiles
@@ -144,10 +155,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea v-model="form.description"
+                                    <ckeditor :editor="editor" v-model="form.description" id="description" name="description"
+                                              :class="{ 'is-invalid': form.errors.has('description') }">
+
+                                    </ckeditor>
+                           <!--         <textarea v-model="form.description"
                                               id="description" rows="3" name="description" placeholder="Description"
                                               class="form-control" :class="{ 'is-invalid': form.errors.has('short_desc') }">
-                                    </textarea>
+                                    </textarea>-->
                                     <has-error :form="form" field="description"></has-error>
                                 </div>
                                 <div class="form-group">
@@ -232,7 +247,6 @@
         <div class="row" v-else>
             <unauthorized></unauthorized>
         </div>
-<!--        </div>-->
     </div>
 </template>
 
@@ -243,6 +257,7 @@
     import UploadFiles from '../shared/UploadFiles';
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
     export default {
 
@@ -277,6 +292,8 @@
                     logo_id: '',
                     logo_small_id: ''
                 }),
+
+                editor: ClassicEditor,
 
                 logoSmall: '',
                 logo: '',
