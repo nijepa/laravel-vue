@@ -5,9 +5,22 @@ namespace App\Http\Controllers\API;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Traits\StoreImageTrait;
 
 class ProductsController extends Controller
 {
+    use StoreImageTrait;
+
+    /**
+     * ProductsController constructor.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +28,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('name')->paginate(5);//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
+        $products = Product::orderBy('name')->get();//To get the output in array
 
         return response()->json($products);
     }
@@ -44,7 +55,18 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $this->validate($request, [
+            'name' => 'required|string|max:191',
+        ]);
+
+        $this->uploadFiles($request);
+
+        return Product::create([
+            'name' => $request['name'],
+            'description' => $request['description'],
+        ]);
     }
 
     /**
@@ -71,7 +93,21 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $product = Product::findOrFail($id);
+
+        $this->validate($request, [
+            'name' => 'required|string|max:191',
+        ]);
+
+        if ($request->photo_id !== null) {
+            $this->savePhoto($request, 'products', 'photo_id');
+        }
+
+        $product->update($request->all());
+
+        return ['product' => $product];
     }
 
     /**
@@ -82,6 +118,29 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $product = Product::findOrFail($id);
+
+        $product->delete();
+
+        return ['message' => 'Product deleted'];
+    }
+
+    /**
+     * Upload files and save names in specified fields
+     *
+     * @param Request $request
+     */
+    public function uploadFiles(Request $request)
+    {
+        $imgFields = ['photo_id'];
+
+        foreach ($imgFields as $imgField) {
+
+            if ($request->$imgField !== null) {
+                $this->savePhoto($request, 'products', $imgField);
+            }
+        }
     }
 }

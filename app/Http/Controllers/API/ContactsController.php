@@ -5,10 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use App\Traits\StoreImageTrait;
 
 class ContactsController extends Controller
 {
+    use StoreImageTrait;
+
     /**
      * ContactsController constructor.
      *
@@ -26,9 +28,7 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::orderBy('name')->paginate(5);//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
+        $contacts = Contact::orderBy('name')->get();//To get the output in array
 
         return response()->json($contacts);
     }
@@ -62,14 +62,7 @@ class ContactsController extends Controller
             'email' => 'required|string|email|max:191|unique:users',
         ]);
 
-/*        $name = time().'.' . explode('/',
-                explode(':',
-                    substr($request->photo, 0,
-                        strpos($request->photo, ';')))[1])[1];
-
-        \Image::make($request->photo)->save(public_path('img/profile/').$name);
-
-        $request->merge(['photo' => $name]);*/
+        $this->uploadFiles($request);
 
         return Contact::create([
             'name' => $request['name'],
@@ -106,7 +99,7 @@ class ContactsController extends Controller
             'email' => 'required|string|email|max:191|unique:users,email,'.$contact->id,
         ]);
 
-        //$this->savePhoto($request, $user);
+        $this->uploadFiles($request);
 
         $contact->update($request->all());
 
@@ -128,5 +121,22 @@ class ContactsController extends Controller
         $contact->delete();
 
         return ['message' => 'Contact deleted'];
+    }
+
+    /**
+     * Upload files and save names in specified fields
+     *
+     * @param Request $request
+     */
+    public function uploadFiles(Request $request)
+    {
+        $imgFields = ['photo_id'];
+
+        foreach ($imgFields as $imgField) {
+
+            if ($request->$imgField !== null) {
+                $this->savePhoto($request, 'profile', $imgField);
+            }
+        }
     }
 }

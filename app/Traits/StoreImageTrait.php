@@ -33,7 +33,7 @@ trait StoreImageTrait
                                 strpos($request->$fieldname, ';')))[1])[1];
 
                 //$request->$fieldname->move('img/'.$directory.'/' , $name);
-
+                \Image::make($request->$fieldname)->save(public_path('img/'.$directory.'/').$name);
 
                 $request->merge([$fieldname => $name]);
 

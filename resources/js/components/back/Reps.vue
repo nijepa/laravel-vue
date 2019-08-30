@@ -2,29 +2,16 @@
     <div class="container" data-aos="fade-right">
         <div class="row" v-if="$gate.isAdmin()">
             <div class="col-12">
-
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3">
-                            <i class="fas fa-building fa-2x icolor"></i> COMPANIES
-                        </h3>
-    <!--                    <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal()">
-                                Add Company <span><i class="cap-icon ci-plus"></i></span>
-                            </button>
-                        </div>-->
-                    </div>
-                    <div class="d-flex justify-content-center mt-3">
-                        <button class="btn btn-success" @click="newModal()">
-                            Add Company <span><i class="cap-icon ci-plus"></i></span>
-                        </button>
-                    </div>
-                    <!-- /.card-header -->
                     <appTableOptions
+                            :title="'COMPANIES'"
+                            :button-title="'Company'"
+                            :at-click="newModal"
+                            :button-icon="'fas fa-building fa-2x icolor'"
                             @pageSizeChanged="onPageSizeChanged"
                             @searchChanged="onSearchChanged"
                     ></appTableOptions>
-
+                    <!-- /.card-header -->
                     <hr>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
@@ -98,7 +85,6 @@
                             </tbody>
                         </table>
                     </div>
-
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <appPagination

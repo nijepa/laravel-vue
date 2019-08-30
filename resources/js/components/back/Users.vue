@@ -1,19 +1,23 @@
 <template>
-    <div class="container">
+    <div class="container" data-aos="fade-right">
         <div class="row" v-if="$gate.isAdmin()">
             <div class="col-12">
 
                 <div class="card">
-                    <div class="card-header">
+       <!--             <div class="card-header">
                         <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-users fa-2x icolor"></i> USERS</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add User <span><i class="fas fa-user-plus"></i></span>
                             </button>
                         </div>
-                    </div>
+                    </div>-->
                     <!-- /.card-header -->
                     <appTableOptions
+                        :title="'USERS'"
+                        :button-title="'User'"
+                        :at-click="newModal"
+                        :button-icon="'fas fa-users fa-2x icolor'"
                         @pageSizeChanged="onPageSizeChanged"
                         @searchChanged="onSearchChanged">
                     </appTableOptions>

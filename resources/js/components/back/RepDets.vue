@@ -5,117 +5,100 @@
 
             <!-- Card -->
                 <div class="card" data-aos="flip-up">
-                    <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold">
-<!--                            <img :src="'img/companies/logosSmall/'+rep.logo_small_id" alt=""> -->
-                            {{ oneRep.name}} - DOCUMENTS
-                        </h3>
-                    </div>
-                        <div class="d-flex justify-content-between mt-3">
-                            <router-link to="/reps" class="nav-link btn btn-outline-secondary ml-3" tag="button">
-                                <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
-                            </router-link>
-                            <button class="btn btn-success mr-3" @click="newModal()">
-                                Add Document <span><i class="cap-icon ci-plus"></i></span>
-                            </button>
-                        </div>
-                        <hr>
-                     <!--   <div class="">
-                            <router-link to="/reps" class="nav-link btn btn-outline-secondary ml-3" tag="button">
-                                <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
-                            </router-link>
-                        </div>-->
+                    <div class="d-flex justify-content-between mt-3">
+
                         <div class="ml-3 mt-3">
                             <div class="">
-                                <p class="d-inline p-2">Name :</p>
-                                <h4 class="d-inline p-2">{{ oneRep.name }}</h4>
+                                <h3 class="d-inline p-2 text-blue font-weight-bold">{{ oneRep.name }}</h3>
                             </div>
                             <div class="mt-2">
-                                <p class="d-inline p-2">Short description :</p>
-                                <h5 class="d-inline p-2">{{ oneRep.short_desc }}</h5>
-                            </div>
-                            <div class="mt-2">
-                                <p class="d-inline p-2">Description :</p>
-                                <h5 class="d-inline p-2">{{ oneRep.description }}</h5>
+                                <h4 class="d-inline p-2">{{ oneRep.short_desc }}</h4>
                             </div>
                         </div>
-                        <hr>
-            <!-- /.card-header -->
-                    <div v-if="repDets.repDet.length">
-                    <appTableOptions
-                            @pageSizeChanged="onPageSizeChanged"
-                            @searchChanged="onSearchChanged"
-                    ></appTableOptions>
-
+                        <router-link to="/reps" class="nav-link btn btn-outline-secondary mr-3" tag="button">
+                            <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
+                        </router-link>
+                    </div>
                     <hr>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th @click="sortBy('id')">ID
-                                        <i v-if="sortKey === 'id'"
-                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
-                                           class="ic">
-                                        </i>
-                                    </th>
-                                    <th @click="sortBy('title')">Title
-                                        <i v-if="sortKey === 'title'"
-                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
-                                           class="ic">
-                                        </i>
-                                    </th>
-                                    <th @click="sortBy('doc_id')">Document
-                                        <i v-if="sortKey === 'doc_id'"
-                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
-                                           class="ic">
-                                        </i>
-                                    </th>
-                                    <th @click="sortBy('created_at')">Created At
-                                        <i v-if="sortKey === 'created_at'"
-                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
-                                           class="ic">
-                                        </i>
-                                    </th>
-                                    <th>Modify</th>
-                                </tr>
-                            </thead>
-                                <tbody>
-                                <tr v-for="repDet in repsSorted" :key="repDet.id">
-                                    <td>{{ repDet.id }}</td>
-                                    <td>{{ repDet.title }}</td>
-                                    <td>
-                                        <a :href="'img/companies/docs/'+repDet.doc_id" target="_blank">{{ repDet.doc_id }}</a>
-                                    </td>
-                                    <td>{{ repDet.created_at | customDate }}</td>
-                                    <td>
-                                        <button @click="editModal(repDet)"
-                                                class="btn btn-info btn-sm"
-                                                data-toggle="tooltip" data-placement="top" title="Edit Company">
-                                            <i class="cap-icon ci-file-edit"></i>
-                                        </button>
-                                        /
-                                        <button  @click="deleteRep(repDet)"
-                                                 class="btn btn-danger btn-sm"
-                                                 data-toggle="tooltip" data-placement="top" title="Delete Company">
-                                            <i class="cap-icon ci-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div v-if="repDets.repDet.length">
+                        <appTableOptions
+                                :title="'DOCUMENTS'"
+                                :button-title="'Document'"
+                                :at-click="newModal"
+                                :button-icon="'far fa-file-alt fa-2x icolor'"
+                                @pageSizeChanged="onPageSizeChanged"
+                                @searchChanged="onSearchChanged"
+                        ></appTableOptions>
+                <!-- /.card-header -->
+                        <hr>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th @click="sortBy('id')">ID
+                                            <i v-if="sortKey === 'id'"
+                                               :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
+                                               class="ic">
+                                            </i>
+                                        </th>
+                                        <th @click="sortBy('title')">Title
+                                            <i v-if="sortKey === 'title'"
+                                               :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
+                                               class="ic">
+                                            </i>
+                                        </th>
+                                        <th @click="sortBy('doc_id')">Document
+                                            <i v-if="sortKey === 'doc_id'"
+                                               :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
+                                               class="ic">
+                                            </i>
+                                        </th>
+                                        <th @click="sortBy('created_at')">Created At
+                                            <i v-if="sortKey === 'created_at'"
+                                               :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
+                                               class="ic">
+                                            </i>
+                                        </th>
+                                        <th>Modify</th>
+                                    </tr>
+                                </thead>
+                                    <tbody>
+                                    <tr v-for="repDet in repsSorted" :key="repDet.id">
+                                        <td>{{ repDet.id }}</td>
+                                        <td>{{ repDet.title }}</td>
+                                        <td>
+                                            <a :href="'img/companies/docs/'+repDet.doc_id" target="_blank">{{ repDet.doc_id }}</a>
+                                        </td>
+                                        <td>{{ repDet.created_at | customDate }}</td>
+                                        <td>
+                                            <button @click="editModal(repDet)"
+                                                    class="btn btn-info btn-sm"
+                                                    data-toggle="tooltip" data-placement="top" title="Edit Company">
+                                                <i class="cap-icon ci-file-edit"></i>
+                                            </button>
+                                            /
+                                            <button  @click="deleteRep(repDet)"
+                                                     class="btn btn-danger btn-sm"
+                                                     data-toggle="tooltip" data-placement="top" title="Delete Company">
+                                                <i class="cap-icon ci-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                <!-- /.card-body -->
+                        <div class="card-footer">
+                            <appPagination
+                                    :maxVisibleButtons="totalPages"
+                                    :total-pages="totalPages"
+                                    :total="totalPages"
+                                    :per-page="3"
+                                    :current-page="currentPage"
+                                    @pagechanged="onPageChange"
+                            ></appPagination>
+                        </div>
                     </div>
-            <!-- /.card-body -->
-                    <div class="card-footer">
-                        <appPagination
-                                :maxVisibleButtons="totalPages"
-                                :total-pages="totalPages"
-                                :total="totalPages"
-                                :per-page="3"
-                                :current-page="currentPage"
-                                @pagechanged="onPageChange"
-                        ></appPagination>
-                    </div>
-                </div>
                     <div v-else class="card m-2">
                         <h3 class="text-blue font-weight-bold m-3">
                             No files uploaded !
@@ -315,7 +298,6 @@
                 let formData = this.prepareData();
 
                 axios.post('../api/reps_det', formData)
-               // this.form.post('api/reps_det')
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -367,7 +349,6 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
-                    // Send request to the server
                     if (result.value) {
                         this.form.delete('../api/reps_det/'+rep.id).then(()=>{
                             swal.fire(
@@ -391,15 +372,11 @@
                 let query = this.$parent.search;
                 this.fetchRepsS(query);
             });
-            /*axios.get(`../api/reps_det/${this.repId}`)
-                .then(({data}) => {
-                    console.log(data);
-                    this.repDets = data;
-                });*/
 
             this.loadReps();
             this.fetchCities();
             this.cities = this.$store.state.cities;
+
             Fire.$on('AfterCreate', () => {
                 this.loadReps();
             });

@@ -14,7 +14,35 @@ export default
         }
     },
 
+    computed: {
+
+/*        sortFilterData() {
+
+            if (this.search) {
+                result = result.filter(item => item.name.toLowerCase().includes(this.search));
+            }
+
+            result =  _.orderBy(result, this.sortKey, this.sortOrder);
+
+            return result.filter((row, index) => {
+                this.totalPages = Math.ceil(result.length / this.pageSize);
+                let start = (this.currentPage - 1) * this.pageSize;
+                let end = this.currentPage * this.pageSize;
+                if (index >= start && index < end) return true;
+            });
+        },*/
+
+        classe() {
+            if (this.sortOrder === 'asc') {
+                return 'fas fa-angle-up ic';
+            } else {
+                return 'fas fa-angle-down ic'
+            }
+        },
+    },
+
     methods: {
+
         onPageChange(page) {
             console.log(page);
             this.currentPage = page;
