@@ -1,91 +1,121 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\ProductDet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use App\Traits\StoreImageTrait;
 
 class ProductDetsController extends Controller
 {
+    use StoreImageTrait;
+
+    /**
+     * ProductsDets Controller constructor.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function index()
     {
         $productdets = ProductDet::orderBy('title')->get();//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
 
         return response()->json($productdets);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @throws
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $this->validate($request, [
+            'title' => 'required|string|max:191',
+        ]);
+
+        if ($request->photo_id !== null) {
+            $this->savePhoto($request, 'products', 'photo_id');
+        }
+
+        return ProductDet::create([
+            'product_id' => $request['product_id'],
+            'title' => $request['name'],
+            'description' => $request['description'],
+            'photo_id' => $request['photo_id']
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function show($id)
     {
-        //
-    }
+        $product = ProductDet::where('product_id', $id)->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json($product);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $product = ProductDet::findOrFail($id);
+
+        $this->validate($request, [
+            'title' => 'required|string|max:191',
+        ]);
+
+        if ($request->photo_id !== null) {
+            $this->savePhoto($request, 'products', 'photo_id');
+        }
+
+        $product->update($request->all());
+
+        return ['product' => $product];
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $product = ProductDet::findOrFail($id);
+
+        $product->delete();
+
+        return ['message' => 'Product deleted'];
     }
 }

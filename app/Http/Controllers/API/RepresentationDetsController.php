@@ -13,9 +13,18 @@ class RepresentationDetsController extends Controller
     use StoreImageTrait;
 
     /**
+     * RepDets Controller constructor.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
+    }
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function index()
     {
@@ -27,13 +36,15 @@ class RepresentationDetsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      *
      * @throws
      */
     public function store(Request $request)
     {
+        $this->authorize('isAdmin');
+
         $this->validate($request, [
             'title' => 'required|string|max:191'
         ]);
@@ -51,7 +62,7 @@ class RepresentationDetsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function show($id)
     {
@@ -64,15 +75,15 @@ class RepresentationDetsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      *
      * @throws
      */
     public function update(Request $request, $id)
     {
-        //$this->authorize('isAdmin');
+        $this->authorize('isAdmin');
 
         $rep = RepDet::findOrFail($id);
 
@@ -91,11 +102,12 @@ class RepresentationDetsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws
      */
     public function destroy($id)
     {
-        //$this->authorize('isAdmin');
+        $this->authorize('isAdmin');
 
         $rep = RepDet::findOrFail($id);
 

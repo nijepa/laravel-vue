@@ -18,13 +18,13 @@ class ProductsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function index()
     {
@@ -41,8 +41,6 @@ class ProductsController extends Controller
     public function productF()
     {
         $products = Product::orderBy('name')->get();//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
 
         return response()->json($products);
     }
@@ -50,8 +48,10 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @throws
      */
     public function store(Request $request)
     {
@@ -61,7 +61,9 @@ class ProductsController extends Controller
             'name' => 'required|string|max:191',
         ]);
 
-        $this->uploadFiles($request);
+        if ($request->photo_id !== null) {
+            $this->savePhoto($request, 'products', 'photo_id');
+        }
 
         return Product::create([
             'name' => $request['name'],
@@ -73,13 +75,11 @@ class ProductsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
 
         return response()->json($product);
     }
@@ -87,9 +87,11 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     *
+     * @throws
      */
     public function update(Request $request, $id)
     {
@@ -114,7 +116,9 @@ class ProductsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     *
+     * @throws
      */
     public function destroy($id)
     {
@@ -125,22 +129,5 @@ class ProductsController extends Controller
         $product->delete();
 
         return ['message' => 'Product deleted'];
-    }
-
-    /**
-     * Upload files and save names in specified fields
-     *
-     * @param Request $request
-     */
-    public function uploadFiles(Request $request)
-    {
-        $imgFields = ['photo_id'];
-
-        foreach ($imgFields as $imgField) {
-
-            if ($request->$imgField !== null) {
-                $this->savePhoto($request, 'products', $imgField);
-            }
-        }
     }
 }

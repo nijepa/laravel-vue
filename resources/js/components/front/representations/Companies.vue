@@ -5,7 +5,9 @@
 
                 <div class="col-4 my-5">
                     <nav @click="getRep(rep, rep.id)" :key="rep.id" class="nav flex-column list-group" v-for="rep in allReps">
-                        <a  class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}} <img :src="'../img/companies/logosSmall/' + rep.logo_small_id" class="img-fluid mx-auto d-block"></a>
+                        <a class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}}
+                            <img :src="'../img/companies/logosSmall/' + rep.logo_small_id" class="img-fluid mx-auto d-block">
+                        </a>
                     </nav>
                 </div>
 
@@ -14,16 +16,23 @@
                         <transition name="slide" mode="out-in" appear>
 
                             <div :key="oneRep.id" v-if="oneRep.id" class="card-body">
-                                <a :href="oneRep.website" target="_blank"><img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block"></a>
-                                <img :src="'../img/companies/' + oneRep.photo_id" alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
-                                <h3>{{oneRep.name}} <a :href="oneRep.website" target="_blank"><i class='cap-icon ci-link'></i></a></h3>
+                                <a :href="oneRep.website" target="_blank">
+                                    <img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block">
+                                </a>
+                                <img :src="'../img/companies/' + oneRep.photo_id"
+                                     alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
+                                <h3>{{oneRep.name}}
+                                    <a :href="oneRep.website" target="_blank"><i class='cap-icon ci-link'></i></a>
+                                </h3>
                                 <h5 class="text-muted">{{oneRep.short_desc}}</h5>
                                 <p class="my-3" v-html="oneRep.description"></p>
 
                                 <div v-if="allRepDet.length">
                                     <img :src="'../img/companies/docs/pdfdown.png'" alt="" class="img-fluid my-3">
                                     <div :key="repDet.id" v-for="repDet in allRepDet">
-                                        <a :href="'../img/companies/docs/' + repDet.doc_id" target="_blank" class="my-3"><i class="cap-icon ci-download m-1"></i> {{repDet.title}}</a>
+                                        <a :href="'../img/companies/docs/' + repDet.doc_id" target="_blank" class="my-3">
+                                            <i class="cap-icon ci-download m-1"></i> {{repDet.title}}
+                                        </a>
                                     </div>
                                 </div>
 
@@ -47,17 +56,26 @@
 </template>
 
 <script>
-
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
 
         name: "Companies",
 
-        computed: mapGetters(['allReps', 'oneRep', 'allRepDet']),
+        computed:
+            mapGetters([
+                'allReps',
+                'oneRep',
+                'allRepDet'
+            ]),
 
         methods: {
-            ...mapActions(['fetchReps', 'fetchRep', 'resetRepState', 'fetchRepDet']),
+            ...mapActions([
+                'fetchReps',
+                'fetchRep',
+                'resetRepState',
+                'fetchRepDet'
+            ]),
 
             getRep(rep, id) {
                 const selRep = rep;

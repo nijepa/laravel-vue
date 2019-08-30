@@ -14,10 +14,10 @@
                         <div class="">
                             <form action="" >
                                 <div class="form-group">
-                                    <input class="form-control" type="text" v-model="abouts.abouts.data[0].title" >
+                                    <input class="form-control" type="text" v-model="abouts.abouts.title" >
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control" type="text" v-model="abouts.abouts.data[0].description" ></textarea>
+                                    <textarea class="form-control" type="text" v-model="abouts.abouts.body" ></textarea>
                                 </div>
                             </form>
                         </div>
@@ -33,31 +33,22 @@
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
-                            <tr v-for="about in abouts.abouts.data" :key="about.id">
+                            <tr v-for="about in abouts.abouts" :key="about.id">
                                 <td>{{ about.id }}</td>
                                 <td>{{ about.caption }}</td>
                                 <td>{{ about.description }}</td>
                                 <td>{{ about.created_at | customDate }}</td>
-                                <td>
-                                    <button @click="editModal(about)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-
-                                    <button  @click="deleteAbout(about)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
+                                <appTableActions
+                                        :action-title="''"
+                                        :at-click-edit="editModal.bind(this, about)"
+                                        :at-click-delete="deleteAbout.bind(this, about)"
+                                ></appTableActions>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer">
-                        <pagination :data="abouts.abouts" @pagination-change-page="getResults">
-                            <span slot="prev-nav">&lt; Previous</span>
-                            <span slot="next-nav">Next &gt;</span>
-                        </pagination>
-                    </div>
+
                 </div>
                 <!-- /.card -->
             </div>
@@ -66,13 +57,10 @@
             <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Add New About</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update About</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                        <appModalHeader
+                                :title="'About'"
+                                :mode="editMode"
+                        ></appModalHeader>
                         <!-- /.modal-header -->
                         <form @submit.prevent="editMode ? updateAbout() : createAbout()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
@@ -83,11 +71,9 @@
                                     <has-error :form="form" field="title"></has-error>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="far fa-times-circle"></i></span></button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="far fa-check-circle"></i></span></button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="far fa-save"></i></span></button>
-                            </div>
+                            <appModalActions
+                                    :mode="editMode"
+                            ></appModalActions>
                             <!-- /.modal-body -->
                         </form>
                         <!-- /.form -->
@@ -104,19 +90,32 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import TableActions from '../shared/TableActions';
+    import ModalActions from '../shared/ModalActions';
+    import ModalHeader from '../shared/ModalHeader';
+    import tableActions from '../../mixins/tableActions';
+    import modalForm from '../../mixins/modalForm';
 
     export default {
 
         name: "Abouts",
 
+        components: {
+            appTableActions: TableActions,
+            appModalActions: ModalActions,
+            appModalHeader: ModalHeader,
+        },
+
+        mixins: [tableActions, modalForm],
+
         data() {
             return {
                 abouts: {},
+
                 form: new Form({
                     id: '',
                     title: ''
                 }),
-                editMode: true
             }
         },
 
@@ -135,31 +134,9 @@
                     /*              axios.get("api/user")
                                       .then(({ data }) => (this.users = data))
                                       .catch();*/
-                    this.fetchAboutsP();
+                    this.fetchAbouts();
                     this.abouts = this.$store.state.abouts;
                 }
-            },
-
-            getResults(page = 1) {
-                this.fetchAboutsP(page);
-                this.abouts = this.$store.state.abouts;
-                /*        axios.get('api/user?page=' + page)
-                            .then(response => {
-                                console.log(response.data);
-                                this.users = response.data;
-                            });*/
-            },
-
-            newModal() {
-                this.editMode = false;
-                this.form.reset();
-                $('#addNew').modal('show');
-            },
-
-            editModal(about) {
-                this.editMode = true;
-                $('#addNew').modal('show');
-                this.form.fill(about);
             },
 
             createAbout() {

@@ -20,10 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Front end apis
 Route::apiResources(['owner' => 'API\OwnersController']);
 Route::apiResources(['representation' => 'API\RepresentationsController']);
-Route::apiResources(['product' => 'API\ProductsController']);
 Route::apiResources(['reps_det' => 'API\RepresentationDetsController']);
-Route::apiResources(['about_dets' => 'API\AboutDetsController']);
+Route::apiResources(['product' => 'API\ProductsController']);
 Route::apiResources(['product_dets' => 'API\ProductDetsController']);
+Route::apiResources(['about_dets' => 'API\AboutDetsController']);
 Route::apiResources(['news' => 'API\NewsController']);
 
 Route::get('productF', 'API\ProductsController@productF');

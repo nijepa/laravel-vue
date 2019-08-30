@@ -15,7 +15,7 @@ class AboutsController extends Controller
      */
     public function index()
     {
-        $abouts = About::orderBy('title')->leftJoin('about_dets', 'abouts.id', '=', 'about_dets.about_id')->paginate(5);//To get the output in array
+        $abouts = About::orderBy('title')->leftJoin('about_dets', 'abouts.id', '=', 'about_dets.about_id')->get();//To get the output in array
 
 
         return response()->json($abouts);

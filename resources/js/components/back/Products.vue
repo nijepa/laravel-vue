@@ -33,7 +33,12 @@
                                 <th>Modify</th>
                             </tr>
                             <tr v-for="product in repsSorted" :key="product.id">
-                                <td>{{ product.id }}</td>
+                                <router-link
+                                        :to="{name:'prod', params: {id: product.id, selProduct: product}}"
+                                        activeClass="active" tag="a" class="nav-item nav-link">
+                                    {{ product.id }}
+                                </router-link>
+<!--                                <td>{{ product.id }}</td>-->
                                 <td><img :src="'img/products/'+product.photo_id" alt="" style="height: 50px"></td>
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.description }}</td>

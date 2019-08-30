@@ -4,7 +4,7 @@ const getDefaultState = () => {
     return {
         productDet: []
     }
-}
+};
 
 const state = {
     productDet: getDefaultState()
@@ -17,7 +17,7 @@ const getters = {
 const actions = {
     async fetchProductDet ({ commit }, productDet) {
         const response = await axios.get(
-            `api/product_dets/${productDet.id}`,
+            `../api/product_dets/${productDet}`,
             productDet
         );
         commit('setProductDet', response.data);

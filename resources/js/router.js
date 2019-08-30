@@ -36,6 +36,7 @@ export default new Router({
         {path: '/reps', component: () => import('./components/back/Reps.vue')},
         //{path: '/repDets', component: () => import('./components/back/RepDets.vue')},
         {name: 'repd', path: '/repDets/:id', component: () => import('./components/back/RepDets.vue'), props: true},
+        {name: 'prod', path: '/productDets/:id', component: () => import('./components/back/ProductDets.vue'), props: true},
         {path: '*', component: () => import('./components/NotFound.vue')}
     ]
 })

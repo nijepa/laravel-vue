@@ -20,7 +20,7 @@
                   </div>
                 </div> -->
                 <div :key="rep.id" class="carousel-item" v-for="(rep, idx) in allReps" :class="{ active: idx==0 }" >
-                    <div @click="getRep(rep)" class="carousel-caption mb-3">
+                    <div @click="getRep(rep.id)" class="carousel-caption mb-3">
                         <img :src="'../img/companies/' + rep.photo_id" class="img-fluid mx-auto d-block">
                         <h1 class="display-4 text-dark capsize">{{rep.name}}</h1>
                         <p class="lead text-dark">{{rep.email}}</p>

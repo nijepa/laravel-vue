@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Contact;
+use http\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\StoreImageTrait;
@@ -18,13 +19,13 @@ class ContactsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return json response
      */
     public function index()
     {
@@ -40,9 +41,7 @@ class ContactsController extends Controller
      */
     public function contactF()
     {
-        $contacts = Contact::orderBy('name')->get();//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
+        $contacts = Contact::orderBy('name')->get();
 
         return response()->json($contacts);
     }
@@ -50,8 +49,10 @@ class ContactsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
+     *
+     * @throws
      */
     public function store(Request $request)
     {
@@ -84,9 +85,11 @@ class ContactsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     *
+     * @throws
      */
     public function update(Request $request, $id)
     {
@@ -110,7 +113,9 @@ class ContactsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     *
+     * @throws
      */
     public function destroy($id)
     {
@@ -127,6 +132,8 @@ class ContactsController extends Controller
      * Upload files and save names in specified fields
      *
      * @param Request $request
+     *
+     * @return void
      */
     public function uploadFiles(Request $request)
     {

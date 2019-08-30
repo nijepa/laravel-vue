@@ -4,8 +4,11 @@
             <div class="row">
 
                 <div class="col-4 my-5">
-                    <nav  @click="getProduct(product)" :key="product.id" class="nav flex-column list-group" v-for="product in allProducts">
-                        <a style="height:150px;" href="#" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{product.name}} <img :src="'../img/' + product.photo_id" class="img-fluid mx-auto d-block h-75"></a>
+                    <nav  @click="getProduct(product, product.id)" :key="product.id"
+                          class="nav flex-column list-group" v-for="product in allProducts">
+                        <a style="height:150px;" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{product.name}}
+                            <img :src="'../img/' + product.photo_id" class="img-fluid mx-auto d-block h-75">
+                        </a>
                     </nav>
                 </div>
 
@@ -15,25 +18,26 @@
                             <div :key="oneProduct.id" v-if="oneProduct.id" class="card-body">
 <!--                                <a :href="oneRep.website" target="_blank"><img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block"></a>-->
                                 <img :src="'../img/' + oneProduct.photo_id" alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
-                                <h3>{{oneProduct.name}}</h3>
+                                <h3>{{ oneProduct.name }}</h3>
 <!--                                <h5 class="text-muted">{{oneRep.short_desc}}</h5>-->
                                 <p class="my-3" v-html="oneProduct.description"></p>
-                         <!--       <div v-if="allRepDet.length">
+
+                                <div >
                                     <img :src="'../img/companies/docs/pdfdown.png'" alt="" class="img-fluid my-3">
-                                    <div :key="repDet.id" v-for="repDet in allRepDet">
-                                        <a :href="'../img/companies/docs/' + repDet.doc_id" target="_blank" class="my-3"><i class="cap-icon ci-download m-1"></i> {{repDet.title}}</a>
+                                    <div :key="productDet.id" v-for="productDet in allProductDet">
+<!--                                        <a :href="'../img/companies/docs/' + repDet.doc_id" target="_blank" class="my-3"><i class="cap-icon ci-download m-1"></i> {{repDet.title}}</a>-->
+                                        <p>{{ productDet.title }}</p>
                                     </div>
-                                </div>-->
+                                </div>
                             </div>
                             <div key=2 v-else class="card-body">
                                 <i class="cap-icon ci-shopping-cart-full mb-2 activ mx-auto" style="cursor: pointer; font-size: 80px"></i>
                                 <!--<img src="img/person3.jpg" alt="" class="img-fluid rounded-circle w-50 mb-3">-->
                                 <h3 class="mt-3 mb-3">Naši proizvodi</h3>
                                 <!--<h5 class="text-muted">CEO</h5>-->
-                                <p>Iskustvo, kao i dugogodišnje poslovanje sa pomenutim evropskim firmama i mnogim drugim Vam garantuju kvalitetnu i fer saradnju.</p>
-                                <p>Molimo Vas da nam se obratite ako imate bilo kakvo pitanje vezano za dole navedene firme ili njihove proizvodne programe.</p>
-                                <p>Jedna od osnovnih karakterisitka i uslova u našem poslovanju jeste kompletan servis koji pružamo na zahtev svih zainteresovanih kupaca u vidu pomoći, asistencije, informacija iz bilo koje od pomenutih oblasti, uzorkovanja, posete tehničara i laboranata, tj. stavljanja u servis svih firmi sa kojima smo potpisali ugovor o ekskluzivnom zastupanju.</p>
-                                <p>Klikom na nazive firmi možete pročitati detaljniji opis istih, tj. naći dodatne informacije o njihovim proizvodnim programima, učitati tehnička uputstva...</p>
+                                <p>Proizvodi koje prodajemo</p>
+                                <p>Molimo Vas da nam se obratite ako imate bilo kakvo pitanje vezano za navedene proizvode.</p>
+                                <p>Klikom na nazive proizvoda možete pročitati detaljniji opis istih, tj. naći dodatne informacije.</p>
                             </div>
                         </transition>
                     </div>
@@ -50,26 +54,36 @@
 
         name: "Products",
 
-        computed: mapGetters(['allProducts', 'oneProduct', 'allProductDet']),
+        computed:
+            mapGetters([
+                'allProducts',
+                'oneProduct',
+                'allProductDet'
+            ]),
 
         methods: {
-            ...mapActions(['fetchProductsF', 'fetchProduct', 'resetProductState', 'fetchProductDet']),
+            ...mapActions([
+                'fetchProducts',
+                'fetchProduct',
+                'resetProductState',
+                'fetchProductDet'
+            ]),
 
-            getProduct(product) {
+            getProduct(product, id) {
                 const selProduct = product;
-                this.fetchProduct(selProduct);
-                this.fetchProductDet(selProduct);
+                const selProductID = id;
+                this.fetchProduct(selProductID);
+                this.fetchProductDet(selProductID);
             }
         },
 
         created() {
-            this.fetchProductsF();
+            this.fetchProducts();
         },
 
         destroyed:function(){
             this.resetProductState();
         }
-
     }
 </script>
 

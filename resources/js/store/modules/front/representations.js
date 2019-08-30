@@ -40,11 +40,6 @@ const mutations = {
     resetState (state) {
         Object.assign(state, getDefaultState())
     }
-    //   const index = state.reps.findIndex(rep => reps.id === rep.id);
-    //   if (index !== -1) {
-    //     state.reps.splice(index, 1, rep);
-    //   }
-    // }
 };
 
 export default {

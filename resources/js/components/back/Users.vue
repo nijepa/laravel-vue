@@ -238,11 +238,17 @@
             usersSorted: function() {
                 let result = this.users.users;
                 //this.totalPages = Math.ceil(result.length / this.pageSize);
-                if (this.search) {
+      /*          if (this.search) {
                     result = result.filter(item => item.name.toLowerCase().includes(this.search));
-                    this.currentPage = 1;
+                    //this.currentPage = 1;
+                }*/
+                if (this.search) {
+                var self = this;
+                result = result.filter(function (users) {
+                    return users.name.toLowerCase().indexOf(self.search.toLowerCase()) >= 0
+                        || users.email.toLowerCase().indexOf(self.search.toLowerCase()) >= 0;
+                });
                 }
-
                 result =  _.orderBy(result, this.sortKey, this.sortOrder);
 
                 return result.filter((row, index) => {

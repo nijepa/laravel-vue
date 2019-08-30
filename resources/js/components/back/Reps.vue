@@ -294,8 +294,15 @@
             repsSorted() {
                 let result = this.representations.reps;
 
-                if (this.search) {
+       /*         if (this.search) {
                     result = result.filter(item => item.name.toLowerCase().includes(this.search));
+                }*/
+                if (this.search) {
+                    var self = this;
+                    result = result.filter(function (users) {
+                        return users.name.toLowerCase().indexOf(self.search.toLowerCase()) >= 0
+                            || users.short_desc.toLowerCase().indexOf(self.search.toLowerCase()) >= 0;
+                    });
                 }
 
                 result =  _.orderBy(result, this.sortKey, this.sortOrder);
