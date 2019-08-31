@@ -4,7 +4,7 @@ const getDefaultState = () => {
     return {
         newsD: []
     }
-}
+};
 
 const state = {
     news: [],

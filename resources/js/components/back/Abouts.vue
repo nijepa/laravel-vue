@@ -111,15 +111,23 @@
         data() {
             return {
                 abouts: {},
+                aboutID: 1,
+                aboutsDet: {},
 
                 form: new Form({
                     id: '',
-                    title: ''
+                    about_id: this.aboutID,
+                    caption: '',
+                    description: ''
                 }),
             }
         },
 
-        computed: mapGetters(['allAbouts']),
+        computed: {
+            ...mapGetters(['allAbouts']),
+
+
+        },
 
         methods: {
             ...mapActions(['fetchAbouts',

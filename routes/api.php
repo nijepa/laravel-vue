@@ -36,6 +36,7 @@ Route::apiResources(['user' => 'API\UserController']);
 Route::apiResources(['city' => 'API\CitiesController']);
 Route::apiResources(['country' => 'API\CountriesController']);
 Route::apiResources(['product' => 'API\ProductsController']);
+Route::apiResources(['newsb' => 'API\NewsController']);
 Route::apiResources(['contact' => 'API\ContactsController']);
 Route::apiResources(['about' => 'API\AboutsController']);
 Route::apiResources(['reps' => 'API\RepresentationsController']);

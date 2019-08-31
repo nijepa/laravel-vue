@@ -31,6 +31,7 @@ export default new Router({
         {path: '/cities', component: () => import('./components/back/Cities.vue')},
         {path: '/countries', component: () => import('./components/back/Countries.vue')},
         {path: '/products', component: () => import('./components/back/Products.vue')},
+        {path: '/newsb', component: () => import('./components/back/News.vue')},
         {path: '/contacts', component: () => import('./components/back/Contacts.vue')},
         {path: '/abouts', component: () => import('./components/back/Abouts.vue')},
         {path: '/reps', component: () => import('./components/back/Reps.vue')},

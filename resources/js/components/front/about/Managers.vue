@@ -19,7 +19,7 @@
                     <div class="col-lg-4 col-md-6" :key="contact.id" v-for="contact in allContacts">
                         <div class="card">
                             <div class="card-body">
-                                <img src="img/person3.jpg" alt="" class="img-fluid rounded-circle w-50 mb-3">
+                                <img :src="'img/profile/'+contact.photo_id" alt="" class="img-fluid rounded-circle w-50 mb-3">
                                 <h3>{{contact.name}}</h3>
                                 <h5 class="text-muted">{{contact.title}}</h5>
                                 <div class="d-flex justify-content-center">

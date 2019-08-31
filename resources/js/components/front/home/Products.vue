@@ -22,7 +22,7 @@
                         <div :key="product.id" class="col-lg-3 col-md-6" v-for="product in allProducts">
                             <div class="card">
                                 <div @click="getProduct(product.id)" class="card-body">
-                                    <img :src="'../img/' + product.photo_id" alt="" class="img-fluid rounded-circle w-80 mb-3">
+                                    <img :src="'../img/products/' + product.photo_id" alt="" class="img-fluid rounded-circle w-80 mb-3">
                                     <h3>{{product.name}}</h3>
                                     <h5 class="text-muted">{{product.description}}</h5>
                                     <!--<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed commodi nostrum, ab libero voluptas officia.</p>-->

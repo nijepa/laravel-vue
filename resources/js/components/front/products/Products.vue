@@ -7,7 +7,7 @@
                     <nav  @click="getProduct(product, product.id)" :key="product.id"
                           class="nav flex-column list-group" v-for="product in allProducts">
                         <a style="height:150px;" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{product.name}}
-                            <img :src="'../img/' + product.photo_id" class="img-fluid mx-auto d-block h-75">
+                            <img :src="'../img/products/' + product.photo_id" class="img-fluid mx-auto d-block h-75">
                         </a>
                     </nav>
                 </div>
@@ -17,12 +17,12 @@
                         <transition name="slide" mode="out-in" appear>
                             <div :key="oneProduct.id" v-if="oneProduct.id" class="card-body">
 <!--                                <a :href="oneRep.website" target="_blank"><img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block"></a>-->
-                                <img :src="'../img/' + oneProduct.photo_id" alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
+                                <img :src="'../img/products/' + oneProduct.photo_id" alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
                                 <h3>{{ oneProduct.name }}</h3>
 <!--                                <h5 class="text-muted">{{oneRep.short_desc}}</h5>-->
                                 <p class="my-3" v-html="oneProduct.description"></p>
 
-                                <div >
+                                <div v-if="allProductDet.length">
                                     <img :src="'../img/companies/docs/pdfdown.png'" alt="" class="img-fluid my-3">
                                     <div :key="productDet.id" v-for="productDet in allProductDet">
 <!--                                        <a :href="'../img/companies/docs/' + repDet.doc_id" target="_blank" class="my-3"><i class="cap-icon ci-download m-1"></i> {{repDet.title}}</a>-->

@@ -204,7 +204,10 @@
                 }),
             }
         },
-
+        /**
+         * TODO create slugs
+         * look at course how
+         */
         computed: {
 
             ...mapGetters(['allProducts', 'allProductDet', 'oneProduct']),

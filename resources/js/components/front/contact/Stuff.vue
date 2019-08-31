@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-4" :key="contact.id" v-for="contact in allContacts">
                     <div data-aos="zoom-out-up">
-                        <img src="img/person1.jpg" alt="" class="img-fluid rounded-circle mb-2">
+                        <img :src="'img/profile/'+contact.photo_id" alt="" class="img-fluid rounded-circle mb-2">
                         <h4>{{contact.name}}</h4>
                         <h5 class="text-muted">{{contact.title}}</h5>
                         <div class="d-flex justify-content-center">
