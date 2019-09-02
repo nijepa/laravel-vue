@@ -49,12 +49,15 @@ class RepresentationsController extends Controller
             'name' => 'required|string|max:191'
         ]);
 
+        $slug = str_slug($request->name);
+
         if ($request->photo_id !== null) {
             $this->savePhoto($request, 'profile', 'photo_id');
         }
 
         return Representation::create([
             'name' => $request['name'],
+            'slug' => $slug,
             'category_id' => $request['category_id'],
             'short_desc' => $request['short_desc'],
             'description' => $request['description'],
@@ -101,6 +104,9 @@ class RepresentationsController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:191'
         ]);
+
+        $slug = str_slug($request->name);
+        $request->merge(['slug' => $slug]);
 
         if ($request->photo_id !== null) {
             $this->savePhoto($request, 'profile', 'photo_id');

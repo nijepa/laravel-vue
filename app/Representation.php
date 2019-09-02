@@ -17,6 +17,7 @@ class Representation extends Model
      */
     protected $fillable = [
         'name',
+        'slug',
         'email',
         'address',
         'phone',

@@ -17,7 +17,7 @@ const getters = {
 const actions = {
     async fetchAboutDet ({ commit }, aboutDet) {
         const response = await axios.get(
-            `api/about_dets/`,
+            `api/about_dets/${aboutDet}`,
             aboutDet
         );
         commit('setAboutDet', response.data);

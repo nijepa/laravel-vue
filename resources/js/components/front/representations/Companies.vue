@@ -4,8 +4,8 @@
             <div class="row">
 
                 <div class="col-4 my-5">
-                    <nav @click="getRep(rep, rep.id)" :key="rep.id" class="nav flex-column list-group" v-for="rep in allReps">
-                        <a class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}}
+                    <nav :class="classe" id="right-menu" @click="getRep(rep, rep.id)" :key="rep.id" class="nav flex-column list-group" v-for="rep in allReps">
+                        <a  class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}}
                             <img :src="'../img/companies/logosSmall/' + rep.logo_small_id" class="img-fluid mx-auto d-block">
                         </a>
                     </nav>
@@ -62,6 +62,12 @@
 
         name: "Companies",
 
+        data: {
+            return: {
+                classe: ''
+            }
+        },
+
         computed:
             mapGetters([
                 'allReps',
@@ -83,7 +89,8 @@
                 console.log(id);
                 this.fetchRep(selRepID);
                 this.fetchRepDet(selRepID);
-            }
+                this.classe = 'active'
+            },
         },
 
         created() {
@@ -100,6 +107,9 @@
     a {
         cursor: pointer;
         text-decoration: none;
+    }
+    #right-menu .current a .active {
+        background-color: #1d68a7;
     }
     .slide-enter-active {
         animation: slide-in 800ms ease-out forwards;

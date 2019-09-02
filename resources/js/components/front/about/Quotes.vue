@@ -6,7 +6,7 @@
                     <div class="card bg-primary text-white text-center">
                         <div class="card-body">
                             <i class="cap-icon mb-4 activ" :class="classes(aboutDet.id)"></i>
-                            <p class="mt-4">{{aboutDet.description}}</p>
+                            <p class="mt-4" v-html="aboutDet.description"></p>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
         },
 
         created() {
-            this.fetchAboutDet();
+            this.fetchAboutDet(1);
         },
     }
 </script>

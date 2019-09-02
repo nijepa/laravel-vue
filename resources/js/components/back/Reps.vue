@@ -46,7 +46,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr  v-for="rep in repsSorted" :key="rep.id">
+                                <tr v-for="rep in repsSorted" :key="rep.id">
 <!--                                    :to="{ name: 'repd', params: { repID: rep }}"-->
                                     <td>
                                         <keep-alive>
@@ -143,7 +143,6 @@
                                     <label for="description">Description</label>
                                     <ckeditor :editor="editor" v-model="form.description" id="description" name="description"
                                               :class="{ 'is-invalid': form.errors.has('description') }">
-
                                     </ckeditor>
                            <!--         <textarea v-model="form.description"
                                               id="description" rows="3" name="description" placeholder="Description"

@@ -9,6 +9,16 @@ use App\Http\Controllers\Controller;
 class AboutsController extends Controller
 {
     /**
+     * AboutsController constructor.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -16,7 +26,6 @@ class AboutsController extends Controller
     public function index()
     {
         $abouts = About::orderBy('title')->leftJoin('about_dets', 'abouts.id', '=', 'about_dets.about_id')->get();//To get the output in array
-
 
         return response()->json($abouts);
     }
@@ -29,8 +38,6 @@ class AboutsController extends Controller
     public function aboutF()
     {
         $about = About::orderBy('title')->leftJoin('about_dets', 'abouts.id', '=', 'about_dets.about_id')->get();//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
 
         return response()->json($about);
     }
@@ -38,8 +45,9 @@ class AboutsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
+     * @throws
      */
     public function store(Request $request)
     {
@@ -60,19 +68,22 @@ class AboutsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function show($id)
     {
-        //
+        $about = About::findOrFail($id);
+
+        return response()->json($about);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws
      */
     public function update(Request $request, $id)
     {
@@ -94,7 +105,8 @@ class AboutsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws
      */
     public function destroy($id)
     {

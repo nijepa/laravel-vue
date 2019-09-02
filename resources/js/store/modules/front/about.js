@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getDefaultState = () => {
     return {
-        newsD: []
+        about: []
     }
 };
 
@@ -27,10 +27,10 @@ const actions = {
     },
     async fetchAbout ({ commit }, about) {
         const response = await axios.get(
-            `api/news/${about}`,
+            `api/about/${about}`,
             about
         );
-        commit('setNewsD', response.data);
+        commit('setAbout', response.data);
     },
     async fetchAboutsP ({ commit }, id) {
         const response = await axios.get(
