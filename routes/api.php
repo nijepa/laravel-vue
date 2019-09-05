@@ -47,3 +47,6 @@ Route::put('profile', 'API\UserController@updateProfile');
 Route::get('countries', 'API\CountriesController@selectAll');
 
 Route::get('findUser', 'API\UserController@search');
+
+Route::apiResources(['project' => 'API\ProjectsController']);
+Route::apiResources(['project_dets' => 'API\ProjectDetsController']);
