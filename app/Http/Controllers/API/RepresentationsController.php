@@ -6,6 +6,7 @@ use App\Representation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\StoreImageTrait;
+use Illuminate\Support\Str;
 
 class RepresentationsController extends Controller
 {
@@ -105,7 +106,7 @@ class RepresentationsController extends Controller
             'name' => 'required|string|max:191'
         ]);
 
-        $slug = str_slug($request->name);
+        $slug = Str::slug($request->name);
         $request->merge(['slug' => $slug]);
 
         if ($request->photo_id !== null) {

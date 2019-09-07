@@ -38,6 +38,10 @@ export default new Router({
         //{path: '/repDets', component: () => import('./components/back/RepDets.vue')},
         {name: 'repd', path: '/repDets/:id', component: () => import('./components/back/RepDets.vue'), props: true},
         {name: 'prod', path: '/productDets/:id', component: () => import('./components/back/ProductDets.vue'), props: true},
-        {path: '*', component: () => import('./components/NotFound.vue')}
+        {path: '*', component: () => import('./components/NotFound.vue')},
+
+        //web app routes
+        {path: '/projects', component: () => import('./components/app/Projects.vue')},
+        {name: 'proj', path: '/projectDets/:id', component: () => import('./components/app/ProjectDets.vue'), props: true},
     ]
 })

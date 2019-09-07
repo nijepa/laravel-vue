@@ -4,8 +4,8 @@
             <div class="row">
 
                 <div class="col-4 my-5">
-                    <nav :class="classe" id="right-menu" @click="getRep(rep, rep.id)" :key="rep.id" class="nav flex-column list-group" v-for="rep in allReps">
-                        <a  class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}}
+                    <nav  @click="getRep(rep, rep.id)" :key="rep.id" class="nav flex-column list-group" v-for="rep in allReps">
+                        <a :class="{ active : active_el === rep.id }" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}}
                             <img :src="'../img/companies/logosSmall/' + rep.logo_small_id" class="img-fluid mx-auto d-block">
                         </a>
                     </nav>
@@ -22,7 +22,7 @@
                                 <img :src="'../img/companies/' + oneRep.photo_id"
                                      alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
                                 <h3>{{oneRep.name}}
-                                    <a :href="oneRep.website" target="_blank"><i class='cap-icon ci-link'></i></a>
+                                    <a :href="oneRep.website" target="_blank"><i class='cap-icon ci-website' :title="oneRep.website"></i></a>
                                 </h3>
                                 <h5 class="text-muted">{{oneRep.short_desc}}</h5>
                                 <p class="my-3" v-html="oneRep.description"></p>
@@ -62,9 +62,11 @@
 
         name: "Companies",
 
-        data: {
-            return: {
-                classe: ''
+        data() {
+            return {
+                classe: '',
+                active_el: 0,
+                isActive: false,
             }
         },
 
@@ -89,7 +91,12 @@
                 console.log(id);
                 this.fetchRep(selRepID);
                 this.fetchRepDet(selRepID);
-                this.classe = 'active'
+                this.classe = 'active';
+                this.activate(selRepID);
+            },
+
+            activate:function(el){
+                this.active_el = el;
             },
         },
 
@@ -104,19 +111,23 @@
 </script>
 
 <style scoped>
+    .active {
+        background-color: #85b5c6;
+    }
+
     a {
         cursor: pointer;
         text-decoration: none;
     }
-    #right-menu .current a .active {
-        background-color: #1d68a7;
-    }
+
     .slide-enter-active {
         animation: slide-in 800ms ease-out forwards;
     }
+
     .slide-leave-active {
         animation: slide-out 800ms ease-out forwards;
     }
+
     @keyframes slide-in {
         from {
             transform: translateX(-30px);

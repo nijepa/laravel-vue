@@ -12,6 +12,8 @@ import news from './modules/front/news';
 import countries from './modules/countries';
 import cities from './modules/cities';
 import users from './modules/users';
+import projects from './modules/app/projects';
+import projectDet from './modules/app/projectDet';
 
 /**
  * Load vuex store and add modules
@@ -31,6 +33,8 @@ export default new Vuex.Store({
         news,
         cities,
         countries,
-        users
+        users,
+        projects,
+        projectDet
     }
 })
