@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers\API;
 
-use App\ProjectDets;
+use App\ProjectDet;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProjectDetsController extends Controller
 {
+    /**
+     * ProjectsDets Controller constructor.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,9 @@ class ProjectDetsController extends Controller
      */
     public function index()
     {
-        //
+        $projectdets = ProjectDet::orderBy('caption')->get();//To get the output in array
+
+        return response()->json($projectdets);
     }
 
     /**
@@ -44,9 +57,11 @@ class ProjectDetsController extends Controller
      * @param  \App\ProjectDets  $projectDets
      * @return \Illuminate\Http\Response
      */
-    public function show(ProjectDets $projectDets)
+    public function show($id)
     {
-        //
+        $product = ProjectDet::where('project_id', $id)->get();
+
+        return response()->json($product);
     }
 
     /**

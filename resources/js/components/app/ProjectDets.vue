@@ -9,18 +9,18 @@
 
                         <div class="ml-3 mt-3">
                             <div class="">
-                                <h3 class="d-inline p-2 text-blue font-weight-bold">{{ oneProduct.name }}</h3>
+                                <h3 class="d-inline p-2 text-blue font-weight-bold">{{ oneProject.title }}</h3>
                             </div>
                             <div class="mt-2">
-                                <h4 class="d-inline p-2">{{ oneProduct.description }}</h4>
+                                <h4 class="d-inline p-2">{{ oneProject.description }}</h4>
                             </div>
                         </div>
-                        <router-link to="/products" class="nav-link btn btn-outline-secondary mr-3" tag="button">
+                        <router-link to="/projects" class="nav-link btn btn-outline-secondary mr-3" tag="button">
                             <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
                         </router-link>
                     </div>
                     <hr>
-                    <div v-if="productDets.productDet.length">
+                    <div v-if="projectDets.projectDet.length">
                         <appTableOptions
                                 :title="'DETAILS'"
                                 :button-title="'Detail'"
@@ -41,14 +41,14 @@
                                                class="ic">
                                             </i>
                                         </th>
-                                        <th @click="sortBy('title')">Title
-                                            <i v-if="sortKey === 'title'"
+                                        <th @click="sortBy('caption')">Caption
+                                            <i v-if="sortKey === 'caption'"
                                                :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
                                                class="ic">
                                             </i>
                                         </th>
-                                        <th @click="sortBy('description')">Description
-                                            <i v-if="sortKey === 'description'"
+                                        <th @click="sortBy('note')">Note
+                                            <i v-if="sortKey === 'note'"
                                                :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
                                                class="ic">
                                             </i>
@@ -63,21 +63,21 @@
                                     </tr>
                                 </thead>
                                     <tbody>
-                                    <tr v-for="productDet in repsSorted" :key="productDet.id">
-                                        <td>{{ productDet.id }}</td>
-                                        <td>{{ productDet.title }}</td>
+                                    <tr v-for="projectDet in repsSorted" :key="projectDet.id">
+                                        <td>{{ projectDet.id }}</td>
+                                        <td>{{ projectDet.caption }}</td>
                                         <td>
-                                            <a :href="'img/products/'+productDet.photo_id" target="_blank">{{ productDet.photo_id }}</a>
+<!--                                            <a :href="'img/projects/'+projectDet.photo_id" target="_blank">{{ projectDet.photo_id }}</a>-->
                                         </td>
-                                        <td>{{ productDet.created_at | customDate }}</td>
+                                        <td>{{ projectDet.created_at | customDate }}</td>
                                         <td>
-                                            <button @click="editModal(productDet)"
+                                            <button @click="editModal(projectDet)"
                                                     class="btn btn-info btn-sm"
                                                     data-toggle="tooltip" data-placement="top" title="Edit Company">
                                                 <i class="cap-icon ci-file-edit"></i>
                                             </button>
                                             /
-                                            <button  @click="deleteProduct(productDet)"
+                                            <button  @click="deleteProject(projectDet)"
                                                      class="btn btn-danger btn-sm"
                                                      data-toggle="tooltip" data-placement="top" title="Delete Company">
                                                 <i class="cap-icon ci-trash"></i>
@@ -125,15 +125,15 @@
                         </div>
             <!-- /.modal-header -->
                         <form enctype="multipart/form-data"
-                              @submit.prevent="editMode ? updateProduct() : createProduct()"
+                              @submit.prevent="editMode ? updateProject() : createProject()"
                               @keydown="form.onKeydown($event)">
                             <div class="modal-body">
-                                <input v-model="form.product_id" type="hidden" name="product_id" id="product_id">
+                                <input v-model="form.project_id" type="hidden" name="project_id" id="project_id">
                                 <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input v-model="form.title" id="title" type="text" name="title" placeholder="Title"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
-                                    <has-error :form="form" field="title"></has-error>
+                                    <label for="caption">Caption</label>
+                                    <input v-model="form.caption" id="caption" type="caption" name="caption" placeholder="Caption"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('caption') }">
+                                    <has-error :form="form" field="caption"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="doc_id" >Document</label>
@@ -177,7 +177,7 @@
 
     export default {
 
-        name: "ProductDets",
+        name: "ProjectDets",
 
         components: {
             appPagination: Paginations,
@@ -189,16 +189,16 @@
 
         data() {
             return {
-                productDets: {},
-                product: {},
-                productId: this.$route.params.id,
-                selProduct: this.$route.params.selProduct,
+                projectDets: {},
+                project: {},
+                projectId: this.$route.params.id,
+                selProject: this.$route.params.selProject,
 
                 form: new Form({
                     id: '',
-                    title: '',
-                    description: '',
-                    product_id: '',
+                    caption: '',
+                    note: '',
+                    project_id: '',
                     photo_id: '',
                     doc: null
                 }),
@@ -210,10 +210,10 @@
          */
         computed: {
 
-            ...mapGetters(['allProducts', 'allProductDet', 'oneProduct']),
+            ...mapGetters(['allProjects', 'allProjectDet', 'oneProject']),
 
             repsSorted() {
-                let result = this.productDets.productDet;
+                let result = this.projectDets.projectDet;
 
                 if (this.search) {
                     result = result.filter(item => item.title.toLowerCase().includes(this.search));
@@ -235,17 +235,17 @@
         methods: {
 
             ...mapActions([
-                'fetchProducts',
-                'fetchProductDet',
-                'fetchProduct'
+                'fetchProjects',
+                'fetchProjectDet',
+                'fetchProject'
             ]),
 
-            loadProducts() {
+            loadProjects() {
                 if(this.$gate.isAdmin()) {
-                    this.fetchProduct(this.productId);
-                    this.product = this.$store.state.product;
-                    this.fetchProductDet(this.productId);
-                    this.productDets = this.$store.state.productDet;
+                    this.fetchProject(this.projectId);
+                    this.project = this.$store.state.project;
+                    this.fetchProjectDet(this.projectId);
+                    this.projectDets = this.$store.state.projectDet;
                 }
             },
 
@@ -299,12 +299,12 @@
                 this.logo = 'img/companies/'+this.form.logo_id;
             },
 
-            createProduct() {
+            createProject() {
                 this.$Progress.start();
-                this.form.product_id = this.oneProduct.id;
-                let formData = this.productData();
+                this.form.project_id = this.oneProject.id;
+                let formData = this.projectData();
 
-                axios.post('../api/products_det', formData)
+                axios.post('../api/projects_det', formData)
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -317,11 +317,11 @@
                     .catch(() => {})
             },
 
-            updateProduct() {
+            updateProject() {
                 this.$Progress.start();
-                let formData = this.productData(1);
+                let formData = this.projectData(1);
 
-                axios.post('../api/products_det/'+this.form.id, formData)
+                axios.post('../api/projects_det/'+this.form.id, formData)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -336,17 +336,17 @@
                     })
             },
 
-            productData(action = '') {
+            projectData(action = '') {
                 let data = new FormData();
                 data.append('title', this.form.title);
-                data.append('product_id', this.form.product_id);
+                data.append('project_id', this.form.project_id);
                 data.append('doc_id', this.form.doc_id);
                 data.append('doc', this.form.doc);
                 if (action) data.append('_method', 'put');
                 return data;
             },
 
-            deleteProduct(product){
+            deleteProject(project){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -357,7 +357,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        this.form.delete('../api/products_det/'+product.id).then(()=>{
+                        this.form.delete('../api/projects_det/'+project.id).then(()=>{
                             swal.fire(
                                 'Deleted!',
                                 'Document has been deleted.',
@@ -377,13 +377,13 @@
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                this.fetchProductsS(query);
+                this.fetchProjectsS(query);
             });
 
-            this.loadProducts();
+            this.loadProjects();
 
             Fire.$on('AfterCreate', () => {
-                this.loadProducts();
+                this.loadProjects();
             });
         }
     }

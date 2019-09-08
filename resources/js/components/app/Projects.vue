@@ -8,7 +8,7 @@
                             :title="'PROJECTS'"
                             :button-title="'Project'"
                             :at-click="newModal"
-                            :button-icon="'fas fa-boxes fa-2x icolor'"
+                            :button-icon="'fas fa-project-diagram fa-2x icolor'"
                             @pageSizeChanged="onPageSizeChanged"
                             @searchChanged="onSearchChanged"
                     ></appTableOptions>
@@ -20,13 +20,13 @@
                                 <th @click="sortBy('id')">ID
                                     <i v-if="sortKey === 'id'" :class="classe"></i>
                                 </th>
-                                <th>Photo</th>
                                 <th @click="sortBy('title')">Name
                                     <i v-if="sortKey === 'name'" :class="classe"></i>
                                 </th>
                                 <th @click="sortBy('description')">Description
                                     <i v-if="sortKey === 'description'" :class="classe"></i>
                                 </th>
+                                <th>File</th>
                                 <th @click="sortBy('created_at')">Created At
                                     <i v-if="sortKey === 'created_at'" :class="classe"></i>
                                 </th>
@@ -39,9 +39,9 @@
                                     {{ project.id }}
                                 </router-link>
 <!--                                <td>{{ project.id }}</td>-->
-                                <td></td>
-                                <td>{{ project.name }}</td>
+                                <td>{{ project.title }}</td>
                                 <td>{{ project.description }}</td>
+                                <td></td>
                                 <td>{{ project.created_at | customDate }}</td>
                                 <appTableActions
                                         :action-title="'Project'"
@@ -78,6 +78,18 @@
                         <!-- /.modal-header -->
                         <form @submit.prevent="editMode ? updateProject() : createProject()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input v-model="form.title" type="text" name="title" placeholder="Title"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                    <has-error :form="form" field="title"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <input v-model="form.description" type="text" name="description" placeholder="Description"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
+                                    <has-error :form="form" field="description"></has-error>
+                                </div>
                                 <appUploadFiles
                                         :title="'Picture'"
                                         :fieldname="'photo_id'"
@@ -86,18 +98,6 @@
                                         @onimageselect="OnImageSelect"
                                         @onimageload="OnImageLoad">
                                 </appUploadFiles>
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="form.name" type="text" name="name" placeholder="Name"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                                    <has-error :form="form" field="name"></has-error>
-                                </div>
-                                <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="form.description" type="text" name="description" placeholder="Description"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
-                                    <has-error :form="form" field="description"></has-error>
-                                </div>
                             </div>
                             <appModalActions
                                     :mode="editMode"
@@ -148,7 +148,7 @@
                 form: new Form({
                     id: '',
                     photo_id: '',
-                    name: '',
+                    title: '',
                     description: ''
                 }),
 

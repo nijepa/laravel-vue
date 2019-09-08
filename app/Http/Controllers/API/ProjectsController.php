@@ -2,10 +2,22 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Project;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProjectsController extends Controller
 {
+    /**
+     * ProductsController constructor.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +25,9 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::orderBy('title')->get();//To get the output in array
+
+        return response()->json($projects);
     }
 
     /**
@@ -45,7 +59,9 @@ class ProjectsController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return response()->json($project);
     }
 
     /**
