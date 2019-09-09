@@ -18,7 +18,9 @@ class ProjectDet extends Model
         'project_added',
         'user_id',
         'note',
-        'user_id'
+        'user_id',
+        'doc_id',
+        'finished'
     ];
 
     /**

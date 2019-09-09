@@ -173,6 +173,7 @@
     import TableOptions from '../shared/TableOptions';
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
+    import updateFile from '../../mixins/updateFile';
     import UploadFiles from '../shared/UploadFiles';
 
     export default {
@@ -185,7 +186,7 @@
             appUploadFiles: UploadFiles
         },
 
-        mixins: [tableActions, modalForm],
+        mixins: [tableActions, modalForm, updateFile],
 
         data() {
             return {
@@ -242,7 +243,7 @@
                 }
             },
 
-            onFileChange(e){
+/*            onFileChange(e){
                 let file = e.target.files[0];
                 let limit = 1024 * 1024 * 2;
                 let type = [
@@ -271,7 +272,7 @@
 
                 this.form.doc = e.target.files[0];
                 this.form.doc_id = this.form.doc.name;
-            },
+            },*/
 
             onPageChange(page) {
                 console.log(page);

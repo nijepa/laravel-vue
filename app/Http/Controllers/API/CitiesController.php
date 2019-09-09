@@ -27,11 +27,8 @@ class CitiesController extends Controller
     public function index()
     {
         $cities = City::orderBy('name')->with('Country')->paginate(10);//To get the output in array
-        /*        ^               ^
-         This will get the user | This will get all the Orders related to the user*/
 
         return response()->json($cities);
-        //return City::orderBy('name')->paginate(5);
     }
 
     /**
@@ -39,6 +36,7 @@ class CitiesController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws
      */
     public function store(Request $request)
     {

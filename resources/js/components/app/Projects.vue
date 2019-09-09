@@ -20,28 +20,49 @@
                                 <th @click="sortBy('id')">ID
                                     <i v-if="sortKey === 'id'" :class="classe"></i>
                                 </th>
-                                <th @click="sortBy('title')">Name
+                                <th>Date</th>
+                                <th @click="sortBy('name')">Company
                                     <i v-if="sortKey === 'name'" :class="classe"></i>
+                                </th>
+                                <th @click="sortBy('title')">Title
+                                    <i v-if="sortKey === 'title'" :class="classe"></i>
                                 </th>
                                 <th @click="sortBy('description')">Description
                                     <i v-if="sortKey === 'description'" :class="classe"></i>
                                 </th>
                                 <th>File</th>
+                                <th @click="sortBy('name')">User
+                                    <i v-if="sortKey === 'name'" :class="classe"></i>
+                                </th>
+                                <th @click="sortBy('finished')">Finished
+                                    <i v-if="sortKey === 'finished'" :class="classe"></i>
+                                </th>
                                 <th @click="sortBy('created_at')">Created At
                                     <i v-if="sortKey === 'created_at'" :class="classe"></i>
                                 </th>
                                 <th>Modify</th>
                             </tr>
                             <tr v-for="project in repsSorted" :key="project.id">
-                                <router-link
-                                        :to="{name:'proj', params: {id: project.id, selProject: project}}"
-                                        activeClass="active" tag="a" class="nav-item nav-link">
-                                    {{ project.id }}
-                                </router-link>
-<!--                                <td>{{ project.id }}</td>-->
+
+                                    <router-link
+                                            :to="{name:'proj', params: {id: project.id, selProject: project}}"
+                                            activeClass="active" tag="a" class="nav-item nav-link">
+                                        {{ project.id }}
+                                    </router-link>
+
+                                <td>{{ project.project_started | tableDate }}</td>
+<!--                                <td><datepicker :input-class="`qqq`" :disabled="true" :bootstrap-styling="true" v-model="project.project_started"></datepicker></td>-->
+                                <td><span class="tag tag-success">{{ project.representation_id ? project.representation.name : 'not selected'  }}</span></td>
                                 <td>{{ project.title }}</td>
                                 <td>{{ project.description }}</td>
                                 <td></td>
+                                <td>{{ project.user.name }}</td>
+                                <td>
+                                    <div class="custom-control custom-checkbox">
+                                        <input disabled type="checkbox" class="custom-control-input" id="customCheck1" v-model="project.finished">
+                                        <label class="custom-control-label" for="customCheck1"></label>
+                                    </div>
+                                </td>
                                 <td>{{ project.created_at | customDate }}</td>
                                 <appTableActions
                                         :action-title="'Project'"
@@ -79,25 +100,41 @@
                         <form @submit.prevent="editMode ? updateProject() : createProject()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
+                                    <label>Date</label>
+                                    <datepicker :format="'dd MMM yyyy'" :bootstrap-styling="true" v-model="form.project_started" :class="{ 'is-invalid': form.errors.has('started') }"></datepicker>
+                                    <has-error :form="form" field="started"></has-error>
+                                </div>
+                                <div class="form-group">
                                     <label>Title</label>
                                     <input v-model="form.title" type="text" name="title" placeholder="Title"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
                                     <has-error :form="form" field="title"></has-error>
                                 </div>
                                 <div class="form-group">
+                                    <label>Company</label>
+                                    <select v-model="form.representation_id" name="type" id="type"
+                                            class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                                        <option v-bind:value="rep.id"
+                                                :key="rep.id"
+                                                v-for="rep in reps.reps">{{ rep.name }}</option>
+                                    </select>
+                                    <has-error :form="form" field="type"></has-error>
+                                </div>
+                                <div class="form-group">
                                     <label>Description</label>
-                                    <input v-model="form.description" type="text" name="description" placeholder="Description"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
+                                    <textarea v-model="form.description" type="text" name="description" placeholder="Description"
+                                              class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
                                     <has-error :form="form" field="description"></has-error>
                                 </div>
-                                <appUploadFiles
-                                        :title="'Picture'"
-                                        :fieldname="'photo_id'"
-                                        :imgsrc="image"
-                                        :imgplace="'image'"
-                                        @onimageselect="OnImageSelect"
-                                        @onimageload="OnImageLoad">
-                                </appUploadFiles>
+                                <div class="form-group">
+                                    <label for="doc_id" >Document</label>
+                                    <input type="text" class="form-control" v-model="form.doc_id" name="doc_id" id="doc_id" disabled>
+                                    <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2" v-model="form.finished">
+                                    <label class="custom-control-label" for="customCheck2">FINISHED</label>
+                                </div>
                             </div>
                             <appModalActions
                                     :mode="editMode"
@@ -126,6 +163,8 @@
     import UploadFiles from '../shared/UploadFiles';
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
+    import updateFile from '../../mixins/updateFile';
+    import Datepicker from 'vuejs-datepicker';
 
     export default {
         name: "Projects",
@@ -136,28 +175,32 @@
             appTableActions: TableActions,
             appModalActions: ModalActions,
             appModalHeader: ModalHeader,
-            appUploadFiles: UploadFiles
+            appUploadFiles: UploadFiles,
+            Datepicker
         },
 
-        mixins: [tableActions, modalForm],
+        mixins: [tableActions, modalForm, updateFile],
 
         data() {
             return {
                 projects: {},
+                reps: [],
 
                 form: new Form({
                     id: '',
-                    photo_id: '',
                     title: '',
-                    description: ''
+                    description: '',
+                    representation_id: '',
+                    finished: '',
+                    project_started: '',
+                    doc_id: '',
+                    doc: null
                 }),
-
-                image: ''
             }
         },
 
         computed: {
-            ...mapGetters(['allProjects']),
+            ...mapGetters(['allProjects', 'allReps']),
 
             repsSorted() {
                 let result = this.projects.projects;
@@ -182,17 +225,51 @@
                 'fetchProjects',
                 'fetchProjectsP',
                 'fetchProjectsS',
-                'addProject',
-                'renewProject',
-                'removeProject'
+                'fetchReps'
             ]),
 
             loadProjects() {
                 if(this.$gate.isAdmin()) {
                     this.fetchProjects();
                     this.projects = this.$store.state.projects;
+                    this.fetchReps();
+                    this.reps = this.$store.state.representations;
                 }
             },
+
+            /*onFileChange(e){
+                let file = e.target.files[0];
+                let limit = 1024 * 1024 * 2;
+                let type = [
+                    'application/pdf',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                    'application/msword',
+                    'message/rfc822'];
+
+                if(file['size'] > limit){
+                    swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You are uploading a large file',
+                    });
+                    return false;
+                }
+                //console.log(file['type']);
+                if(!type.includes(file['type'])) {
+                    swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You need to upload document file',
+                    });
+                    return false;
+                }
+
+                this.form.doc = e.target.files[0];
+                console.log(this.form.doc);
+                this.form.doc_id = this.form.doc.name;
+            },*/
 
             onPageChange(page) {
                 this.currentPage = page;
@@ -214,7 +291,9 @@
 
             createProject() {
                 this.$Progress.start();
-                this.form.post('api/project')
+                let formData = this.prepareData();
+
+                axios.post('api/project', formData)
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -229,7 +308,9 @@
 
             updateProject(id) {
                 this.$Progress.start();
-                this.form.put('api/project/'+this.form.id)
+                let formData = this.prepareData(1);
+
+                axios.post('../api/project/'+this.form.id, formData)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -242,6 +323,19 @@
                     .catch(() => {
                         this.$Progress.fail();
                     })
+            },
+
+            prepareData(action = '') {
+                let data = new FormData();
+                data.append('title', this.form.title);
+                data.append('rep_id', this.form.rep_id);
+                data.append('doc_id', this.form.doc_id);
+                data.append('doc', this.form.doc);
+
+                if (action) {
+                    data.append('_method', 'put');
+                }
+                return data;
             },
 
             deleteProject(project){
@@ -287,6 +381,10 @@
     }
 </script>
 
-<style scoped>
-
+<style module>
+    .qqq {
+        width: 110px !important;
+        background-color: white !important;
+        border-color: white !important;
+    }
 </style>

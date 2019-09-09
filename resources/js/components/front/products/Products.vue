@@ -4,7 +4,7 @@
             <div class="row">
 
                 <div class="col-4 my-5">
-                    <nav  @click="getProduct(product, product.id)" :key="product.id"
+                    <nav @click="getProduct(product, product.id)" :key="product.id"
                           class="nav flex-column list-group" v-for="product in allProducts">
                         <a style="height:150px;" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{product.name}}
                             <img :src="'../img/products/' + product.photo_id" class="img-fluid mx-auto d-block h-75">

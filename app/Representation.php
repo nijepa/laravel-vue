@@ -52,4 +52,14 @@ class Representation extends Model
         return $this->belongsTo(City::class);
     }
 
+    /**
+     * Relationship to projects
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
 }

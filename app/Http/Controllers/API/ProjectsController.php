@@ -5,9 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Representation;
+use App\User;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\StoreFileTrait;
 
 class ProjectsController extends Controller
 {
+    use StoreFileTrait;
     /**
      * ProductsController constructor.
      *
@@ -25,19 +31,9 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('title')->get();//To get the output in array
+        $projects = Project::orderBy('title')->with('Representation')->with('User')->get();//To get the output in array
 
         return response()->json($projects);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -45,10 +41,33 @@ class ProjectsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $this->validate($request, [
+            'title' => 'required|string|max:191',
+        ]);
+
+        $this->uploadFile($request, 'img/projects');
+
+        $user = Auth::user()->id;
+        $request->merge(['user_id' => $user]);
+
+        $fdate = Carbon::parse($request->project_started);
+        $request->merge(['project_started' => $fdate]);
+
+        return Project::create([
+            'title' => $request['title'],
+            'description' => $request['description'],
+            'representation_id' => $request['representation_id'],
+            'doc_id' => $request['doc_id'],
+            'project_started' => $request['project_started'],
+            'user_id' => $request['user_id'],
+            'finished' => $request['finished']
+        ]);
     }
 
     /**
@@ -65,26 +84,34 @@ class ProjectsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $project = Project::findOrFail($id);
+
+        $this->validate($request, [
+            'title' => 'required|string|max:191',
+        ]);
+
+        $this->uploadFile($request, 'img/projects');
+
+        $user = Auth::user()->id;
+        $request->merge(['user_id' => $user]);
+
+        $fdate = Carbon::parse($request->project_started);
+        $request->merge(['project_started' => $fdate]);
+
+        $project->update($request->all());
+
+        return ['project' => $project];
     }
 
     /**
@@ -92,9 +119,31 @@ class ProjectsController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * @throws
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $project = Project::findOrFail($id);
+
+        $project->delete();
+
+        return ['message' => 'Document deleted'];
     }
+
+    /**
+     * Upload file and set fle name
+     *
+     * @param Request $request
+     */
+/*    public function uploadFile(Request $request)
+    {
+        If ($request->hasFile('doc')) {
+            //dd('aa');
+            $fileName = time().'.'.$request->doc->getClientOriginalExtension();
+            $request->offsetSet('doc_id', $fileName);
+            $request->doc->move(public_path('img/projects'), $fileName);
+        }
+    }*/
 }

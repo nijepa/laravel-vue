@@ -16,7 +16,10 @@ class Project extends Model
         'company_id',
         'description',
         'project_started',
-        'user_id'
+        'user_id',
+        'doc_id',
+        'representation_id',
+        'finished'
     ];
 
     /**
@@ -28,4 +31,24 @@ class Project extends Model
     {
         return $this->hasMany(ProjectDet::class);
     }
+
+    /**
+     * Relationship to company
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function representation()
+    {
+        return $this->belongsTo(Representation::class);
+    }
+    /**
+     * Relationship to user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

@@ -6,11 +6,11 @@ use App\RepDet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Traits\StoreImageTrait;
+use App\Traits\StoreFileTrait;
 
 class RepresentationDetsController extends Controller
 {
-    use StoreImageTrait;
+    use StoreFileTrait;
 
     /**
      * RepDets Controller constructor.
@@ -49,7 +49,7 @@ class RepresentationDetsController extends Controller
             'title' => 'required|string|max:191'
         ]);
 
-        $this->uploadFile($request);
+        $this->uploadFile($request, 'img/companies/docs');
 
         return RepDet::create([
             'title' => $request['title'],
@@ -91,7 +91,7 @@ class RepresentationDetsController extends Controller
             'title' => 'required|string|max:191'
         ]);
 
-        $this->uploadFile($request);
+        $this->uploadFile($request, 'img/companies/docs');
 
         $rep->update($request->all());
 
@@ -134,12 +134,12 @@ class RepresentationDetsController extends Controller
      *
      * @param Request $request
      */
-    public function uploadFile(Request $request)
+/*    public function uploadFile(Request $request)
     {
         If ($request->hasFile('doc')) {
             $fileName = time().'.'.$request->doc->getClientOriginalExtension();
             $request->offsetSet('doc_id', $fileName);
             $request->doc->move(public_path('img/companies/docs'), $fileName);
         }
-    }
+    }*/
 }

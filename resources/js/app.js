@@ -127,6 +127,7 @@ import helpers from './helpers/helpers';
 import filters from './helpers/filters';
 import router from './router';
 import store from './store/store'
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

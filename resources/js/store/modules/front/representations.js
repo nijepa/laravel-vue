@@ -26,7 +26,6 @@ const actions = {
             `../api/representation/${rep}`,
             rep
         );
-        //console.log(rep);
         commit('setRep', response.data);
     },
     resetRepState ({ commit }) {

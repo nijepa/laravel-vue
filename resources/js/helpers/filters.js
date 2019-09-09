@@ -8,3 +8,7 @@ Vue.filter('upText', (text) => {
 Vue.filter('customDate', (fromDate) => {
     return moment(fromDate).format("MMM Do YYYY");
 });
+
+Vue.filter('tableDate', (fromDate) => {
+    return moment(fromDate).format("DD MMM YYYY");
+});
