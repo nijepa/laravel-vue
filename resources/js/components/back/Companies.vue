@@ -4,10 +4,10 @@
             <div class="col-12">
                 <div class="card">
                     <appTableOptions
-                            :title="'REPRESENTATIONS'"
+                            :title="'COMPANIES'"
                             :button-title="'Company'"
                             :at-click="newModal"
-                            :button-icon="'fas fa-hands-helping fa-2x icolor'"
+                            :button-icon="'fas fa-building fa-2x icolor'"
                             @pageSizeChanged="onPageSizeChanged"
                             @searchChanged="onSearchChanged"
                     ></appTableOptions>
@@ -23,7 +23,7 @@
                                            class="ic">
                                         </i>
                                     </th>
-                                    <th>Photo</th>
+                                    <th>Logo</th>
                                     <th @click="sortBy('name')">Name / Site
                                         <i v-if="sortKey === 'name'"
                                            :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
@@ -32,6 +32,12 @@
                                     </th>
                                     <th @click="sortBy('short_desc')">Description
                                         <i v-if="sortKey === 'short_desc'"
+                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
+                                           class="ic">
+                                        </i>
+                                    </th>
+                                    <th @click="sortBy('city')">City
+                                        <i v-if="sortKey === 'city'"
                                            :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
                                            class="ic">
                                         </i>
@@ -48,15 +54,7 @@
                             <tbody>
                                 <tr v-for="rep in repsSorted" :key="rep.id">
 <!--                                    :to="{ name: 'repd', params: { repID: rep }}"-->
-                                    <td>
-                                        <keep-alive>
-                                        <router-link
-                                            :to="{name:'repd', params: {id: rep.id, selRep: rep}}"
-                                            activeClass="active" tag="a" class="nav-item nav-link">
-                                            {{ rep.id }}
-                                        </router-link>
-                                        </keep-alive>
-                                    </td>
+                                    <td>{{ rep.id }}</td>
                                     <td>
                                         <img :src="'img/companies/logosSmall/'+rep.logo_small_id"
                                              alt="" style="max-width:100%; max-height:100%">
@@ -67,6 +65,7 @@
                                         </a>
                                     </td>
                                     <td>{{ rep.short_desc }}</td>
+                                    <td>{{ rep.city.name }}</td>
                                     <td>{{ rep.created_at | customDate }}</td>
                                     <td>
                                         <button @click="editModal(rep)"
@@ -91,7 +90,7 @@
                                 :maxVisibleButtons="totalPages"
                                 :total-pages="totalPages"
                                 :total="totalPages"
-                                :per-page="10"
+                                :per-page="3"
                                 :current-page="currentPage"
                                 @pagechanged="onPageChange"
                         ></appPagination>
@@ -126,7 +125,6 @@
                                         @onimageselect="OnImageSelect"
                                         @onimageload="OnImageLoad">
                                 </appUploadFiles>
-                                <input v-model="form.isRepresentation" type="hidden" name="isRepresentation" id="isRepresentation">
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input v-model="form.name" id="name" type="text" name="name" placeholder="Name"
@@ -248,7 +246,7 @@
 
     export default {
 
-        name: "Reps",
+        name: "Companies",
 
         components: {
             appPagination: Paginations,
@@ -291,10 +289,10 @@
 
         computed: {
 
-            ...mapGetters(['allReps', 'allCities']),
+            ...mapGetters(['allCompanies', 'allCities']),
 
             repsSorted() {
-                let result = this.representations.reps;
+                let result = this.representations.companies;
 
        /*         if (this.search) {
                     result = result.filter(item => item.name.toLowerCase().includes(this.search));
@@ -320,7 +318,7 @@
 
         methods: {
 
-            ...mapActions(['fetchReps',
+            ...mapActions(['fetchCompanies',
                 'fetchRepsP',
                 'fetchRepsS',
                 'fetchRep',
@@ -329,7 +327,7 @@
 
             loadReps() {
                 if(this.$gate.isAdmin()) {
-                    this.fetchReps();
+                    this.fetchCompanies();
                     this.representations = this.$store.state.representations;
                 }
             },
@@ -356,7 +354,7 @@
 
             createRep() {
                 this.$Progress.start();
-                this.form.isRepresentation = 1;
+                this.form.isRepresentation = 0;
                 this.form.post('api/representation')
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
@@ -372,7 +370,7 @@
 
             updateRep(id) {
                 this.$Progress.start();
-                this.form.isRepresentation = 1;
+                this.form.isRepresentation = 0;
                 this.form.put('api/representation/'+this.form.id)
                     .then(() => {
                         Fire.$emit('AfterCreate');

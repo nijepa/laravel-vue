@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFinishedFieldToProjectsTable extends Migration
+class AddIsRepresentationFieldToRepresentationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddFinishedFieldToProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::table('projects', function (Blueprint $table) {
-            $table->boolean('finished')->default(0);
+        Schema::table('representations', function (Blueprint $table) {
+            $table->boolean('isRepresentation')->default(0);
         });
     }
 
@@ -25,7 +25,7 @@ class AddFinishedFieldToProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::table('projects', function (Blueprint $table) {
+        Schema::table('representations', function (Blueprint $table) {
             //
         });
     }

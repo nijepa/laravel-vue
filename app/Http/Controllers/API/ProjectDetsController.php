@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\ProjectDet;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\StoreFileTrait;
 
 class ProjectDetsController extends Controller
 {
+    use StoreFileTrait;
+
     /**
      * ProjectsDets Controller constructor.
      *
@@ -21,80 +27,108 @@ class ProjectDetsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function index()
     {
-        $projectdets = ProjectDet::orderBy('caption')->get();//To get the output in array
+        $projectdets = ProjectDet::orderBy('caption')->with('User')->get();//To get the output in array
 
         return response()->json($projectdets);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
+     * @throws
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $this->validate($request, [
+            'caption' => 'required|string|max:191'
+        ]);
+
+        $this->uploadFile($request, 'img/projects');
+
+        $user = Auth::user()->id;
+        $request->merge(['user_id' => $user]);
+
+        $fdate = Carbon::parse($request->date_added);
+        $request->merge(['date_added' => $fdate]);
+
+        return ProjectDet::create([
+            'caption' => $request['title'],
+            'note' => $request['note'],
+            'project_id' => $request['project_id'],
+            'doc_id' => $request['doc_id'],
+            'date_added' => $request['date_added'],
+            'user_id' => $request['user_id'],
+            'finished' => $request['finished']
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\ProjectDets  $projectDets
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return json Response
      */
     public function show($id)
     {
-        $product = ProjectDet::where('project_id', $id)->get();
+        $product = ProjectDet::where('project_id', $id)->with('User')->get();
 
         return response()->json($product);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ProjectDets  $projectDets
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProjectDets $projectDets)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProjectDets  $projectDets
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  int  $id
+     * @return array
+     * @throws
      */
-    public function update(Request $request, ProjectDets $projectDets)
+    public function update(Request $request, $id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $project = ProjectDet::findOrFail($id);
+
+        $this->validate($request, [
+            'caption' => 'required|string|max:191',
+        ]);
+
+        $this->uploadFile($request, 'img/projects');
+
+        $user = Auth::user()->id;
+        $request->merge(['user_id' => $user]);
+
+        $fdate = Carbon::parse($request->date_added);
+        $request->merge(['date_added' => $fdate]);
+
+        $project->update($request->all());
+
+        return ['project' => $project];
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ProjectDets  $projectDets
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return array
+     * @throws
      */
-    public function destroy(ProjectDets $projectDets)
+    public function destroy($id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $project = ProjectDet::findOrFail($id);
+
+        $project->delete();
+
+        return ['message' => 'Document deleted'];
     }
 }

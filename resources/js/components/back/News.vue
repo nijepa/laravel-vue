@@ -125,6 +125,7 @@
     import ModalHeader from '../shared/ModalHeader';
     import UploadFiles from '../shared/UploadFiles';
     import tableActions from '../../mixins/tableActions';
+    import paginationActions from '../../mixins/paginationActions';
     import modalForm from '../../mixins/modalForm';
 
     export default {
@@ -139,7 +140,7 @@
             appUploadFiles: UploadFiles
         },
 
-        mixins: [tableActions, modalForm],
+        mixins: [tableActions, modalForm, paginationActions],
 
         data() {
             return {
@@ -194,7 +195,7 @@
                 }
             },
 
-            onPageChange(page) {
+  /*          onPageChange(page) {
                 this.currentPage = page;
             },
 
@@ -206,7 +207,7 @@
             onSearchChanged(s) {
                 this.onPageChange(1);
                 this.search = s;
-            },
+            },*/
 
             imagesPlaces() {
                 this.image = 'img/news/'+this.form.photo_id;

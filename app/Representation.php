@@ -29,7 +29,8 @@ class Representation extends Model
         'logo_id',
         'logo_small_id',
         'city_id',
-        'category_id'
+        'category_id',
+        'isRepresentation'
     ];
 
     /**

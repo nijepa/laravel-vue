@@ -14,7 +14,7 @@ class AddFinishedFieldToProjectDetsTable extends Migration
     public function up()
     {
         Schema::table('project_dets', function (Blueprint $table) {
-            $table->boolean('finished');
+            $table->boolean('finished')->default(0);
         });
     }
 

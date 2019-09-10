@@ -29,7 +29,19 @@ class RepresentationsController extends Controller
      */
     public function index()
     {
-        $reps = Representation::orderBy('name')->with('City')->get();
+        $reps = Representation::orderBy('name')->where('isRepresentation', '=', 1)->with('City')->get();
+
+        return response()->json($reps);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return json Response
+     */
+    public function companies()
+    {
+        $reps = Representation::orderBy('name')->where('isRepresentation', '===', 0)->with('City')->get();
 
         return response()->json($reps);
     }
@@ -70,7 +82,8 @@ class RepresentationsController extends Controller
             'website' => $request['password'],
             'photo_id' => $request['photo_id'],
             'logo_id' => $request['logo_id'],
-            'logo_small_id' => $request['logo_small_id']
+            'logo_small_id' => $request['logo_small_id'],
+            'isRepresentation' => $request['isRepresentation']
         ]);
     }
 

@@ -80502,43 +80502,43 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   {
     path: '/',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./views/front/Home.vue */ "./resources/js/views/front/Home.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./views/front/Home.vue */ "./resources/js/views/front/Home.vue"));
     }
   }, // {path: '/', component: require('./views/front/Home.vue').default},
   {
     path: '/representations',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./views/front/Representations.vue */ "./resources/js/views/front/Representations.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./views/front/Representations.vue */ "./resources/js/views/front/Representations.vue"));
     }
   }, {
     path: '/about',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./views/front/About.vue */ "./resources/js/views/front/About.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./views/front/About.vue */ "./resources/js/views/front/About.vue"));
     }
   }, {
     path: '/contact',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./views/front/Contact.vue */ "./resources/js/views/front/Contact.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./views/front/Contact.vue */ "./resources/js/views/front/Contact.vue"));
     }
   }, {
     path: '/product',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./views/front/Product.vue */ "./resources/js/views/front/Product.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./views/front/Product.vue */ "./resources/js/views/front/Product.vue"));
     }
   }, {
     path: '/news',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./views/front/News.vue */ "./resources/js/views/front/News.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./views/front/News.vue */ "./resources/js/views/front/News.vue"));
     }
   }, {
     path: '/production',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./views/front/Production.vue */ "./resources/js/views/front/Production.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/front/Production.vue */ "./resources/js/views/front/Production.vue"));
     }
   }, {
     path: '/exports',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./views/front/Exports.vue */ "./resources/js/views/front/Exports.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/front/Exports.vue */ "./resources/js/views/front/Exports.vue"));
     }
   }, //backend routes
   {
@@ -80554,42 +80554,42 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   }, {
     path: '/profile',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./components/back/Profile.vue */ "./resources/js/components/back/Profile.vue"));
+      return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./components/back/Profile.vue */ "./resources/js/components/back/Profile.vue"));
     }
   }, {
     path: '/users',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./views/back/Users.vue */ "./resources/js/views/back/Users.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(10)]).then(__webpack_require__.bind(null, /*! ./views/back/Users.vue */ "./resources/js/views/back/Users.vue"));
     }
   }, {
     path: '/cities',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./components/back/Cities.vue */ "./resources/js/components/back/Cities.vue"));
+      return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/back/Cities.vue */ "./resources/js/components/back/Cities.vue"));
     }
   }, {
     path: '/countries',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./components/back/Countries.vue */ "./resources/js/components/back/Countries.vue"));
+      return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./components/back/Countries.vue */ "./resources/js/components/back/Countries.vue"));
     }
   }, {
     path: '/products',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(27)]).then(__webpack_require__.bind(null, /*! ./components/back/Products.vue */ "./resources/js/components/back/Products.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! ./components/back/Products.vue */ "./resources/js/components/back/Products.vue"));
     }
   }, {
     path: '/newsb',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(26)]).then(__webpack_require__.bind(null, /*! ./components/back/News.vue */ "./resources/js/components/back/News.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./components/back/News.vue */ "./resources/js/components/back/News.vue"));
     }
   }, {
     path: '/contacts',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./components/back/Contacts.vue */ "./resources/js/components/back/Contacts.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! ./components/back/Contacts.vue */ "./resources/js/components/back/Contacts.vue"));
     }
   }, {
     path: '/abouts',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(3), __webpack_require__.e(21)]).then(__webpack_require__.bind(null, /*! ./components/back/Abouts.vue */ "./resources/js/components/back/Abouts.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(3), __webpack_require__.e(22)]).then(__webpack_require__.bind(null, /*! ./components/back/Abouts.vue */ "./resources/js/components/back/Abouts.vue"));
     }
   }, {
     path: '/reps',
@@ -80601,32 +80601,38 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: 'repd',
     path: '/repDets/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./components/back/RepDets.vue */ "./resources/js/components/back/RepDets.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/back/RepDets.vue */ "./resources/js/components/back/RepDets.vue"));
     },
     props: true
   }, {
     name: 'prod',
     path: '/productDets/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./components/back/ProductDets.vue */ "./resources/js/components/back/ProductDets.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./components/back/ProductDets.vue */ "./resources/js/components/back/ProductDets.vue"));
     },
     props: true
   }, {
     path: '*',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
+      return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
     }
   }, //web app routes
   {
+    path: '/companies',
+    component: function component() {
+      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(0), __webpack_require__.e(29)]).then(__webpack_require__.bind(null, /*! ./components/back/Companies.vue */ "./resources/js/components/back/Companies.vue"));
+    },
+    props: true
+  }, {
     path: '/projects',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(28), __webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./components/app/Projects.vue */ "./resources/js/components/app/Projects.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./components/app/Projects.vue */ "./resources/js/components/app/Projects.vue"));
     }
   }, {
     name: 'proj',
     path: '/projectDets/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/app/ProjectDets.vue */ "./resources/js/components/app/ProjectDets.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./components/app/ProjectDets.vue */ "./resources/js/components/app/ProjectDets.vue"));
     },
     props: true
   }]
@@ -82357,11 +82363,15 @@ var getDefaultState = function getDefaultState() {
 
 var state = {
   reps: [],
-  rep: getDefaultState()
+  rep: getDefaultState(),
+  companies: []
 };
 var getters = {
   allReps: function allReps(state) {
     return state.reps;
+  },
+  allCompanies: function allCompanies(state) {
+    return state.companies;
   },
   oneRep: function oneRep(state) {
     return state.rep;
@@ -82379,7 +82389,7 @@ var actions = {
             case 0:
               commit = _ref.commit;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/representation');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('../api/representation');
 
             case 3:
               response = _context.sent;
@@ -82430,8 +82440,39 @@ var actions = {
 
     return fetchRep;
   }(),
-  resetRepState: function resetRepState(_ref3) {
-    var commit = _ref3.commit;
+  fetchCompanies: function () {
+    var _fetchCompanies = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3) {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('../api/companies');
+
+            case 3:
+              response = _context3.sent;
+              commit('setCompanies', response.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    function fetchCompanies(_x4) {
+      return _fetchCompanies.apply(this, arguments);
+    }
+
+    return fetchCompanies;
+  }(),
+  resetRepState: function resetRepState(_ref4) {
+    var commit = _ref4.commit;
     commit('resetState');
   }
 };
@@ -82441,6 +82482,9 @@ var mutations = {
   },
   setRep: function setRep(state, rep) {
     return state.rep = rep;
+  },
+  setCompanies: function setCompanies(state, companies) {
+    return state.companies = companies;
   },
   resetState: function resetState(state) {
     Object.assign(state, getDefaultState());

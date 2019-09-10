@@ -5,7 +5,7 @@ export default
             sortKey: ['name'],
             sortOrder: ['asc'],
             currentPage: 1,
-            pageSize: 3,
+            pageSize: 10,
             totalPages: 1,
             search: '',
 

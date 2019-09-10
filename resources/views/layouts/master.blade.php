@@ -193,6 +193,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </router-link>
                             </li>
                             <li class="nav-item">
+                                <router-link to="/companies" class="nav-link">
+                                    <i class="fa fa-building nav-icon text-yellow"></i>
+                                    <p>Companies</p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
                                 <router-link to="/cities" class="nav-link">
                                     <i class="fa fa-city nav-icon text-yellow"></i>
                                     <p>Cities</p>
@@ -226,7 +232,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                                 <li class="nav-item">
                                     <router-link to="/reps" class="nav-link">
-                                        <i class="fas fa-hands-helping nav-icon text-purp"></i>
+                                        <i class="fas fa-flag nav-icon text-purp"></i>
                                         <p>Representations</p>
                                     </router-link>
                                 </li>
@@ -281,7 +287,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <li class="nav-item">
                         <a href="#" class="nav-link has-treeview">
                             <router-link to="/aboutsB" class="nav-item">
-                                <i class="fas fa-certificate nav-icon text-cyan"></i>
+                                <i class="fas fa-hands-helping nav-icon text-cyan"></i>
                                 <p>Meetings</p>
                             </router-link>
                         </a>

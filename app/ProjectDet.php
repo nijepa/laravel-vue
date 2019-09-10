@@ -12,13 +12,11 @@ class ProjectDet extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'company_id',
         'caption',
-        'project_added',
+        'project_id',
+        'date_added',
         'user_id',
         'note',
-        'user_id',
         'doc_id',
         'finished'
     ];
@@ -31,5 +29,15 @@ class ProjectDet extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    /**
+     * Relationship to user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

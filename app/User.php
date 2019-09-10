@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    /**
+     * Relationship to projects details
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function projectdets()
+    {
+        return $this->hasMany(ProjectDet::class);
+    }
 }

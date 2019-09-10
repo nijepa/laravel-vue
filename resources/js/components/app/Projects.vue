@@ -2,8 +2,9 @@
     <div class="container" data-aos="fade-right">
         <div class="row" v-if="$gate.isAdmin()">
             <div class="col-12">
-
+                <!-- card -->
                 <div class="card">
+                    <!-- card-header -->
                     <appTableOptions
                             :title="'PROJECTS'"
                             :button-title="'Project'"
@@ -14,13 +15,16 @@
                     ></appTableOptions>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
+                        <!-- table -->
                         <table class="table table-hover">
                             <tbody>
                             <tr>
                                 <th @click="sortBy('id')">ID
                                     <i v-if="sortKey === 'id'" :class="classe"></i>
                                 </th>
-                                <th>Date</th>
+                                <th @click="sortBy('project_started')">Started At
+                                    <i v-if="sortKey === 'project_started'" :class="classe"></i>
+                                </th>
                                 <th @click="sortBy('name')">Company
                                     <i v-if="sortKey === 'name'" :class="classe"></i>
                                 </th>
@@ -42,24 +46,32 @@
                                 </th>
                                 <th>Modify</th>
                             </tr>
+                            <!-- /.table-header -->
                             <tr v-for="project in repsSorted" :key="project.id">
-
+                                <td>
                                     <router-link
                                             :to="{name:'proj', params: {id: project.id, selProject: project}}"
                                             activeClass="active" tag="a" class="nav-item nav-link">
                                         {{ project.id }}
                                     </router-link>
-
+                                </td>
                                 <td>{{ project.project_started | tableDate }}</td>
 <!--                                <td><datepicker :input-class="`qqq`" :disabled="true" :bootstrap-styling="true" v-model="project.project_started"></datepicker></td>-->
-                                <td><span class="tag tag-success">{{ project.representation_id ? project.representation.name : 'not selected'  }}</span></td>
+                                <td>
+                                    <span class="tag tag-success">
+                                        {{ project.representation_id ? project.representation.name : 'not selected'  }}
+                                    </span>
+                                </td>
                                 <td>{{ project.title }}</td>
                                 <td>{{ project.description }}</td>
-                                <td></td>
+                                <td>
+                                    <a :href="'img/projects/'+project.doc_id" target="_blank">{{ project.doc_id }}</a>
+                                </td>
                                 <td>{{ project.user.name }}</td>
                                 <td>
                                     <div class="custom-control custom-checkbox">
-                                        <input disabled type="checkbox" class="custom-control-input" id="customCheck1" v-model="project.finished">
+                                        <input disabled type="checkbox" class="custom-control-input"
+                                               id="customCheck1" v-model="project.finished">
                                         <label class="custom-control-label" for="customCheck1"></label>
                                     </div>
                                 </td>
@@ -72,6 +84,7 @@
                             </tr>
                             </tbody>
                         </table>
+                        <!-- /.table -->
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -84,6 +97,7 @@
                                 @pagechanged="onPageChange"
                         ></appPagination>
                     </div>
+                    <!-- /.card-footer -->
                 </div>
                 <!-- /.card -->
             </div>
@@ -97,21 +111,24 @@
                                 :mode="editMode"
                         ></appModalHeader>
                         <!-- /.modal-header -->
+                        <!-- form -->
                         <form @submit.prevent="editMode ? updateProject() : createProject()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Date</label>
-                                    <datepicker :format="'dd MMM yyyy'" :bootstrap-styling="true" v-model="form.project_started" :class="{ 'is-invalid': form.errors.has('started') }"></datepicker>
+                                    <datepicker :format="'dd MMM yyyy'" :bootstrap-styling="true"
+                                                v-model="form.project_started" :class="{ 'is-invalid': form.errors.has('started') }">
+                                    </datepicker>
                                     <has-error :form="form" field="started"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label>Title</label>
-                                    <input v-model="form.title" type="text" name="title" placeholder="Title"
+                                    <label for="title">Title</label>
+                                    <input v-model="form.title" type="text" id="title" name="title" placeholder="Title"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
                                     <has-error :form="form" field="title"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label>Company</label>
+                                    <label for="type">Company</label>
                                     <select v-model="form.representation_id" name="type" id="type"
                                             class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
                                         <option v-bind:value="rep.id"
@@ -121,9 +138,11 @@
                                     <has-error :form="form" field="type"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description</label>
-                                    <textarea v-model="form.description" type="text" name="description" placeholder="Description"
-                                              class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+                                    <label for="description">Description</label>
+                                    <textarea v-model="form.description" type="text" id="description" name="description"
+                                              placeholder="Description"
+                                              class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
+                                    </textarea>
                                     <has-error :form="form" field="description"></has-error>
                                 </div>
                                 <div class="form-group">
@@ -132,7 +151,8 @@
                                     <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2" v-model="form.finished">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2"
+                                           name="finished" v-model="form.finished">
                                     <label class="custom-control-label" for="customCheck2">FINISHED</label>
                                 </div>
                             </div>
@@ -327,10 +347,15 @@
 
             prepareData(action = '') {
                 let data = new FormData();
+                data.append('project_started', this.form.project_started);
                 data.append('title', this.form.title);
-                data.append('rep_id', this.form.rep_id);
+                data.append('description', this.form.description);
+                data.append('representation_id', this.form.representation_id);
                 data.append('doc_id', this.form.doc_id);
                 data.append('doc', this.form.doc);
+                let trueFalse = this.form.finished === false ? 0 : 1;
+                data.append('finished', trueFalse);
+                //data.append('finished', this.form.finished);
 
                 if (action) {
                     data.append('_method', 'put');
@@ -358,10 +383,10 @@
                                 );
                                 Fire.$emit('AfterCreate');
                             }).catch(()=> {
-                            swal("Failed!", "There was something wrong.", "warning");
+                                swal("Failed!", "There was something wrong.", "warning");
                         });
                     } else {
-                        console.log('qqqqqqqqqqqq');
+                        console.log('error');
                     }
                 })
             }

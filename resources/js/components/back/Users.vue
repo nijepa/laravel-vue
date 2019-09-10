@@ -190,6 +190,7 @@
     import TableOptions from '../shared/TableOptions';
     import UploadFiles from '../shared/UploadFiles';
     import tableActions from '../../mixins/tableActions';
+    import paginationActions from '../../mixins/paginationActions';
     import modalForm from '../../mixins/modalForm';
 
     export default {
@@ -202,7 +203,7 @@
             appUploadFiles: UploadFiles
         },
 
-        mixins: [tableActions, modalForm],
+        mixins: [tableActions, modalForm, paginationActions],
 
         data() {
             return {
@@ -270,7 +271,7 @@
                 'renewUser',
                 'removeUser']),
 
-            onPageChange(page) {
+/*            onPageChange(page) {
                 console.log(page);
                 this.currentPage = page;
             },
@@ -283,7 +284,7 @@
             onSearchChanged(s) {
                 this.onPageChange(1);
                 this.search = s;
-            },
+            },*/
 
      /*       OnImageSelect(imgSelected, fieldname) {
                 this[fieldname] = imgSelected;

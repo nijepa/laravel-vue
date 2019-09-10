@@ -13,7 +13,6 @@ class Project extends Model
      */
     protected $fillable = [
         'title',
-        'company_id',
         'description',
         'project_started',
         'user_id',
@@ -41,6 +40,7 @@ class Project extends Model
     {
         return $this->belongsTo(Representation::class);
     }
+
     /**
      * Relationship to user
      *

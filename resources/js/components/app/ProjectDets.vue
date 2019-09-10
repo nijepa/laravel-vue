@@ -6,7 +6,6 @@
             <!-- Card -->
                 <div class="card" data-aos="flip-up">
                     <div class="d-flex justify-content-between mt-3">
-
                         <div class="ml-3 mt-3">
                             <div class="">
                                 <h3 class="d-inline p-2 text-blue font-weight-bold">{{ oneProject.title }}</h3>
@@ -41,6 +40,9 @@
                                                class="ic">
                                             </i>
                                         </th>
+                                        <th @click="sortBy('date_added')">Started At
+                                            <i v-if="sortKey === 'date_added'" :class="classe"></i>
+                                        </th>
                                         <th @click="sortBy('caption')">Caption
                                             <i v-if="sortKey === 'caption'"
                                                :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
@@ -52,6 +54,13 @@
                                                :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'"
                                                class="ic">
                                             </i>
+                                        </th>
+                                        <th>File</th>
+                                        <th @click="sortBy('name')">User
+                                            <i v-if="sortKey === 'name'" :class="classe"></i>
+                                        </th>
+                                        <th @click="sortBy('finished')">Finished
+                                            <i v-if="sortKey === 'finished'" :class="classe"></i>
                                         </th>
                                         <th @click="sortBy('created_at')">Created At
                                             <i v-if="sortKey === 'created_at'"
@@ -65,9 +74,18 @@
                                     <tbody>
                                     <tr v-for="projectDet in repsSorted" :key="projectDet.id">
                                         <td>{{ projectDet.id }}</td>
+                                        <td>{{ projectDet.date_added | tableDate }}</td>
                                         <td>{{ projectDet.caption }}</td>
+                                        <td>{{ projectDet.note }}</td>
                                         <td>
 <!--                                            <a :href="'img/projects/'+projectDet.photo_id" target="_blank">{{ projectDet.photo_id }}</a>-->
+                                        </td>
+                                        <td>{{ projectDet.user.name }}</td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input disabled type="checkbox" class="custom-control-input" id="customCheck1" v-model="projectDet.finished">
+                                                <label class="custom-control-label" for="customCheck1"></label>
+                                            </div>
                                         </td>
                                         <td>{{ projectDet.created_at | customDate }}</td>
                                         <td>
@@ -130,15 +148,33 @@
                             <div class="modal-body">
                                 <input v-model="form.project_id" type="hidden" name="project_id" id="project_id">
                                 <div class="form-group">
+                                    <label>Date</label>
+                                    <datepicker :format="'dd MMM yyyy'" :bootstrap-styling="true"
+                                                v-model="form.date_added" :class="{ 'is-invalid': form.errors.has('started') }">
+                                    </datepicker>
+                                    <has-error :form="form" field="started"></has-error>
+                                </div>
+                                <div class="form-group">
                                     <label for="caption">Caption</label>
-                                    <input v-model="form.caption" id="caption" type="caption" name="caption" placeholder="Caption"
+                                    <input v-model="form.caption" id="caption" type="text" name="caption" placeholder="Caption"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('caption') }">
                                     <has-error :form="form" field="caption"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label>Note</label>
+                                    <textarea v-model="form.note" type="text" id="note" name="note" placeholder="Note"
+                                              class="form-control" :class="{ 'is-invalid': form.errors.has('note') }"></textarea>
+                                    <has-error :form="form" field="note"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="doc_id" >Document</label>
                                     <input type="text" class="form-control" v-model="form.doc_id" name="doc_id" id="doc_id" disabled>
                                     <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2"
+                                           name="finished" v-model="form.finished">
+                                    <label class="custom-control-label" for="customCheck2">FINISHED</label>
                                 </div>
                             </div>
             <!-- /.modal-body -->
@@ -173,7 +209,10 @@
     import TableOptions from '../shared/TableOptions';
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
+    import updateFile from '../../mixins/updateFile';
+    import paginationActions from '../../mixins/paginationActions';
     import UploadFiles from '../shared/UploadFiles';
+    import Datepicker from 'vuejs-datepicker';
 
     export default {
 
@@ -182,10 +221,11 @@
         components: {
             appPagination: Paginations,
             appTableOptions: TableOptions,
-            appUploadFiles: UploadFiles
+            appUploadFiles: UploadFiles,
+            Datepicker
         },
 
-        mixins: [tableActions, modalForm],
+        mixins: [tableActions, modalForm, updateFile, paginationActions],
 
         data() {
             return {
@@ -196,10 +236,12 @@
 
                 form: new Form({
                     id: '',
+                    date_added: '',
                     caption: '',
                     note: '',
                     project_id: '',
-                    photo_id: '',
+                    finished: '',
+                    doc_id: '',
                     doc: null
                 }),
             }
@@ -249,38 +291,7 @@
                 }
             },
 
-            onFileChange(e){
-                let file = e.target.files[0];
-                let limit = 1024 * 1024 * 2;
-                let type = [
-                    'application/pdf',
-                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
-
-                if(file['size'] > limit){
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You are uploading a large file',
-                    });
-                    return false;
-                }
-
-                if(!type.includes(file['type'])) {
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You need to upload document file',
-                    });
-                    return false;
-                }
-
-                this.form.doc = e.target.files[0];
-                this.form.doc_id = this.form.doc.name;
-            },
-
-            onPageChange(page) {
+           /* onPageChange(page) {
                 console.log(page);
                 this.currentPage = page;
             },
@@ -293,7 +304,7 @@
             onSearchChanged(s) {
                 this.onPageChange(1);
                 this.search = s;
-            },
+            },*/
 
             imagesPlaces() {
                 this.logo = 'img/companies/'+this.form.logo_id;
@@ -310,7 +321,7 @@
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'Document added successfully'
+                            title: 'Project detail added successfully'
                         });
                         this.$Progress.finish();
                     })
@@ -321,13 +332,13 @@
                 this.$Progress.start();
                 let formData = this.projectData(1);
 
-                axios.post('../api/projects_det/'+this.form.id, formData)
+                axios.post('/api/project_dets/'+this.form.id, formData)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'Document updated successfully'
+                            title: 'Project detail updated successfully'
                         });
                         this.$Progress.finish();
                     })
@@ -338,7 +349,11 @@
 
             projectData(action = '') {
                 let data = new FormData();
-                data.append('title', this.form.title);
+                data.append('caption', this.form.caption);
+                data.append('note', this.form.note);
+                data.append('date_added', this.form.date_added);
+                let trueFalse = this.form.finished === false ? 0 : 1;
+                data.append('finished', trueFalse);
                 data.append('project_id', this.form.project_id);
                 data.append('doc_id', this.form.doc_id);
                 data.append('doc', this.form.doc);
@@ -357,16 +372,17 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        this.form.delete('../api/projects_det/'+project.id).then(()=>{
-                            swal.fire(
-                                'Deleted!',
-                                'Document has been deleted.',
-                                'success'
-                            );
-                            Fire.$emit('AfterCreate');
-                        }).catch(()=> {
-                            swal("Failed!", "There was something wrong.", "warning");
-                        });
+                        this.form.delete('../api/projects_det/'+project.id)
+                            .then(()=>{
+                                swal.fire(
+                                    'Deleted!',
+                                    'Project detail has been deleted.',
+                                    'success'
+                                );
+                                Fire.$emit('AfterCreate');
+                            }).catch(()=> {
+                                swal("Failed!", "There was something wrong.", "warning");
+                            });
                     } else {
                         console.log('error');
                     }

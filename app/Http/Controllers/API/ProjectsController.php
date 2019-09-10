@@ -14,6 +14,7 @@ use App\Traits\StoreFileTrait;
 class ProjectsController extends Controller
 {
     use StoreFileTrait;
+
     /**
      * ProductsController constructor.
      *
@@ -39,7 +40,7 @@ class ProjectsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      * @throws
      */
@@ -74,7 +75,7 @@ class ProjectsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return json Response
      */
     public function show($id)
     {
@@ -86,7 +87,7 @@ class ProjectsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  int  $id
      * @return array
      * @throws
@@ -118,7 +119,7 @@ class ProjectsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      * @throws
      */
     public function destroy($id)

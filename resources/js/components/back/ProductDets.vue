@@ -173,6 +173,7 @@
     import TableOptions from '../shared/TableOptions';
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
+    import paginationActions from '../../mixins/paginationActions';
     import UploadFiles from '../shared/UploadFiles';
 
     export default {
@@ -185,7 +186,7 @@
             appUploadFiles: UploadFiles
         },
 
-        mixins: [tableActions, modalForm],
+        mixins: [tableActions, modalForm, paginationActions],
 
         data() {
             return {
@@ -280,7 +281,7 @@
                 this.form.doc_id = this.form.doc.name;
             },
 
-            onPageChange(page) {
+  /*          onPageChange(page) {
                 console.log(page);
                 this.currentPage = page;
             },
@@ -293,7 +294,7 @@
             onSearchChanged(s) {
                 this.onPageChange(1);
                 this.search = s;
-            },
+            },*/
 
             imagesPlaces() {
                 this.logo = 'img/companies/'+this.form.logo_id;
