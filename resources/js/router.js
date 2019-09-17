@@ -44,5 +44,7 @@ export default new Router({
         {path: '/companies', component: () => import('./components/back/Companies.vue'), props: true},
         {path: '/projects', component: () => import('./components/app/Projects.vue')},
         {name: 'proj', path: '/projectDets/:id', component: () => import('./components/app/ProjectDets.vue'), props: true},
+        {path: '/meetings', component: () => import('./components/app/Meetings.vue')},
+        // {name: 'meet', path: '/meetingDets/:id', component: () => import('./components/app/MeetingDets.vue'), props: true},
     ]
 })

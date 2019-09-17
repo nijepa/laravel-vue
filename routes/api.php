@@ -48,7 +48,11 @@ Route::get('countries', 'API\CountriesController@selectAll');
 
 Route::get('findUser', 'API\UserController@search');
 
+// Web App apis
 Route::get('companies', 'API\RepresentationsController@companies');
 
 Route::apiResources(['project' => 'API\ProjectsController']);
 Route::apiResources(['project_dets' => 'API\ProjectDetsController']);
+
+Route::apiResources(['meeting' => 'API\MeetingsController']);
+Route::apiResources(['meeting_dets' => 'API\MeetingDetsController']);

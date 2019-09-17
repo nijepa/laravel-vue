@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Project;
+use App\Meeting;
+use App\Traits\StoreFileTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Representation;
-use App\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Traits\StoreFileTrait;
 
-class ProjectsController extends Controller
+class MeetingsController extends Controller
 {
     use StoreFileTrait;
 
@@ -32,17 +30,16 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('title')->with('Representation')->with('User')->get();//To get the output in array
+        $meetings = Meeting::orderBy('title')->with('Representation')->with('User')->get();//To get the output in array
 
-        return response()->json($projects);
+        return response()->json($meetings);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     * @throws
      */
     public function store(Request $request)
     {
@@ -57,16 +54,17 @@ class ProjectsController extends Controller
         $user = Auth::user()->id;
         $request->merge(['user_id' => $user]);
 
-        $fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->project_started);
-//        $fdate = Carbon::parse($request->project_started);
-        $request->merge(['project_started' => $fdate]);
+//        $fdate = Carbon::parse($request->meeting_started);
+        $fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->meeting_started);
+        $request->merge(['meeting_started' => $fdate]);
 
-        return Project::create([
+        return Meeting::create([
             'title' => $request['title'],
+            'city_id' => $request['city_id'],
             'description' => $request['description'],
             'representation_id' => $request['representation_id'],
             'doc_id' => $request['doc_id'],
-            'project_started' => $request['project_started'],
+            'meeting_started' => $request['meeting_started'],
             'user_id' => $request['user_id'],
             'finished' => $request['finished']
         ]);
@@ -75,29 +73,28 @@ class ProjectsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return json Response
+     * @param  \App\Meeting  $meeting
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $project = Project::findOrFail($id);
+        $meeting = Meeting::findOrFail($id);
 
-        return response()->json($project);
+        return response()->json($meeting);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return array
-     * @throws
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Meeting  $meeting
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Meeting $meeting)
     {
         $this->authorize('isAdmin');
 
-        $project = Project::findOrFail($id);
+        $meeting = Meeting::findOrFail($id);
 
         $this->validate($request, [
             'title' => 'required|string|max:191',
@@ -108,45 +105,29 @@ class ProjectsController extends Controller
         $user = Auth::user()->id;
         $request->merge(['user_id' => $user]);
 
-        $fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->project_started);
+        $fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->meeting_started);
         //$fdate = Carbon::parse($request->project_started);
         $request->merge(['project_started' => $fdate]);
 
-        $project->update($request->all());
+        $meeting->update($request->all());
 
-        return ['project' => $project];
+        return ['project' => $meeting];
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return array
-     * @throws
+     * @param  \App\Meeting  $meeting
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $this->authorize('isAdmin');
 
-        $project = Project::findOrFail($id);
+        $meeting = Meeting::findOrFail($id);
 
-        $project->delete();
+        $meeting->delete();
 
-        return ['message' => 'Project deleted'];
+        return ['message' => 'Meeting deleted'];
     }
-
-    /**
-     * Upload file and set fle name
-     *
-     * @param Request $request
-     */
-/*    public function uploadFile(Request $request)
-    {
-        If ($request->hasFile('doc')) {
-            //dd('aa');
-            $fileName = time().'.'.$request->doc->getClientOriginalExtension();
-            $request->offsetSet('doc_id', $fileName);
-            $request->doc->move(public_path('img/projects'), $fileName);
-        }
-    }*/
 }

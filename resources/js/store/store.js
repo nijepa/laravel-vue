@@ -14,6 +14,8 @@ import cities from './modules/cities';
 import users from './modules/users';
 import projects from './modules/app/projects';
 import projectDet from './modules/app/projectDet';
+import meetings from './modules/app/meetings';
+import meetingDet from './modules/app/meetingDet';
 
 /**
  * Load vuex store and add modules
@@ -35,6 +37,8 @@ export default new Vuex.Store({
         countries,
         users,
         projects,
-        projectDet
+        projectDet,
+        meetings,
+        meetingDet
     }
 })

@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\ProjectDet;
-use App\User;
+use App\MeetingDet;
+use App\Traits\StoreFileTrait;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Traits\StoreFileTrait;
 
-class ProjectDetsController extends Controller
+class MeetingDetsController extends Controller
 {
     use StoreFileTrait;
 
@@ -27,21 +25,20 @@ class ProjectDetsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return json Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $projectdets = ProjectDet::orderBy('caption')->with('User')->get();//To get the output in array
+        $meetingdets = MeetingDet::orderBy('caption')->with('User')->get();//To get the output in array
 
-        return response()->json($projectdets);
+        return response()->json($meetingdets);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     * @throws
      */
     public function store(Request $request)
     {
@@ -60,10 +57,10 @@ class ProjectDetsController extends Controller
         //$fdate = Carbon::parse($request->date_added);
         $request->merge(['date_added' => $fdate]);
 
-        return ProjectDet::create([
+        return MeetingDet::create([
             'caption' => $request['caption'],
             'note' => $request['note'],
-            'project_id' => $request['project_id'],
+            'project_id' => $request['meeting_id'],
             'doc_id' => $request['doc_id'],
             'date_added' => $request['date_added'],
             'user_id' => $request['user_id'],
@@ -74,29 +71,28 @@ class ProjectDetsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return json Response
+     * @param  \App\MeetingDet  $meetingDet
+     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $product = ProjectDet::where('project_id', $id)->with('User')->get();
+        $meetingdets = MeetingDet::where('meeting_id', $id)->with('User')->get();
 
-        return response()->json($product);
+        return response()->json($meetingdets);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return array
-     * @throws
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\MeetingDet  $meetingDet
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $this->authorize('isAdmin');
 
-        $project = ProjectDet::findOrFail($id);
+        $project = MeetingDet::findOrFail($id);
 
         $this->validate($request, [
             'caption' => 'required|string|max:191',
@@ -111,26 +107,25 @@ class ProjectDetsController extends Controller
 //        $fdate = Carbon::parse($request->date_added);
         $request->merge(['date_added' => $fdate]);
 
-        $project->update($request->all());
+        $meetingdet->update($request->all());
 
-        return ['project' => $project];
+        return ['project' => $meetingdet];
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return array
-     * @throws
+     * @param  \App\MeetingDet  $meetingDet
+     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $this->authorize('isAdmin');
 
-        $project = ProjectDet::findOrFail($id);
+        $meetingdet = MeetingDet::findOrFail($id);
 
-        $project->delete();
+        $meetingdet->delete();
 
-        return ['message' => 'Document deleted'];
+        return ['message' => 'Meeting detail deleted'];
     }
 }

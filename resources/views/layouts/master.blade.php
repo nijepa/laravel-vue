@@ -286,8 +286,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <li class="nav-item">
                         <a href="#" class="nav-link has-treeview">
-                            <router-link to="/aboutsB" class="nav-item">
-                                <i class="fas fa-hands-helping nav-icon text-cyan"></i>
+                            <router-link to="/meetings" class="nav-item">
+                                <i class="fas fa-handshake nav-icon text-cyan"></i>
                                 <p>Meetings</p>
                             </router-link>
                         </a>

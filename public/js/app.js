@@ -80544,17 +80544,17 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   {
     path: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue"));
+      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue"));
     }
   }, {
     path: '/dashboard',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue"));
+      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue"));
     }
   }, {
     path: '/profile',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./components/back/Profile.vue */ "./resources/js/components/back/Profile.vue"));
+      return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/back/Profile.vue */ "./resources/js/components/back/Profile.vue"));
     }
   }, {
     path: '/users',
@@ -80564,37 +80564,37 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   }, {
     path: '/cities',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/back/Cities.vue */ "./resources/js/components/back/Cities.vue"));
+      return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./components/back/Cities.vue */ "./resources/js/components/back/Cities.vue"));
     }
   }, {
     path: '/countries',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./components/back/Countries.vue */ "./resources/js/components/back/Countries.vue"));
+      return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/back/Countries.vue */ "./resources/js/components/back/Countries.vue"));
     }
   }, {
     path: '/products',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! ./components/back/Products.vue */ "./resources/js/components/back/Products.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(26)]).then(__webpack_require__.bind(null, /*! ./components/back/Products.vue */ "./resources/js/components/back/Products.vue"));
     }
   }, {
     path: '/newsb',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./components/back/News.vue */ "./resources/js/components/back/News.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! ./components/back/News.vue */ "./resources/js/components/back/News.vue"));
     }
   }, {
     path: '/contacts',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! ./components/back/Contacts.vue */ "./resources/js/components/back/Contacts.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./components/back/Contacts.vue */ "./resources/js/components/back/Contacts.vue"));
     }
   }, {
     path: '/abouts',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(3), __webpack_require__.e(22)]).then(__webpack_require__.bind(null, /*! ./components/back/Abouts.vue */ "./resources/js/components/back/Abouts.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(3), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! ./components/back/Abouts.vue */ "./resources/js/components/back/Abouts.vue"));
     }
   }, {
     path: '/reps',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(0), __webpack_require__.e(20)]).then(__webpack_require__.bind(null, /*! ./components/back/Reps.vue */ "./resources/js/components/back/Reps.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0), __webpack_require__.e(21)]).then(__webpack_require__.bind(null, /*! ./components/back/Reps.vue */ "./resources/js/components/back/Reps.vue"));
     }
   }, //{path: '/repDets', component: () => import('./components/back/RepDets.vue')},
   {
@@ -80608,19 +80608,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: 'prod',
     path: '/productDets/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./components/back/ProductDets.vue */ "./resources/js/components/back/ProductDets.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(20)]).then(__webpack_require__.bind(null, /*! ./components/back/ProductDets.vue */ "./resources/js/components/back/ProductDets.vue"));
     },
     props: true
   }, {
     path: '*',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
+      return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
     }
   }, //web app routes
   {
     path: '/companies',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(0), __webpack_require__.e(29)]).then(__webpack_require__.bind(null, /*! ./components/back/Companies.vue */ "./resources/js/components/back/Companies.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./components/back/Companies.vue */ "./resources/js/components/back/Companies.vue"));
     },
     props: true
   }, {
@@ -80635,9 +80635,261 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
       return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./components/app/ProjectDets.vue */ "./resources/js/components/app/ProjectDets.vue"));
     },
     props: true
+  }, {
+    path: '/meetings',
+    component: function component() {
+      return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(30)]).then(__webpack_require__.bind(null, /*! ./components/app/Meetings.vue */ "./resources/js/components/app/Meetings.vue"));
+    }
   }]
 }));
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/app/meetingDet.js":
+/*!******************************************************!*\
+  !*** ./resources/js/store/modules/app/meetingDet.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var getDefaultState = function getDefaultState() {
+  return {
+    meetingDet: []
+  };
+};
+
+var state = {
+  meetingDet: getDefaultState()
+};
+var getters = {
+  allMeetingDet: function allMeetingDet(state) {
+    return state.meetingDet;
+  }
+};
+var actions = {
+  fetchMeetingDet: function () {
+    var _fetchMeetingDet = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref, meetingDet) {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("../api/meeting_dets/".concat(meetingDet), meetingDet);
+
+            case 3:
+              response = _context.sent;
+              commit('setMeetingDet', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function fetchMeetingDet(_x, _x2) {
+      return _fetchMeetingDet.apply(this, arguments);
+    }
+
+    return fetchMeetingDet;
+  }(),
+  resetMeetingState: function resetMeetingState(_ref2) {
+    var commit = _ref2.commit;
+    commit('resetState');
+  }
+};
+var mutations = {
+  setMeetingDet: function setMeetingDet(state, meetingDet) {
+    return state.meetingDet = meetingDet;
+  },
+  resetState: function resetState(state) {
+    Object.assign(state, getDefaultState());
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/app/meetings.js":
+/*!****************************************************!*\
+  !*** ./resources/js/store/modules/app/meetings.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var getDefaultState = function getDefaultState() {
+  return {
+    meeting: []
+  };
+};
+
+var state = {
+  meetings: {},
+  meeting: getDefaultState()
+};
+var getters = {
+  allMeetings: function allMeetings(state) {
+    return state.meetings;
+  },
+  oneMeeting: function oneMeeting(state) {
+    return state.meeting;
+  }
+};
+var actions = {
+  fetchMeetings: function () {
+    var _fetchMeetings = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/meeting');
+
+            case 3:
+              response = _context.sent;
+              commit('setMeetings', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function fetchMeetings(_x) {
+      return _fetchMeetings.apply(this, arguments);
+    }
+
+    return fetchMeetings;
+  }(),
+  fetchMeeting: function () {
+    var _fetchMeeting = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2, meeting) {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("../api/meeting/".concat(meeting), meeting);
+
+            case 3:
+              response = _context2.sent;
+              commit('setMeeting', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    function fetchMeeting(_x2, _x3) {
+      return _fetchMeeting.apply(this, arguments);
+    }
+
+    return fetchMeeting;
+  }(),
+  addMeeting: function () {
+    var _addMeeting = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, form) {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/meeting", form);
+
+            case 3:
+              response = _context3.sent;
+              commit('add', response.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    function addMeeting(_x4, _x5) {
+      return _addMeeting.apply(this, arguments);
+    }
+
+    return addMeeting;
+  }(),
+  resetMeetingState: function resetMeetingState(_ref4) {
+    var commit = _ref4.commit;
+    commit('resetState');
+  }
+};
+var mutations = {
+  setMeetings: function setMeetings(state, meetings) {
+    return state.meetings = meetings;
+  },
+  setMeeting: function setMeeting(state, meeting) {
+    return state.meeting = meeting;
+  },
+  resetState: function resetState(state) {
+    Object.assign(state, getDefaultState());
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
 
 /***/ }),
 
@@ -82747,6 +82999,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_users__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/users */ "./resources/js/store/modules/users.js");
 /* harmony import */ var _modules_app_projects__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./modules/app/projects */ "./resources/js/store/modules/app/projects.js");
 /* harmony import */ var _modules_app_projectDet__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./modules/app/projectDet */ "./resources/js/store/modules/app/projectDet.js");
+/* harmony import */ var _modules_app_meetings__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./modules/app/meetings */ "./resources/js/store/modules/app/meetings.js");
+/* harmony import */ var _modules_app_meetingDet__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/app/meetingDet */ "./resources/js/store/modules/app/meetingDet.js");
+
+
 
 
 
@@ -82783,7 +83039,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     countries: _modules_countries__WEBPACK_IMPORTED_MODULE_11__["default"],
     users: _modules_users__WEBPACK_IMPORTED_MODULE_13__["default"],
     projects: _modules_app_projects__WEBPACK_IMPORTED_MODULE_14__["default"],
-    projectDet: _modules_app_projectDet__WEBPACK_IMPORTED_MODULE_15__["default"]
+    projectDet: _modules_app_projectDet__WEBPACK_IMPORTED_MODULE_15__["default"],
+    meetings: _modules_app_meetings__WEBPACK_IMPORTED_MODULE_16__["default"],
+    meetingDet: _modules_app_meetingDet__WEBPACK_IMPORTED_MODULE_17__["default"]
   }
 }));
 
