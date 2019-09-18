@@ -2,14 +2,19 @@
 
 namespace App;
 
+use App\Notifications\UserRegistered;
+use Illuminate\Support\Facades\Notification;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -57,4 +62,25 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProjectDet::class);
     }
+
+    /**
+     * Relationship to projects
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function meetings()
+    {
+        return $this->hasMany(Meeting::class);
+    }
+
+    /**
+     * Relationship to projects details
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function meetingdets()
+    {
+        return $this->hasMany(MeetingDet::class);
+    }
+
 }

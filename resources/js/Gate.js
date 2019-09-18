@@ -5,7 +5,7 @@ export default class Gate {
     }
 
     isAdmin() {
-        return this.user.type === 'admin';
+        return this.user.user.type === 'Admin';
     }
 
     isAuthor() {

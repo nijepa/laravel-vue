@@ -492,6 +492,7 @@
             // this.fetchUsers();
             // this.users = this.$store.state.users;
             this.loadUsers();
+            console.log(window.user);
             Fire.$on('AfterCreate', () => {
                 this.loadUsers();
             });

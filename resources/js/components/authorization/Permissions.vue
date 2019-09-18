@@ -5,10 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-globe-europe fa-2x icolor"></i> COUNTRIES</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-user-lock fa-2x icolor"></i> PERMISSIONS</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
-                                Add Country <span><i class="cap-icon ci-plus"></i></span>
+                                Add Permission <span><i class="cap-icon ci-plus"></i></span>
                             </button>
                         </div>
                     </div>
@@ -22,16 +22,16 @@
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
-                            <tr v-for="country in countries.countries.data" :key="country.id">
-                                <td>{{ country.id }}</td>
-                                <td>{{ country.name }}</td>
-                                <td>{{ country.created_at | customDate }}</td>
+                            <tr v-for="permission in permissions.permissions.data" :key="permission.id">
+                                <td>{{ permission.id }}</td>
+                                <td>{{ permission.name }}</td>
+                                <td>{{ permission.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(country)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <button @click="editModal(permission)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="cap-icon ci-file-edit"></i>
                                     </button>
 
-                                    <button  @click="deleteCountry(country)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <button  @click="deletePermission(permission)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="cap-icon ci-trash"></i>
                                     </button>
                                 </td>
@@ -41,7 +41,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <pagination :data="countries.countries" @pagination-change-page="getResults">
+                        <pagination :data="permissions.permissions" @pagination-change-page="getResults">
                             <span slot="prev-nav">&lt; Previous</span>
                             <span slot="next-nav">Next &gt;</span>
                         </pagination>
@@ -55,13 +55,13 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="cap-icon ci-plus icolor"></i> Add New Country</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="cap-icon ci-file-edit icolor"></i> Update Country</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="cap-icon ci-plus icolor"></i> Add New Permission</h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="cap-icon ci-file-edit icolor"></i> Update Permission</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div><!-- /.modal-header -->
-                        <form @submit.prevent="editMode ? updateCountry() : createCountry()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? updatePermission() : createPermission()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Name</label>
@@ -93,92 +93,90 @@
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
-        name: "Countries",
+        name: "Permissions",
+
         data() {
             return {
-                countries: {},
+                permissions: {},
                 form: new Form({
                     id: '',
-                    name: ''
+                    name: '',
+                    guard_name: ''
                 }),
                 editMode: true
             }
         },
-        computed: mapGetters(['allCountries']),
+
+        computed: mapGetters(['allPermissions']),
+
         methods: {
-            ...mapActions(['fetchCountries',
-                'fetchCountriesP',
-                'fetchCountriesS',
-                'addCountry',
-                'renewCountry',
-                'removeCountry']),
-            loadCountries() {
+            ...mapActions(['fetchPermissions']),
+
+            loadPermissions() {
                 if(this.$gate.isAdmin()) {
-      /*              axios.get("api/user")
-                        .then(({ data }) => (this.users = data))
-                        .catch();*/
-                    this.fetchCountriesP();
-                    this.countries = this.$store.state.countries;
+                    /*              axios.get("api/user")
+                                      .then(({ data }) => (this.users = data))
+                                      .catch();*/
+                    this.fetchPermissions();
+                    this.permissions = this.$store.state.permissions;
                 }
             },
+
             getResults(page = 1) {
-                this.fetchCountriesP(page);
-                this.countries = this.$store.state.countries;
-        /*        axios.get('api/user?page=' + page)
-                    .then(response => {
-                        console.log(response.data);
-                        this.users = response.data;
-                    });*/
+                this.fetchPermissions(page);
+                this.permissions = this.$store.state.permissions;
             },
+
             newModal() {
                 this.editMode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-            editModal(country) {
+
+            editModal(permission) {
                 this.editMode = true;
                 $('#addNew').modal('show');
-                this.form.fill(country);
+                this.form.fill(permission);
             },
 
-            createCountry() {
+            createPermission() {
                 this.$Progress.start();
                 //this.addCountry(this.form);
-                this.form.post('api/country')
-                     .then(({ data }) => {
+                this.form.post('api/permissions')
+                    .then(({ data }) => {
                         //console.log(data);
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'Country added successfully'
+                            title: 'Permission added successfully'
                         });
                         this.$Progress.finish();
-                     })
-                     .catch(() => {})
+                    })
+                    .catch(() => {})
             },
 
-            updateCountry(id) {
+            updatePermission(id) {
                 this.$Progress.start();
                 //console.log(this.form);
-               //this.renewCountry(this.form);
+                //this.renewCountry(this.form);
 
-                this.form.put('api/country/'+this.form.id)
+                this.form.put('api/permission/'+this.form.id)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'Country updated successfully'
+                            title: 'Permission updated successfully'
                         });
                         this.$Progress.finish();
-                   })
+                    })
                     .catch(() => {
                         this.$Progress.fail();
                     })
             },
 
-            deleteCountry(country){
+            deletePermission(permission){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -191,41 +189,28 @@
                     // Send request to the server
                     if (result.value) {
                         //this.removeCountry(country);
-                        this.form.delete('api/country/'+country.id)
+                        this.form.delete('api/permission/'+permission.id)
                             .then(()=>{
                                 swal.fire(
                                     'Deleted!',
-                                    'Country has been deleted.',
+                                    'Permission has been deleted.',
                                     'success'
                                 );
                                 Fire.$emit('AfterCreate');
-                             }).catch(()=> {
-                                 swal("Failed!", "There was something wrong.", "warning");
-                             });
+                            }).catch(()=> {
+                            swal("Failed!", "There was something wrong.", "warning");
+                        });
                     } else {
                         console.log('qqqqqqqqqqqq');
                     }
                 })
             }
         },
-        created() {
-            Fire.$on('searching', () => {
-                let query = this.$parent.search;
-                this.fetchCountriesS(query);
-        /*        axios.get('api/findUser?q=' + query)
-                    .then((data) => {
-                        console.log(data);
-                        this.users = data.data
-                    })
-                    .catch(() => {
 
-                    })*/
-            });
-            // this.fetchUsers();
-            // this.users = this.$store.state.users;
-            this.loadCountries();
+        created() {
+            this.loadPermissions();
             Fire.$on('AfterCreate', () => {
-                this.loadCountries();
+                this.loadPermissions();
             });
         }
     }

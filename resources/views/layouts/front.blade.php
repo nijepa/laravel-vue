@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="">
     <link rel="stylesheet" href="/css/app.css">
-    <title>donau</title>
+    <title>Donau</title>
   </head>
   <body id="home" data-spy="scroll" data-target="#main-nav">
     <noscript>

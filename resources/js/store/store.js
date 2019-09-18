@@ -16,6 +16,8 @@ import projects from './modules/app/projects';
 import projectDet from './modules/app/projectDet';
 import meetings from './modules/app/meetings';
 import meetingDet from './modules/app/meetingDet';
+import permissions from './modules/authorize/permissions';
+import roles from './modules/authorize/roles';
 
 /**
  * Load vuex store and add modules
@@ -39,6 +41,8 @@ export default new Vuex.Store({
         projects,
         projectDet,
         meetings,
-        meetingDet
+        meetingDet,
+        permissions,
+        roles
     }
 })

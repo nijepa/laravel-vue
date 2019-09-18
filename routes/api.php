@@ -56,3 +56,6 @@ Route::apiResources(['project_dets' => 'API\ProjectDetsController']);
 
 Route::apiResources(['meeting' => 'API\MeetingsController']);
 Route::apiResources(['meeting_dets' => 'API\MeetingDetsController']);
+
+Route::apiResource('roles', 'API\RoleController');
+Route::apiResource('permissions', 'API\PermissionController');
