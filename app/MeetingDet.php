@@ -14,6 +14,7 @@ class MeetingDet extends Model
     protected $fillable = [
         'caption',
         'meeting_id',
+        'representation_id',
         'date_added',
         'user_id',
         'note',
@@ -29,6 +30,16 @@ class MeetingDet extends Model
     public function meeting()
     {
         return $this->belongsTo(Meeting::class);
+    }
+
+    /**
+     * Relationship to company
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function representation()
+    {
+        return $this->belongsTo(Representation::class);
     }
 
     /**

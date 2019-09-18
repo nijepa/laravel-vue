@@ -80528,33 +80528,33 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   }, {
     path: '/news',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./views/front/News.vue */ "./resources/js/views/front/News.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./views/front/News.vue */ "./resources/js/views/front/News.vue"));
     }
   }, {
     path: '/production',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/front/Production.vue */ "./resources/js/views/front/Production.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(20)]).then(__webpack_require__.bind(null, /*! ./views/front/Production.vue */ "./resources/js/views/front/Production.vue"));
     }
   }, {
     path: '/exports',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./views/front/Exports.vue */ "./resources/js/views/front/Exports.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./views/front/Exports.vue */ "./resources/js/views/front/Exports.vue"));
     }
   }, //backend routes
   {
     path: '/home',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue"));
+      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue"));
     }
   }, {
     path: '/dashboard',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue"));
+      return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue"));
     }
   }, {
     path: '/profile',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/back/Profile.vue */ "./resources/js/components/back/Profile.vue"));
+      return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./components/back/Profile.vue */ "./resources/js/components/back/Profile.vue"));
     }
   }, {
     path: '/users',
@@ -80564,82 +80564,89 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   }, {
     path: '/cities',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./components/back/Cities.vue */ "./resources/js/components/back/Cities.vue"));
+      return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./components/back/Cities.vue */ "./resources/js/components/back/Cities.vue"));
     }
   }, {
     path: '/countries',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/back/Countries.vue */ "./resources/js/components/back/Countries.vue"));
+      return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./components/back/Countries.vue */ "./resources/js/components/back/Countries.vue"));
     }
   }, {
     path: '/products',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(26)]).then(__webpack_require__.bind(null, /*! ./components/back/Products.vue */ "./resources/js/components/back/Products.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(28)]).then(__webpack_require__.bind(null, /*! ./components/back/Products.vue */ "./resources/js/components/back/Products.vue"));
     }
   }, {
     path: '/newsb',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! ./components/back/News.vue */ "./resources/js/components/back/News.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(27)]).then(__webpack_require__.bind(null, /*! ./components/back/News.vue */ "./resources/js/components/back/News.vue"));
     }
   }, {
     path: '/contacts',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(24)]).then(__webpack_require__.bind(null, /*! ./components/back/Contacts.vue */ "./resources/js/components/back/Contacts.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(26)]).then(__webpack_require__.bind(null, /*! ./components/back/Contacts.vue */ "./resources/js/components/back/Contacts.vue"));
     }
   }, {
     path: '/abouts',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(3), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! ./components/back/Abouts.vue */ "./resources/js/components/back/Abouts.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(3), __webpack_require__.e(25)]).then(__webpack_require__.bind(null, /*! ./components/back/Abouts.vue */ "./resources/js/components/back/Abouts.vue"));
     }
   }, {
     path: '/reps',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0), __webpack_require__.e(21)]).then(__webpack_require__.bind(null, /*! ./components/back/Reps.vue */ "./resources/js/components/back/Reps.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(0), __webpack_require__.e(23)]).then(__webpack_require__.bind(null, /*! ./components/back/Reps.vue */ "./resources/js/components/back/Reps.vue"));
     }
   }, //{path: '/repDets', component: () => import('./components/back/RepDets.vue')},
   {
     name: 'repd',
     path: '/repDets/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/back/RepDets.vue */ "./resources/js/components/back/RepDets.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./components/back/RepDets.vue */ "./resources/js/components/back/RepDets.vue"));
     },
     props: true
   }, {
     name: 'prod',
     path: '/productDets/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(20)]).then(__webpack_require__.bind(null, /*! ./components/back/ProductDets.vue */ "./resources/js/components/back/ProductDets.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(22)]).then(__webpack_require__.bind(null, /*! ./components/back/ProductDets.vue */ "./resources/js/components/back/ProductDets.vue"));
     },
     props: true
   }, {
     path: '*',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
+      return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
     }
   }, //web app routes
   {
     path: '/companies',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./components/back/Companies.vue */ "./resources/js/components/back/Companies.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(0), __webpack_require__.e(21)]).then(__webpack_require__.bind(null, /*! ./components/back/Companies.vue */ "./resources/js/components/back/Companies.vue"));
     },
     props: true
   }, {
     path: '/projects',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./components/app/Projects.vue */ "./resources/js/components/app/Projects.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./components/app/Projects.vue */ "./resources/js/components/app/Projects.vue"));
     }
   }, {
     name: 'proj',
     path: '/projectDets/:id',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./components/app/ProjectDets.vue */ "./resources/js/components/app/ProjectDets.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/app/ProjectDets.vue */ "./resources/js/components/app/ProjectDets.vue"));
     },
     props: true
   }, {
     path: '/meetings',
     component: function component() {
-      return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(30)]).then(__webpack_require__.bind(null, /*! ./components/app/Meetings.vue */ "./resources/js/components/app/Meetings.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./components/app/Meetings.vue */ "./resources/js/components/app/Meetings.vue"));
     }
+  }, {
+    name: 'meet',
+    path: '/meetingDets/:id',
+    component: function component() {
+      return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(0), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./components/app/MeetingDets.vue */ "./resources/js/components/app/MeetingDets.vue"));
+    },
+    props: true
   }]
 }));
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))

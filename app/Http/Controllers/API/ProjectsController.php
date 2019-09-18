@@ -108,8 +108,8 @@ class ProjectsController extends Controller
         $user = Auth::user()->id;
         $request->merge(['user_id' => $user]);
 
-        $fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->project_started);
-        //$fdate = Carbon::parse($request->project_started);
+        //$fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->project_started);
+        $fdate = Carbon::parse($request->project_started);
         $request->merge(['project_started' => $fdate]);
 
         $project->update($request->all());

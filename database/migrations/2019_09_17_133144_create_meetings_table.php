@@ -21,6 +21,7 @@ class CreateMeetingsTable extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('user_id');
+            $table->string('doc_id')->nullable();
             $table->timestamps();
         });
     }

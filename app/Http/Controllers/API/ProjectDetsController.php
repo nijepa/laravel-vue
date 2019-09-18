@@ -107,8 +107,8 @@ class ProjectDetsController extends Controller
         $user = Auth::user()->id;
         $request->merge(['user_id' => $user]);
 
-        $fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->date_added);
-//        $fdate = Carbon::parse($request->date_added);
+        //$fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->date_added);
+        $fdate = Carbon::parse($request->date_added);
         $request->merge(['date_added' => $fdate]);
 
         $project->update($request->all());

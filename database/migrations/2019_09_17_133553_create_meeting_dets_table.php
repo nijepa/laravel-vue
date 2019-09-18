@@ -21,6 +21,8 @@ class CreateMeetingDetsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('caption');
             $table->text('note');
+            $table->string('doc_id')->nullable();
+            $table->boolean('finished')->default(0);
             $table->timestamps();
         });
     }

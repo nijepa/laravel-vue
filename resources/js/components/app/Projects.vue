@@ -65,7 +65,7 @@
                                 <td>{{ project.title }}</td>
                                 <td>{{ project.description }}</td>
                                 <td>
-                                    <a :href="'img/projects/'+project.doc_id" target="_blank">{{ project.doc_id }}</a>
+                                    <a v-if="project.doc_id" :href="'img/projects/'+project.doc_id" target="_blank">{{ project.doc_id }}</a>
                                 </td>
                                 <td>{{ project.user.name }}</td>
                                 <td>

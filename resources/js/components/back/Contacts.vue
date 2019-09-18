@@ -292,7 +292,7 @@
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                this.fetchContactsS(query);
+                this.fetchContacts(query);
             });
 
             this.loadContacts();

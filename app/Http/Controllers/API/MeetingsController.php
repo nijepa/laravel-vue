@@ -30,7 +30,7 @@ class MeetingsController extends Controller
      */
     public function index()
     {
-        $meetings = Meeting::orderBy('title')->with('Representation')->with('User')->get();//To get the output in array
+        $meetings = Meeting::orderBy('title')->with('Representation')->with('User')->with('City')->get();//To get the output in array
 
         return response()->json($meetings);
     }
@@ -90,7 +90,7 @@ class MeetingsController extends Controller
      * @param  \App\Meeting  $meeting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meeting $meeting)
+    public function update(Request $request, $id)
     {
         $this->authorize('isAdmin');
 
@@ -105,8 +105,8 @@ class MeetingsController extends Controller
         $user = Auth::user()->id;
         $request->merge(['user_id' => $user]);
 
-        $fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->meeting_started);
-        //$fdate = Carbon::parse($request->project_started);
+        //$fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->meeting_started);
+        $fdate = Carbon::parse($request->meeting_started);
         $request->merge(['project_started' => $fdate]);
 
         $meeting->update($request->all());

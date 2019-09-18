@@ -100,9 +100,14 @@
                         </div>
                     </div>
                     <div v-else class="card m-2">
-                        <h3 class="text-blue font-weight-bold m-3">
-                            No files uploaded !
-                        </h3>
+                        <div class="d-flex justify-content-center my-3">
+                            <h3 class="text-blue font-weight-bold m-3">
+                                No Product details !
+                            </h3>
+                            <button class="btn btn-success" @click="newModal">
+                                Add Product detail <span><i class="cap-icon ci-plus"></i></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             <!-- /.card -->

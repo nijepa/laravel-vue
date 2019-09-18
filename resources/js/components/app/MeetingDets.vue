@@ -8,23 +8,23 @@
                     <div class="d-flex justify-content-between mt-3">
                         <div class="ml-3 mt-3">
                             <div class="">
-                                <h3 class="d-inline p-2 text-blue font-weight-bold">{{ oneProject.title }}</h3>
+                                <h3 class="d-inline p-2 text-blue font-weight-bold">{{ oneMeeting.title }}</h3>
                             </div>
                             <div class="mt-2">
-                                <h4 class="d-inline p-2">{{ oneProject.description }}</h4>
+                                <h4 class="d-inline p-2">{{ oneMeeting.description }}</h4>
                             </div>
                         </div>
-                        <router-link to="/projects" class="nav-link btn btn-outline-secondary mr-3" tag="button">
+                        <router-link to="/meetings" class="nav-link btn btn-outline-secondary mr-3" tag="button">
                             <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
                         </router-link>
                     </div>
                     <hr>
-                    <div v-if="projectDets.projectDet.length">
+                    <div v-if="meetingDets.meetingDet.length">
                         <appTableOptions
-                                :title="'PROJECT DETAILS'"
+                                :title="'MEETING DETAILS'"
                                 :button-title="'Detail'"
                                 :at-click="newModal"
-                                :button-icon="'far fa-file-alt fa-2x icolor'"
+                                :button-icon="'far fa-handshake fa-2x icolor'"
                                 @pageSizeChanged="onPageSizeChanged"
                                 @searchChanged="onSearchChanged"
                         ></appTableOptions>
@@ -72,30 +72,30 @@
                                     </tr>
                                 </thead>
                                     <tbody>
-                                    <tr v-for="projectDet in repsSorted" :key="projectDet.id">
-                                        <td>{{ projectDet.id }}</td>
-                                        <td>{{ projectDet.date_added | tableDate }}</td>
-                                        <td>{{ projectDet.caption }}</td>
-                                        <td>{{ projectDet.note }}</td>
-                                        <td>
-                                            <a :href="'../img/projects/'+projectDet.doc_id" target="_blank">{{ projectDet.doc_id }}</a>
+                                    <tr v-for="meetingDet in repsSorted" :key="meetingDet.id">
+                                        <td>{{ meetingDet.id }}</td>
+                                        <td>{{ meetingDet.date_added | tableDate }}</td>
+                                        <td>{{ meetingDet.caption }}</td>
+                                        <td>{{ meetingDet.note }}</td>
+                                        <td >
+                                            <a v-if="meetingDet.doc_id" :href="'../img/meetings/'+meetingDet.doc_id" target="_blank">{{ meetingDet.doc_id }}</a>
                                         </td>
-                                        <td>{{ projectDet.user.name }}</td>
+                                        <td>{{ meetingDet.user.name }}</td>
                                         <td>
                                             <div class="custom-control custom-checkbox">
-                                                <input disabled type="checkbox" class="custom-control-input" id="customCheck1" v-model="projectDet.finished">
+                                                <input disabled type="checkbox" class="custom-control-input" id="customCheck1" v-model="meetingDet.finished">
                                                 <label class="custom-control-label" for="customCheck1"></label>
                                             </div>
                                         </td>
-                                        <td>{{ projectDet.created_at | customDate }}</td>
+                                        <td>{{ meetingDet.created_at | customDate }}</td>
                                         <td>
-                                            <button @click="editModal(projectDet)"
+                                            <button @click="editModal(meetingDet)"
                                                     class="btn btn-info btn-sm"
                                                     data-toggle="tooltip" data-placement="top" title="Edit Company">
                                                 <i class="cap-icon ci-file-edit"></i>
                                             </button>
                                             /
-                                            <button  @click="deleteProject(projectDet)"
+                                            <button  @click="deleteMeeting(meetingDet)"
                                                      class="btn btn-danger btn-sm"
                                                      data-toggle="tooltip" data-placement="top" title="Delete Company">
                                                 <i class="cap-icon ci-trash"></i>
@@ -118,9 +118,14 @@
                         </div>
                     </div>
                     <div v-else class="card m-2">
-                        <h3 class="text-blue font-weight-bold m-3">
-                            No files uploaded !
-                        </h3>
+                        <div class="d-flex justify-content-center my-3">
+                            <h3 class="text-blue font-weight-bold m-3">
+                                No meeting details !
+                            </h3>
+                            <button class="btn btn-success" @click="newModal">
+                                Add Meeting detail <span><i class="cap-icon ci-plus"></i></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             <!-- /.card -->
@@ -132,10 +137,10 @@
                     <div class="modal-content">
                         <div class="modal-header" v-if="editMode ? classes='edit' : classes='add'" :class="classes">
                             <h5 class="modal-title" v-show="!editMode" id="addNewLabel">
-                                <i class="cap-icon ci-plus icolor"></i> ADD NEW PROJECT DETAIL
+                                <i class="cap-icon ci-plus icolor"></i> ADD NEW MEETING DETAIL
                             </h5>
                             <h5 class="modal-title" v-show="editMode" id="addNewLabel">
-                                <i class="cap-icon ci-file-edit icolor"></i> UPDATE PROJECT DETAIL
+                                <i class="cap-icon ci-file-edit icolor"></i> UPDATE MEETING DETAIL
                             </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -143,16 +148,26 @@
                         </div>
             <!-- /.modal-header -->
                         <form enctype="multipart/form-data"
-                              @submit.prevent="editMode ? updateProject() : createProject()"
+                              @submit.prevent="editMode ? updateMeeting() : createMeeting()"
                               @keydown="form.onKeydown($event)">
                             <div class="modal-body">
-                                <input v-model="form.project_id" type="hidden" name="project_id" id="project_id">
+                                <input v-model="form.meeting_id" type="hidden" name="meeting_id" id="meeting_id">
                                 <div class="form-group">
                                     <label>Date</label>
                                     <datepicker :format="'dd MM yyyy'" :bootstrap-styling="true"
                                                 v-model="form.date_added" :class="{ 'is-invalid': form.errors.has('started') }">
                                     </datepicker>
                                     <has-error :form="form" field="started"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="representation_id">Company</label>
+                                    <select v-model="form.representation_id" name="representation_id" id="representation_id"
+                                            class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                                        <option v-bind:value="rep.id"
+                                                :key="rep.id"
+                                                v-for="rep in reps.reps">{{ rep.name }}</option>
+                                    </select>
+                                    <has-error :form="form" field="type"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="caption">Caption</label>
@@ -216,7 +231,7 @@
 
     export default {
 
-        name: "ProjectDets",
+        name: "MeetingDets",
 
         components: {
             appPagination: Paginations,
@@ -229,17 +244,19 @@
 
         data() {
             return {
-                projectDets: {},
-                project: {},
-                projectId: this.$route.params.id,
-                selProject: this.$route.params.selProject,
+                meetingDets: {},
+                meeting: {},
+                reps: [],
+                meetingId: this.$route.params.id,
+                selMeeting: this.$route.params.selMeeting,
 
                 form: new Form({
                     id: '',
                     date_added: '',
                     caption: '',
                     note: '',
-                    project_id: '',
+                    meeting_id: '',
+                    representation_id: '',
                     finished: '',
                     doc_id: '',
                     doc: null
@@ -252,10 +269,10 @@
          */
         computed: {
 
-            ...mapGetters(['allProjects', 'allProjectDet', 'oneProject']),
+            ...mapGetters(['allMeetings', 'allMeetingDet', 'oneMeeting', 'allReps']),
 
             repsSorted() {
-                let result = this.projectDets.projectDet;
+                let result = this.meetingDets.meetingDet;
 
                 if (this.search) {
                     result = result.filter(item => item.title.toLowerCase().includes(this.search));
@@ -277,17 +294,20 @@
         methods: {
 
             ...mapActions([
-                'fetchProjects',
-                'fetchProjectDet',
-                'fetchProject'
+                'fetchMeetings',
+                'fetchMeetingDet',
+                'fetchMeeting',
+                'fetchReps',
             ]),
 
-            loadProjects() {
+            loadMeetings() {
                 if(this.$gate.isAdmin()) {
-                    this.fetchProject(this.projectId);
-                    this.project = this.$store.state.project;
-                    this.fetchProjectDet(this.projectId);
-                    this.projectDets = this.$store.state.projectDet;
+                    this.fetchMeeting(this.meetingId);
+                    this.meeting = this.$store.state.meeting;
+                    this.fetchMeetingDet(this.meetingId);
+                    this.meetingDets = this.$store.state.meetingDet;
+                    this.fetchReps();
+                    this.reps = this.$store.state.representations;
                 }
             },
 
@@ -310,35 +330,35 @@
                 this.logo = 'img/companies/'+this.form.logo_id;
             },
 
-            createProject() {
+            createMeeting() {
                 this.$Progress.start();
-                this.form.project_id = this.oneProject.id;
-                let formData = this.projectData();
+                this.form.meeting_id = this.oneMeeting.id;
+                let formData = this.meetingData();
 
-                axios.post('../api/project_dets', formData)
+                axios.post('../api/meeting_dets', formData)
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'Project detail added successfully'
+                            title: 'Meeting detail added successfully'
                         });
                         this.$Progress.finish();
                     })
                     .catch(() => {})
             },
 
-            updateProject() {
+            updateMeeting() {
                 this.$Progress.start();
-                let formData = this.projectData(1);
+                let formData = this.meetingData(1);
 
-                axios.post('../api/project_dets/'+this.form.id, formData)
+                axios.post('../api/meeting_dets/'+this.form.id, formData)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
-                            title: 'Project detail updated successfully'
+                            title: 'Meeting detail updated successfully'
                         });
                         this.$Progress.finish();
                     })
@@ -347,21 +367,22 @@
                     })
             },
 
-            projectData(action = '') {
+            meetingData(action = '') {
                 let data = new FormData();
                 data.append('caption', this.form.caption);
                 data.append('note', this.form.note);
                 data.append('date_added', this.form.date_added);
                 let trueFalse = this.form.finished === false ? 0 : 1;
                 data.append('finished', trueFalse);
-                data.append('project_id', this.form.project_id);
+                data.append('meeting_id', this.form.meeting_id);
+                data.append('representation_id', this.form.representation_id);
                 data.append('doc_id', this.form.doc_id);
                 data.append('doc', this.form.doc);
                 if (action) data.append('_method', 'put');
                 return data;
             },
 
-            deleteProject(project){
+            deleteMeeting(meeting){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -372,11 +393,11 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        this.form.delete('../api/project_dets/'+project.id)
+                        this.form.delete('../api/meeting_dets/'+meeting.id)
                             .then(()=>{
                                 swal.fire(
                                     'Deleted!',
-                                    'Project detail has been deleted.',
+                                    'Meeting detail has been deleted.',
                                     'success'
                                 );
                                 Fire.$emit('AfterCreate');
@@ -393,13 +414,13 @@
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                this.fetchProjectsS(query);
+                this.fetchMeetingsS(query);
             });
 
-            this.loadProjects();
+            this.loadMeetings();
 
             Fire.$on('AfterCreate', () => {
-                this.loadProjects();
+                this.loadMeetings();
             });
         }
     }

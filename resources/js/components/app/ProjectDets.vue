@@ -24,7 +24,7 @@
                                 :title="'PROJECT DETAILS'"
                                 :button-title="'Detail'"
                                 :at-click="newModal"
-                                :button-icon="'far fa-file-alt fa-2x icolor'"
+                                :button-icon="'fas fa-tasks fa-2x icolor'"
                                 @pageSizeChanged="onPageSizeChanged"
                                 @searchChanged="onSearchChanged"
                         ></appTableOptions>
@@ -71,14 +71,14 @@
                                         <th>Modify</th>
                                     </tr>
                                 </thead>
-                                    <tbody>
+                                <tbody>
                                     <tr v-for="projectDet in repsSorted" :key="projectDet.id">
                                         <td>{{ projectDet.id }}</td>
                                         <td>{{ projectDet.date_added | tableDate }}</td>
                                         <td>{{ projectDet.caption }}</td>
                                         <td>{{ projectDet.note }}</td>
                                         <td>
-                                            <a :href="'../img/projects/'+projectDet.doc_id" target="_blank">{{ projectDet.doc_id }}</a>
+                                            <a v-if="projectDet.doc_id" :href="'../img/projects/'+projectDet.doc_id" target="_blank">{{ projectDet.doc_id }}</a>
                                         </td>
                                         <td>{{ projectDet.user.name }}</td>
                                         <td>
@@ -118,9 +118,14 @@
                         </div>
                     </div>
                     <div v-else class="card m-2">
-                        <h3 class="text-blue font-weight-bold m-3">
-                            No files uploaded !
-                        </h3>
+                        <div class="d-flex justify-content-center my-3">
+                            <h3 class="text-blue font-weight-bold m-3">
+                                No project details !
+                            </h3>
+                            <button class="btn btn-success" @click="newModal">
+                                Add Project detail <span><i class="cap-icon ci-plus"></i></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             <!-- /.card -->

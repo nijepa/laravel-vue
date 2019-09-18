@@ -63,4 +63,24 @@ class Representation extends Model
         return $this->hasMany(Project::class);
     }
 
+    /**
+     * Relationship to meetings
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function meetings()
+    {
+        return $this->hasMany(Meeting::class);
+    }
+
+    /**
+     * Relationship to meeting details
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function meetingDets()
+    {
+        return $this->hasMany(MeetingDet::class);
+    }
+
 }

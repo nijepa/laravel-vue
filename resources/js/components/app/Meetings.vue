@@ -25,6 +25,9 @@
                                 <th @click="sortBy('meeting_started')">Started At
                                     <i v-if="sortKey === 'meeting_started'" :class="classe"></i>
                                 </th>
+                                <th @click="sortBy('city')">City
+                                    <i v-if="sortKey === 'city'" :class="classe"></i>
+                                </th>
                                 <th @click="sortBy('name')">Company
                                     <i v-if="sortKey === 'name'" :class="classe"></i>
                                 </th>
@@ -57,6 +60,7 @@
                                 </td>
                                 <td>{{ meeting.meeting_started | tableDate }}</td>
 <!--                                <td><datepicker :input-class="`qqq`" :disabled="true" :bootstrap-styling="true" v-model="meeting.meeting_started"></datepicker></td>-->
+                                <td>{{ meeting.city.name }}</td>
                                 <td>
                                     <span class="tag tag-success">
                                         {{ meeting.representation_id ? meeting.representation.name : 'not selected'  }}
@@ -65,7 +69,7 @@
                                 <td>{{ meeting.title }}</td>
                                 <td>{{ meeting.description }}</td>
                                 <td>
-                                    <a :href="'img/meetings/'+meeting.doc_id" target="_blank">{{ meeting.doc_id }}</a>
+                                    <a v-if="meeting.doc_id" :href="'img/meetings/'+meeting.doc_id" target="_blank">{{ meeting.doc_id }}</a>
                                 </td>
                                 <td>{{ meeting.user.name }}</td>
                                 <td>
@@ -79,7 +83,7 @@
                                 <appTableActions
                                         :action-title="'meeting'"
                                         :at-click-edit="editModal.bind(this, meeting)"
-                                        :at-click-delete="deletemeeting.bind(this, meeting)"
+                                        :at-click-delete="deleteMeeting.bind(this, meeting)"
                                 ></appTableActions>
                             </tr>
                             </tbody>
@@ -112,7 +116,7 @@
                         ></appModalHeader>
                         <!-- /.modal-header -->
                         <!-- form -->
-                        <form @submit.prevent="editMode ? updatemeeting() : createmeeting()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? updateMeeting() : createMeeting()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Date</label>
@@ -120,6 +124,16 @@
                                                 v-model="form.meeting_started" :class="{ 'is-invalid': form.errors.has('started') }">
                                     </datepicker>
                                     <has-error :form="form" field="started"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city_id">City</label>
+                                    <select v-model="form.city_id" name="city_id" id="city_id"
+                                            class="form-control" :class="{ 'is-invalid': form.errors.has('city_id') }">
+                                        <option v-bind:value="city.id"
+                                                :key="city.id"
+                                                v-for="city in cities.cities.data">{{ city.name }}</option>
+                                    </select>
+                                    <has-error :form="form" field="city_id"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="title">Title</label>
@@ -205,6 +219,7 @@
             return {
                 meetings: {},
                 reps: [],
+                cities: {},
 
                 form: new Form({
                     id: '',
@@ -213,6 +228,7 @@
                     representation_id: '',
                     finished: '',
                     meeting_started: '',
+                    city_id: '',
                     doc_id: '',
                     doc: null
                 }),
@@ -220,7 +236,7 @@
         },
 
         computed: {
-            ...mapGetters(['allMeetings', 'allReps']),
+            ...mapGetters(['allMeetings', 'allReps', 'allCities']),
 
             repsSorted() {
                 let result = this.meetings.meetings;
@@ -243,15 +259,18 @@
         methods: {
             ...mapActions([
                 'fetchMeetings',
-                'fetchReps'
+                'fetchReps',
+                'fetchCities'
             ]),
 
-            loadmeetings() {
+            loadMeetings() {
                 if(this.$gate.isAdmin()) {
                     this.fetchMeetings();
                     this.meetings = this.$store.state.meetings;
                     this.fetchReps();
                     this.reps = this.$store.state.representations;
+                    this.fetchCities();
+                    this.cities = this.$store.state.cities;
                 }
             },
 
@@ -273,7 +292,7 @@
                 this.image = 'img/meetings/'+this.form.photo_id;
             },
 
-            createmeeting() {
+            createMeeting() {
                 this.$Progress.start();
                 let formData = this.prepareData();
 
@@ -290,7 +309,7 @@
                     .catch(() => {})
             },
 
-            updatemeeting(id) {
+            updateMeeting(id) {
                 this.$Progress.start();
                 let formData = this.prepareData(1);
 
@@ -316,6 +335,7 @@
                 data.append('description', this.form.description);
                 data.append('representation_id', this.form.representation_id);
                 data.append('doc_id', this.form.doc_id);
+                data.append('city_id', this.form.city_id);
                 data.append('doc', this.form.doc);
                 let trueFalse = this.form.finished === false ? 0 : 1;
                 data.append('finished', trueFalse);
@@ -327,7 +347,7 @@
                 return data;
             },
 
-            deletemeeting(meeting){
+            deleteMeeting(meeting){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -358,13 +378,13 @@
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                this.fetchmeetingsS(query);
+                this.fetchMeetings(query);
             });
 
-            this.loadmeetings();
+            this.loadMeetings();
 
             Fire.$on('AfterCreate', () => {
-                this.loadmeetings();
+                this.loadMeetings();
             });
         }
     }
