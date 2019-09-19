@@ -19,15 +19,17 @@ class RoleController extends Controller
     {
         $this->role = $role;
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return collection
      */
     public function index()
     {
         return RoleResource::collection(Role::all());
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -39,7 +41,7 @@ class RoleController extends Controller
         $request->validate([
             'name'=>'required',
         ]);
-        $role= $this->role->create([
+        $role = $this->role->create([
             'name'=> $request->name
         ]);
 /*        activity()
@@ -54,6 +56,7 @@ class RoleController extends Controller
         }
         return response(['message'=>'Role Created']);
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -76,6 +79,7 @@ class RoleController extends Controller
                 'name'=> $request->name
             ])
             ->log('updated');*/
+ //dd($request->permissions);
         if ($request->has('permissions')) {
             $role->syncPermissions(collect($request->permissions)->pluck('id')->toArray());
         }

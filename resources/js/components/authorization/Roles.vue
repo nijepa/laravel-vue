@@ -5,7 +5,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-user-tag fa-2x icolor"></i> ROLES</h3>
+                        <h3 class="card-title text-yellow font-weight-bold h3"><i class="fas fa-user-tag fa-2x text-yellow"></i> ROLES</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add Role <span><i class="cap-icon ci-plus"></i></span>
@@ -26,8 +26,8 @@
                             <tr v-for="role in roles.roles.data" :key="role.id">
                                 <td>{{ role.id }}</td>
                                 <td>{{ role.name }}</td>
-
-                                <td><span class="tag tag-success">{{ role.permissions.id ? role.permissions.name : 'not selected'  }}</span></td>
+                                <td><multiselect v-model="role.permissions" :options="options" :multiple="true"  placeholder="none selected" track-by="name" label="name" disabled></multiselect></td>
+<!--                                <td><span class="tag tag-success">{{  role.permissions.id  }}</span></td>-->
                                 <td>{{ role.created_at | customDate }}</td>
                                 <td>
                                     <button @click="editModal(role)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
@@ -74,17 +74,16 @@
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label>Permissions</label>
-                                    <select v-model="form.selPerms" name="type" id="type"
-                                            class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
-                                        <!--<option value="">Select country</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="author">Author</option>
-                                        <option value="user">Standar user</option>-->
-                                        <option v-bind:value="permission.id"
-                                                :key="permission.id"
-                                                v-for="permission in permissions.permissions.data">{{ permission.name }}</option>
-                                    </select>
+                                    <label class="typo__label">Permissions</label>
+                                    <multiselect v-model="form.permissions"
+                                                 :options="options"
+                                                 :multiple="true"
+                                                 placeholder="Type to search"
+                                                 track-by="name"
+                                                 label="name"
+                                                 :class="{ 'is-invalid': form.errors.has('type') }">
+                                        <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
+                                    </multiselect>
                                     <has-error :form="form" field="type"></has-error>
                                 </div>
                             </div>
@@ -109,18 +108,23 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import Multiselect from 'vue-multiselect'
 
     export default {
         name: "Roles",
 
+        components: {Multiselect},
+
         data() {
             return {
                 roles: {},
-                permissions: {},
+                permissions: [],
+                value: [],
+                options: [],
                 form: new Form({
                     id: '',
                     name: '',
-                    selPerms: []
+                    permissions: [],
                 }),
                 editMode: true
             }
@@ -147,12 +151,14 @@
             },
 
             newModal() {
+                this.options = this.permissions.permissions.data;
                 this.editMode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
 
             editModal(role) {
+                this.options = this.permissions.permissions.data;
                 this.editMode = true;
                 $('#addNew').modal('show');
                 this.form.fill(role);
@@ -160,10 +166,8 @@
 
             createRole() {
                 this.$Progress.start();
-                //this.addCity(this.form);
                 this.form.post('api/roles')
                     .then(({ data }) => {
-                        //console.log(data);
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
@@ -177,9 +181,6 @@
 
             updateRole(id) {
                 this.$Progress.start();
-                //console.log(this.form);
-                //this.renewCity(this.form);
-
                 this.form.put('api/roles/'+this.form.id)
                     .then(() => {
                         Fire.$emit('AfterCreate');
@@ -208,7 +209,7 @@
                     // Send request to the server
                     if (result.value) {
                         //this.removeCity(city);
-                        this.form.delete('apis/role/'+role.id)
+                        this.form.delete('apis/roles/'+role.id)
                             .then(()=>{
                                 swal.fire(
                                     'Deleted!',
@@ -237,6 +238,6 @@
     }
 </script>
 
-<style scoped>
+<style src="vue-multiselect/dist/vue-multiselect.min.css">
 
 </style>

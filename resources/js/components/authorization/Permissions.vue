@@ -5,7 +5,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-user-lock fa-2x icolor"></i> PERMISSIONS</h3>
+                        <h3 class="card-title text-yellow font-weight-bold h3"><i class="fas fa-user-lock fa-2x text-yellow"></i> PERMISSIONS</h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add Permission <span><i class="cap-icon ci-plus"></i></span>
@@ -114,9 +114,6 @@
 
             loadPermissions() {
                 if(this.$gate.isAdmin()) {
-                    /*              axios.get("api/user")
-                                      .then(({ data }) => (this.users = data))
-                                      .catch();*/
                     this.fetchPermissions();
                     this.permissions = this.$store.state.permissions;
                 }
@@ -141,10 +138,8 @@
 
             createPermission() {
                 this.$Progress.start();
-                //this.addCountry(this.form);
                 this.form.post('api/permissions')
                     .then(({ data }) => {
-                        //console.log(data);
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
@@ -158,10 +153,7 @@
 
             updatePermission(id) {
                 this.$Progress.start();
-                //console.log(this.form);
-                //this.renewCountry(this.form);
-
-                this.form.put('api/permission/'+this.form.id)
+                this.form.put('api/permissions/'+this.form.id)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -186,10 +178,8 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
-                    // Send request to the server
                     if (result.value) {
-                        //this.removeCountry(country);
-                        this.form.delete('api/permission/'+permission.id)
+                        this.form.delete('api/permissions/'+permission.id)
                             .then(()=>{
                                 swal.fire(
                                     'Deleted!',

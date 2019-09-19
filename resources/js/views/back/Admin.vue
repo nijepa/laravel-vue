@@ -91,22 +91,22 @@
                 </div>
             </li>
             <!-- Notifications Dropdown Menu -->
-            <li class="nav-item dropdown" @click="markAsRead" v-for="notification in allNotifications" :key="notification.id">
+            <li class="nav-item dropdown" >
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-bell fa-2x"></i>
-                    <span class="badge badge-warning navbar-badge">15</span>
+                    <span class="badge badge-warning navbar-badge">{{ unreadNotifications.length }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <span class="dropdown-header">15 Notifications</span>
+                    <span class="dropdown-header">{{ unreadNotifications.length }}</span>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa fa-envelope mr-2"></i> {{notification.data.createdUser.name}} has just registered
-                        <span class="float-right text-muted text-sm">on {{notification.created_at}}</span>
+                    <a href="#" class="dropdown-item" v-for="notification in createdProjectNotifications" :key="notification.id">
+                        <i class="fa fa-project-diagram mr-2"></i> {{ notification.data.createdProject.title }} - project created
+                        <span class="float-right text-muted text-sm">on {{ notification.created_at }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa fa-users mr-2"></i> 8 friend requests
-                        <span class="float-right text-muted text-sm">12 hours</span>
+                    <a href="#" class="dropdown-item" v-for="notification in createdUserNotifications" :key="notification.id">
+                        <i class="fa fa-user-plus mr-2"></i> {{ notification.data.createdUser.name }} - user registered
+                        <span class="float-right text-muted text-sm">on {{notification.created_at }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
@@ -200,35 +200,35 @@
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-cogs text-yell"></i>
+                            <i class="nav-icon fas fa-list-ol text-green"></i>
                             <p>
-                                Manage
+                                Lists
                                 <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
 <!--                            @can('isAdmin')-->
-                            <li class="nav-item">
+                       <!--     <li class="nav-item">
                                 <router-link to="/users" class="nav-link">
                                     <i class="fa fa-users nav-icon text-orange"></i>
                                     <p>Users</p>
                                 </router-link>
-                            </li>
+                            </li>-->
                             <li class="nav-item">
                                 <router-link to="/companies" class="nav-link">
-                                    <i class="fa fa-building nav-icon text-yellow"></i>
+                                    <i class="fa fa-building nav-icon text-teal"></i>
                                     <p>Companies</p>
                                 </router-link>
                             </li>
                             <li class="nav-item">
                                 <router-link to="/cities" class="nav-link">
-                                    <i class="fa fa-city nav-icon text-yellow"></i>
+                                    <i class="fa fa-city nav-icon text-teal"></i>
                                     <p>Cities</p>
                                 </router-link>
                             </li>
                             <li class="nav-item">
                                 <router-link to="/countries" class="nav-link">
-                                    <i class="fa fa-globe-europe nav-icon text-yellow"></i>
+                                    <i class="fa fa-globe-europe nav-icon text-teal"></i>
                                     <p>Countries</p>
                                 </router-link>
                             </li>
@@ -396,7 +396,9 @@
         data() {
             return {
                 allNotifications: [],
-                unreadNotifications: []
+                unreadNotifications: [],
+                createdUserNotifications: [],
+                createdProjectNotifications: [],
             }
         },
 
@@ -411,9 +413,19 @@
             logout() {
                 axios.post("/logout").then(response => window.location.reload());
             },
+
             markAsRead() {
-                axios.get("/mark-all-read/" + this.user.id).then(response=>{
+                axios.get("api/mark-all-read/" + this.user.id).then(response=>{
                     this.unreadNotifications = [];
+                });
+            },
+
+            filterNotifications() {
+                this.createdUserNotifications = this.unreadNotifications.filter(notification => {
+                    return notification.type == `App\\Notifications\\UserRegistered`;
+                });
+                this.createdProjectNotifications = this.unreadNotifications.filter(notification => {
+                    return notification.type == `App\\Notifications\\ProjectCreated`;
                 });
             }
         },
@@ -423,6 +435,7 @@
             this.unreadNotifications =  this.allNotifications.filter(notification => {
                 return notification.read_at == null;
             });
+            this.filterNotifications();
           /*  Echo.private("App.User." + this.user.id).notification(notification => {
                 this.allNotifications.unshift(notification.notification);
             });*/

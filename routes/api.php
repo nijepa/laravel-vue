@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -59,3 +59,9 @@ Route::apiResources(['meeting_dets' => 'API\MeetingDetsController']);
 
 Route::apiResource('roles', 'API\RoleController');
 Route::apiResource('permissions', 'API\PermissionController');
+
+// Mark read all notifications
+Route::get('/mark-all-read/{user}', function (User $user) {
+    $user->unreadNotifications->markAsRead();
+    return response(['message'=>'done', 'notifications'=>$user->notifications]);
+});

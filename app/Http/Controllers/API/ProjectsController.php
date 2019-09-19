@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Notifications\ProjectCreated;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use App\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\StoreFileTrait;
+use Illuminate\Support\Facades\Notification;
 
 class ProjectsController extends Controller
 {
@@ -61,7 +63,7 @@ class ProjectsController extends Controller
 //        $fdate = Carbon::parse($request->project_started);
         $request->merge(['project_started' => $fdate]);
 
-        return Project::create([
+        $project = Project::create([
             'title' => $request['title'],
             'description' => $request['description'],
             'representation_id' => $request['representation_id'],
@@ -70,6 +72,19 @@ class ProjectsController extends Controller
             'user_id' => $request['user_id'],
             'finished' => $request['finished']
         ]);
+
+        $userNote = Auth::user();
+        //dd($userNote);
+        $admins = User::all()->filter(function($project) {
+            return $project->hasRole('Admin');
+        });
+
+        try {
+            Notification::send($admins, new ProjectCreated($project));
+        } catch(\Exception $e){
+        }
+
+        return $project;
     }
 
     /**

@@ -3255,7 +3255,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       allNotifications: [],
-      unreadNotifications: []
+      unreadNotifications: [],
+      createdUserNotifications: [],
+      createdProjectNotifications: []
     };
   },
   watch: {
@@ -3274,8 +3276,16 @@ __webpack_require__.r(__webpack_exports__);
     markAsRead: function markAsRead() {
       var _this = this;
 
-      axios.get("/mark-all-read/" + this.user.id).then(function (response) {
+      axios.get("api/mark-all-read/" + this.user.id).then(function (response) {
         _this.unreadNotifications = [];
+      });
+    },
+    filterNotifications: function filterNotifications() {
+      this.createdUserNotifications = this.unreadNotifications.filter(function (notification) {
+        return notification.type == "App\\Notifications\\UserRegistered";
+      });
+      this.createdProjectNotifications = this.unreadNotifications.filter(function (notification) {
+        return notification.type == "App\\Notifications\\ProjectCreated";
       });
     }
   },
@@ -3284,6 +3294,7 @@ __webpack_require__.r(__webpack_exports__);
     this.unreadNotifications = this.allNotifications.filter(function (notification) {
       return notification.read_at == null;
     });
+    this.filterNotifications();
     /*  Echo.private("App.User." + this.user.id).notification(notification => {
           this.allNotifications.unshift(notification.notification);
       });*/
@@ -64200,85 +64211,113 @@ var render = function() {
           _vm._v(" "),
           _vm._m(1),
           _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "navbar-nav ml-auto" },
-            [
-              _vm._m(2),
+          _c("ul", { staticClass: "navbar-nav ml-auto" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("li", { staticClass: "nav-item dropdown" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "nav-link",
+                  attrs: { "data-toggle": "dropdown", href: "#" }
+                },
+                [
+                  _c("i", { staticClass: "far fa-bell fa-2x" }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    { staticClass: "badge badge-warning navbar-badge" },
+                    [_vm._v(_vm._s(_vm.unreadNotifications.length))]
+                  )
+                ]
+              ),
               _vm._v(" "),
-              _vm._l(_vm.allNotifications, function(notification) {
-                return _c(
-                  "li",
-                  {
-                    key: notification.id,
-                    staticClass: "nav-item dropdown",
-                    on: { click: _vm.markAsRead }
-                  },
-                  [
-                    _vm._m(3, true),
-                    _vm._v(" "),
-                    _c(
-                      "div",
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "dropdown-menu dropdown-menu-lg dropdown-menu-right"
+                },
+                [
+                  _c("span", { staticClass: "dropdown-header" }, [
+                    _vm._v(_vm._s(_vm.unreadNotifications.length))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dropdown-divider" }),
+                  _vm._v(" "),
+                  _vm._l(_vm.createdProjectNotifications, function(
+                    notification
+                  ) {
+                    return _c(
+                      "a",
                       {
-                        staticClass:
-                          "dropdown-menu dropdown-menu-lg dropdown-menu-right"
+                        key: notification.id,
+                        staticClass: "dropdown-item",
+                        attrs: { href: "#" }
                       },
                       [
-                        _c("span", { staticClass: "dropdown-header" }, [
-                          _vm._v("15 Notifications")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "dropdown-divider" }),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { href: "#" }
-                          },
-                          [
-                            _c("i", { staticClass: "fa fa-envelope mr-2" }),
-                            _vm._v(
-                              " " +
-                                _vm._s(notification.data.createdUser.name) +
-                                " has just registered\r\n                        "
-                            ),
-                            _c(
-                              "span",
-                              { staticClass: "float-right text-muted text-sm" },
-                              [_vm._v("on " + _vm._s(notification.created_at))]
-                            )
-                          ]
+                        _c("i", { staticClass: "fa fa-project-diagram mr-2" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(notification.data.createdProject.title) +
+                            " - project created\r\n                        "
                         ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "dropdown-divider" }),
-                        _vm._v(" "),
-                        _vm._m(4, true),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "dropdown-divider" }),
-                        _vm._v(" "),
-                        _vm._m(5, true),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "dropdown-divider" }),
-                        _vm._v(" "),
                         _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item dropdown-footer",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("See All Notifications")]
+                          "span",
+                          { staticClass: "float-right text-muted text-sm" },
+                          [_vm._v("on " + _vm._s(notification.created_at))]
                         )
                       ]
                     )
-                  ]
-                )
-              }),
-              _vm._v(" "),
-              _vm._m(6)
-            ],
-            2
-          )
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dropdown-divider" }),
+                  _vm._v(" "),
+                  _vm._l(_vm.createdUserNotifications, function(notification) {
+                    return _c(
+                      "a",
+                      {
+                        key: notification.id,
+                        staticClass: "dropdown-item",
+                        attrs: { href: "#" }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-user-plus mr-2" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(notification.data.createdUser.name) +
+                            " - user registered\r\n                        "
+                        ),
+                        _c(
+                          "span",
+                          { staticClass: "float-right text-muted text-sm" },
+                          [_vm._v("on " + _vm._s(notification.created_at))]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dropdown-divider" }),
+                  _vm._v(" "),
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dropdown-divider" }),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item dropdown-footer",
+                      attrs: { href: "#" }
+                    },
+                    [_vm._v("See All Notifications")]
+                  )
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(4)
+          ])
         ]
       ),
       _vm._v(" "),
@@ -64286,7 +64325,7 @@ var render = function() {
         "aside",
         { staticClass: "main-sidebar sidebar-dark-primary elevation-4" },
         [
-          _vm._m(7),
+          _vm._m(5),
           _vm._v(" "),
           _c("div", { staticClass: "sidebar" }, [
             _c("div", { staticClass: "user-panel mt-3 pb-3 mb-3 d-flex" }, [
@@ -64352,7 +64391,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("li", { staticClass: "nav-item has-treeview" }, [
-                    _vm._m(8),
+                    _vm._m(6),
                     _vm._v(" "),
                     _c("ul", { staticClass: "nav nav-treeview" }, [
                       _c(
@@ -64426,31 +64465,9 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("li", { staticClass: "nav-item has-treeview" }, [
-                    _vm._m(9),
+                    _vm._m(7),
                     _vm._v(" "),
                     _c("ul", { staticClass: "nav nav-treeview" }, [
-                      _c(
-                        "li",
-                        { staticClass: "nav-item" },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "nav-link",
-                              attrs: { to: "/users" }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fa fa-users nav-icon text-orange"
-                              }),
-                              _vm._v(" "),
-                              _c("p", [_vm._v("Users")])
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
                       _c(
                         "li",
                         { staticClass: "nav-item" },
@@ -64463,8 +64480,7 @@ var render = function() {
                             },
                             [
                               _c("i", {
-                                staticClass:
-                                  "fa fa-building nav-icon text-yellow"
+                                staticClass: "fa fa-building nav-icon text-teal"
                               }),
                               _vm._v(" "),
                               _c("p", [_vm._v("Companies")])
@@ -64486,7 +64502,7 @@ var render = function() {
                             },
                             [
                               _c("i", {
-                                staticClass: "fa fa-city nav-icon text-yellow"
+                                staticClass: "fa fa-city nav-icon text-teal"
                               }),
                               _vm._v(" "),
                               _c("p", [_vm._v("Cities")])
@@ -64509,7 +64525,7 @@ var render = function() {
                             [
                               _c("i", {
                                 staticClass:
-                                  "fa fa-globe-europe nav-icon text-yellow"
+                                  "fa fa-globe-europe nav-icon text-teal"
                               }),
                               _vm._v(" "),
                               _c("p", [_vm._v("Countries")])
@@ -64522,7 +64538,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("li", { staticClass: "nav-item has-treeview" }, [
-                    _vm._m(10),
+                    _vm._m(8),
                     _vm._v(" "),
                     _c("ul", { staticClass: "nav nav-treeview" }, [
                       _c(
@@ -64638,7 +64654,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("li", { staticClass: "nav-item has-treeview" }, [
-                    _vm._m(11),
+                    _vm._m(9),
                     _vm._v(" "),
                     _c("ul", { staticClass: "nav nav-treeview" }, [
                       _c(
@@ -64738,7 +64754,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "content-wrapper" }, [
-        _vm._m(12),
+        _vm._m(10),
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c(
@@ -64750,9 +64766,9 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(13),
+      _vm._m(11),
       _vm._v(" "),
-      _vm._m(14)
+      _vm._m(12)
     ])
   ])
 }
@@ -64933,37 +64949,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "nav-link",
-        attrs: { "data-toggle": "dropdown", href: "#" }
-      },
-      [
-        _c("i", { staticClass: "far fa-bell fa-2x" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "badge badge-warning navbar-badge" }, [
-          _vm._v("15")
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-      _c("i", { staticClass: "fa fa-users mr-2" }),
-      _vm._v(" 8 friend requests\r\n                        "),
-      _c("span", { staticClass: "float-right text-muted text-sm" }, [
-        _vm._v("12 hours")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
       _c("i", { staticClass: "fa fa-file mr-2" }),
       _vm._v(" 3 new reports\r\n                        "),
@@ -65031,11 +65016,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-      _c("i", { staticClass: "nav-icon fas fa-cogs text-yell" }),
+      _c("i", { staticClass: "nav-icon fas fa-list-ol text-green" }),
       _vm._v(" "),
       _c("p", [
         _vm._v(
-          "\r\n                                Manage\r\n                                "
+          "\r\n                                Lists\r\n                                "
         ),
         _c("i", { staticClass: "right fa fa-angle-left" })
       ])
@@ -82022,12 +82007,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   {
     path: '/cities',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./components/back/Cities.vue */ "./resources/js/components/back/Cities.vue"));
+      return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./components/back/Cities.vue */ "./resources/js/components/back/Cities.vue"));
     }
   }, {
     path: '/countries',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./components/back/Countries.vue */ "./resources/js/components/back/Countries.vue"));
+      return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./components/back/Countries.vue */ "./resources/js/components/back/Countries.vue"));
     }
   }, {
     path: '/contacts',
@@ -82077,12 +82062,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   }, {
     path: '/roles',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./components/authorization/Roles.vue */ "./resources/js/components/authorization/Roles.vue"));
+      return Promise.all(/*! import() */[__webpack_require__.e(34), __webpack_require__.e(31)]).then(__webpack_require__.bind(null, /*! ./components/authorization/Roles.vue */ "./resources/js/components/authorization/Roles.vue"));
     }
   }, {
     path: '/permissions',
     component: function component() {
-      return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./components/authorization/Permissions.vue */ "./resources/js/components/authorization/Permissions.vue"));
+      return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./components/authorization/Permissions.vue */ "./resources/js/components/authorization/Permissions.vue"));
     }
   }, // Lists routes
   {
