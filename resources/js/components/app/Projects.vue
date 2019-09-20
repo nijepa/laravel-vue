@@ -115,11 +115,11 @@
                         <form @submit.prevent="editMode ? updateProject() : createProject()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Date</label>
-                                    <datepicker :format="'dd MMM yyyy'" :bootstrap-styling="true"
-                                                v-model="form.project_started" :class="{ 'is-invalid': form.errors.has('started') }">
+                                    <label for="project_started">Date</label>
+                                    <datepicker :format="'dd MMM yyyy'" :bootstrap-styling="true" id="project_started" name="project_started" placeholder="Project started date"
+                                                v-model="form.project_started" :class="{ 'is-invalid': form.errors.has('project_started') }">
                                     </datepicker>
-                                    <has-error :form="form" field="started"></has-error>
+                                    <has-error :form="form" field="project_started"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="title">Title</label>
@@ -128,14 +128,14 @@
                                     <has-error :form="form" field="title"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label for="type">Company</label>
-                                    <select v-model="form.representation_id" name="type" id="type"
-                                            class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                                    <label for="representation_id">Company</label>
+                                    <select v-model="form.representation_id" name="representation_id" id="representation_id"
+                                            class="form-control" :class="{ 'is-invalid': form.errors.has('representation_id') }">
                                         <option v-bind:value="rep.id"
                                                 :key="rep.id"
                                                 v-for="rep in reps.reps">{{ rep.name }}</option>
                                     </select>
-                                    <has-error :form="form" field="type"></has-error>
+                                    <has-error :form="form" field="representation_id"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
@@ -146,7 +146,7 @@
                                     <has-error :form="form" field="description"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label for="doc_id" >Document</label>
+                                    <label for="doc_id">Document</label>
                                     <input type="text" class="form-control" v-model="form.doc_id" name="doc_id" id="doc_id" disabled>
                                     <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
                                 </div>
@@ -211,7 +211,7 @@
                     title: '',
                     description: '',
                     representation_id: '',
-                    finished: '',
+                    finished: 0,
                     project_started: '',
                     doc_id: '',
                     doc: null
@@ -323,7 +323,9 @@
                         });
                         this.$Progress.finish();
                     })
-                    .catch(() => {})
+                    .catch(() => {
+                        console.log(this.form.errors)
+                    })
             },
 
             updateProject(id) {
@@ -353,7 +355,8 @@
                 data.append('representation_id', this.form.representation_id);
                 data.append('doc_id', this.form.doc_id);
                 data.append('doc', this.form.doc);
-                let trueFalse = this.form.finished === false ? 0 : 1;
+                let trueFalse = this.form.finished == 0 ? 0 : 1;
+                console.log(trueFalse);
                 data.append('finished', trueFalse);
                 //data.append('finished', this.form.finished);
 

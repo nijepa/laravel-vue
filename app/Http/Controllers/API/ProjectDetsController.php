@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Notifications\ProjectCreated;
+use App\Notifications\ProjectDetailCreated;
 use App\ProjectDet;
 use App\User;
 use Illuminate\Http\Request;
@@ -9,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\StoreFileTrait;
+use Illuminate\Support\Facades\Notification;
 
 class ProjectDetsController extends Controller
 {
@@ -60,7 +63,7 @@ class ProjectDetsController extends Controller
         //$fdate = Carbon::parse($request->date_added);
         $request->merge(['date_added' => $fdate]);
 
-        return ProjectDet::create([
+        $projectDet = ProjectDet::create([
             'caption' => $request['caption'],
             'note' => $request['note'],
             'project_id' => $request['project_id'],
@@ -69,6 +72,17 @@ class ProjectDetsController extends Controller
             'user_id' => $request['user_id'],
             'finished' => $request['finished']
         ]);
+
+        $admins = User::all()->filter(function($projectDet) {
+            return $projectDet->hasRole('Admin');
+        });
+//dd($projectDet);
+        try {
+            Notification::send($admins, new ProjectDetailCreated($projectDet));
+        } catch(\Exception $e){
+        }
+
+        return $projectDet;
     }
 
     /**

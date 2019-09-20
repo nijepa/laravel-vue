@@ -2,30 +2,29 @@
 
 namespace App\Notifications;
 
-use App\User;
+use App\ProjectDet;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class UserRegistered extends Notification
+class ProjectDetailCreated extends Notification
 {
     use Queueable;
 
     /**
      * @var User
      */
-    public $user;
+    public $projectDet;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(ProjectDet $projectDet)
     {
-        $this->user = $user;
+        $this->projectDet = $projectDet;
     }
 
     /**
@@ -36,7 +35,7 @@ class UserRegistered extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database'];
     }
 
     /**
@@ -62,21 +61,8 @@ class UserRegistered extends Notification
     public function toArray($notifiable)
     {
         return [
-            'createdUser'=> $this->user,
+            'createdProjectDetail'=> $this->projectDet,
             'admin'=> $notifiable
         ];
-    }
-
-    /**
-     * Get the broadcastable representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return BroadcastMessage
-     */
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'notification'=> $notifiable->notifications()->latest()->first()
-        ]);
     }
 }

@@ -357,7 +357,7 @@
                 data.append('caption', this.form.caption);
                 data.append('note', this.form.note);
                 data.append('date_added', this.form.date_added);
-                let trueFalse = this.form.finished === false ? 0 : 1;
+                let trueFalse = this.form.finished == 0 ? 0 : 1;
                 data.append('finished', trueFalse);
                 data.append('project_id', this.form.project_id);
                 data.append('doc_id', this.form.doc_id);

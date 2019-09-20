@@ -91,7 +91,7 @@
                 </div>
             </li>
             <!-- Notifications Dropdown Menu -->
-            <li class="nav-item dropdown" >
+            <li class="nav-item dropdown" @click="markAsRead">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-bell fa-2x"></i>
                     <span class="badge badge-warning navbar-badge">{{ unreadNotifications.length }}</span>
@@ -109,9 +109,9 @@
                         <span class="float-right text-muted text-sm">on {{notification.created_at }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa fa-file mr-2"></i> 3 new reports
-                        <span class="float-right text-muted text-sm">2 days</span>
+                    <a href="#" class="dropdown-item" v-for="notification in createdProjectDetailNotifications" :key="notification.id">
+                        <i class="fa fa-tasks mr-2"></i> {{ notification.data.createdProjectDetail.caption }} - project task created
+                        <span class="float-right text-muted text-sm">on {{ notification.created_at }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
@@ -321,7 +321,15 @@
                     </li>
 
                     <li class="nav-item">
-                        <<!--a class="nav-link" href="{{ route('logout') }}"
+                        <a class="nav-link" @click="logout" >
+                            <i class="nav-icon fas fa-sign-out-alt text-red ilink"></i>
+                            <p class="plink">
+                                Logout
+                            </p>
+                        </a>
+
+
+                        <!--<a class="nav-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                             <i class="nav-icon fas fa-sign-out-alt text-red"></i>
@@ -399,6 +407,7 @@
                 unreadNotifications: [],
                 createdUserNotifications: [],
                 createdProjectNotifications: [],
+                createdProjectDetailNotifications: [],
             }
         },
 
@@ -427,6 +436,9 @@
                 this.createdProjectNotifications = this.unreadNotifications.filter(notification => {
                     return notification.type == `App\\Notifications\\ProjectCreated`;
                 });
+                this.createdProjectDetailNotifications = this.unreadNotifications.filter(notification => {
+                    return notification.type == `App\\Notifications\\ProjectDetailCreated`;
+                });
             }
         },
 
@@ -436,13 +448,32 @@
                 return notification.read_at == null;
             });
             this.filterNotifications();
-          /*  Echo.private("App.User." + this.user.id).notification(notification => {
+
+         /*   Echo.join(`chat`)
+                .here((users) => {
+                    //
+                })
+                .joining((user) => {
+                    console.log(user.name);
+                })
+                .leaving((user) => {
+                    console.log(user.name);
+                });*/
+            Echo.private("App.User." + this.user.id).notification(notification => {
+                console.log(this.user);
                 this.allNotifications.unshift(notification.notification);
-            });*/
+
+            });
         }
     }
 </script>
 
 <style scoped>
-
+    .plink {
+        color: white;
+        cursor: pointer;
+    }
+    .ilink {
+        cursor: pointer;
+    }
 </style>
