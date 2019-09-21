@@ -12,3 +12,11 @@ Vue.filter('customDate', (fromDate) => {
 Vue.filter('tableDate', (fromDate) => {
     return moment(fromDate).format("DD MMM YYYY");
 });
+
+Vue.filter('customTime', (fromDate) => {
+    return moment(fromDate).format("HH:mm");
+});
+
+Vue.filter('dayMonthYear', (fromDate) => {
+    return moment(fromDate).format("dddd, MMMM Do YYYY");
+});

@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\CausesActivity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Project extends Model
 {
+    use Notifiable, LogsActivity, CausesActivity;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +25,8 @@ class Project extends Model
         'representation_id',
         'finished'
     ];
+
+    protected static $logFillable = true;
 
     /**
      * Relationship to project details

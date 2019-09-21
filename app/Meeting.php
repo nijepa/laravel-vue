@@ -3,9 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\CausesActivity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Meeting extends Model
 {
+    use Notifiable, LogsActivity, CausesActivity;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +26,8 @@ class Meeting extends Model
         'city_id',
         'finished'
     ];
+
+    protected static $logFillable = true;
 
     /**
      * Relationship to project details

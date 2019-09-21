@@ -59,6 +59,7 @@ Route::apiResources(['meeting_dets' => 'API\MeetingDetsController']);
 
 Route::apiResource('roles', 'API\RoleController');
 Route::apiResource('permissions', 'API\PermissionController');
+Route::apiResource('activities', 'API\ActivityController');
 
 // Mark read all notifications
 Route::get('/mark-all-read/{user}', function (User $user) {
