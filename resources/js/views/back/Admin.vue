@@ -1,6 +1,5 @@
 <template>
 
-<body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
 
     <!-- Navbar -->
@@ -128,7 +127,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href="" class="brand-link">
             <img src="/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">DONAU</span>
@@ -165,6 +164,8 @@
                             </p>
                         </router-link>
                     </li>
+
+                    <li class="nav-header">MANAGE</li>
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
@@ -280,7 +281,8 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item has-treeview">
+                    <li class="nav-header">APPLICATION</li>
+                    <!--<li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-project-diagram text-blue"></i>
                             <p>
@@ -289,22 +291,22 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-<!--                            @can('isAdmin')-->
+&lt;!&ndash;                            @can('isAdmin')&ndash;&gt;-->
                                 <li class="nav-item">
                                     <router-link to="/projects" class="nav-link">
-                                        <i class="fas fa-certificate nav-icon text-cyan"></i>
-                                        <p>View</p>
+                                        <i class="fas fa-project-diagram nav-icon text-blue"></i>
+                                        <p>Projects</p>
                                     </router-link>
                                 </li>
-                                <li class="nav-item">
+        <!--                        <li class="nav-item">
                                     <router-link to="/representations" class="nav-link">
                                         <i class="fas fa-hands-helping nav-icon text-cyan"></i>
                                         <p>Add</p>
                                     </router-link>
                                 </li>
-<!--                            @endcan-->
+&lt;!&ndash;                            @endcan&ndash;&gt;
                         </ul>
-                    </li>
+                    </li>-->
 
                     <li class="nav-item">
                         <router-link to="/meetings" class="nav-link">
@@ -312,6 +314,34 @@
                             <p>Meetings</p>
                         </router-link>
                     </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon far fa-file-alt text-purpl"></i>
+                            <p>
+                                Reports
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <!--                            @can('isAdmin')-->
+                            <li class="nav-item">
+                                <router-link to="/projects" class="nav-link">
+                                    <i class="fas fa-certificate nav-icon text-purpli"></i>
+                                    <p>Activities</p>
+                                </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/representations" class="nav-link">
+                                    <i class="fas fa-hands-helping nav-icon text-purpli"></i>
+                                    <p>Notifications</p>
+                                </router-link>
+                            </li>
+                            <!--                            @endcan-->
+                        </ul>
+                    </li>
+
+                    <li class="nav-header">PERSONAL</li>
 
                     <li class="nav-item">
                         <router-link to="/profile" class="nav-link">
@@ -391,7 +421,7 @@
     </footer>
 </div>
 <!-- ./wrapper -->
-    </body>
+
 
 </template>
 

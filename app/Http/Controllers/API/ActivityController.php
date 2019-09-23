@@ -14,7 +14,7 @@ class ActivityController extends Controller
         if($userId){
             $activities = Activity::with('causer', 'subject')->where('causer_id', $userId)->get();
         }else {
-            $activities = Activity::with('causer', 'subject')->orderBy('created_at', 'DESC')->get();
+            $activities = Activity::with('causer', 'subject')->orderBy('created_at', 'DESC')->simplePaginate(4);
         }
         return $activities;
     }

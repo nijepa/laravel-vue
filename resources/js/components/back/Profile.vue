@@ -16,7 +16,7 @@
                             <div class="col-sm-4 border-right">
                                 <div class="description-block">
                                     <h5 class="description-header">3,200</h5>
-                                    <span class="description-text">SALES</span>
+                                    <span class="description-text">ACTIONS</span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
@@ -76,7 +76,7 @@
                                                         {{ activity.subject_type.substring(4) }} - {{ activity.description }} <i :class="descType(activity.description)"  aria-hidden="true"></i>
                                                     </div>
                                                     <div class="box-content d-flex align-items-center">
-                                                        <div class="box-item mr-5"><strong>{{ activity.subject_type.substring(4) }}</strong>:
+                                                        <div v-if="activity.subject" class="box-item mr-5"><strong>{{ activity.subject_type.substring(4) }}</strong>:
 <!--                                                            {{ subjectType(activity.subject_type.substring(4)) }}-->
                                                             {{ activity.subject_type.substring(4) === 'User' ?
                                                                 activity.subject.name :
@@ -86,7 +86,16 @@
                                                                 activity.subject.title :
                                                                 activity.subject.caption }}
                                                         </div>
-                                                        <a class="btn btn-xs btn-primary mr-auto">Details</a>
+                                                        <div v-else class="box-item mr-5"><strong>{{ activity.subject_type.substring(4) }}</strong>:
+                                                            {{ activity.subject_type.substring(4) === 'User' ?
+                                                                activity.properties.attributes.name :
+                                                                activity.subject_type.substring(4) === 'Project' ?
+                                                                activity.properties.attributes.title :
+                                                                activity.subject_type.substring(4) === 'Meeting' ?
+                                                                activity.properties.attributes.title :
+                                                                activity.properties.attributes.caption }}
+                                                        </div>
+                                                        <a v-if="activity.subject" class="btn btn-xs btn-primary mr-auto">Details</a>
 
                                                         <!--<div class="box-item"><strong>Loss Territory</strong>: {{ activity.description }}</div>
                                                         <div class="box-item"><strong>Time</strong>:  {{ activity.created_at | customTime }}</div>-->
@@ -100,7 +109,11 @@
                                     </div>
 
                                 </div>
-
+                                <div class="text-center mt-5" v-if="nextUrl">
+                                    <button @click.prevent="loadMoreActivities(nextUrl)" class="btn btn-outline-secondary">
+                                        Load more activities
+                                    </button>
+                                </div>
                                <!-- <div class="timeline" v-for="(activity, i) in activities" :key="i">
                                     &lt;!&ndash; timeline time label &ndash;&gt;
                                     <div class="time-label">
@@ -132,7 +145,7 @@
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">Name</label>
                                         <div class="col-sm-12">
-                                            <input type="" v-model="form.name" class="form-control" id="inputName" placeholder="Name" :class="{ 'is-invalid': form.errors.has('name') }">
+                                            <input type="text" v-model="form.name" class="form-control" id="inputName" placeholder="Name" :class="{ 'is-invalid': form.errors.has('name') }">
                                             <has-error :form="form" field="name"></has-error>
                                         </div>
                                     </div>
@@ -191,6 +204,7 @@
 <script>
     export default {
         name: "Profile",
+
         data() {
             return {
                 user: '',
@@ -204,10 +218,20 @@
                     bio: '',
                     photo: ''
                 }),
-                activities: []
+                activities: [],
+                nextUrl: null
             }
         },
+
         methods: {
+            loadMoreActivities(endpoint) {
+                axios.get(endpoint)
+                    .then(({data}) => {
+                        this.activities.push(...data.data);
+                        this.nextUrl = data.next_page_url;
+                    })
+            },
+
             getProfilePhoto() {
                 let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
                 return photo;
@@ -307,9 +331,11 @@
                 .then(({ data }) => (this.form.fill(data)))
                 .catch();
 
-            axios.get("api/activities")
-                .then(({data}) => (this.activities = data))
-                .catch();
+            this.loadMoreActivities("api/activities");
+
+           /* axios.get("api/activities")
+                .then(({data}) => (this.activities = data.data))
+                .catch();*/
         }
     }
 </script>
@@ -327,7 +353,6 @@
     .timeline{
         margin-top:20px;
         position:relative;
-
     }
 
     .timeline:before{

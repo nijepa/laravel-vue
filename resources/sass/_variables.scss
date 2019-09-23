@@ -19,6 +19,8 @@ $teal: #4dc0b5;
 $cyan: #6cb2eb;
 $purp: rgba(242, 141, 170, 0.8);
 $yell: rgba(246, 226, 78, 0.8);
+$purpl: #cebaff;
+$purpli: #d7d9ff;
 
 .text-yell {
   color: $yell;
@@ -26,6 +28,14 @@ $yell: rgba(246, 226, 78, 0.8);
 
 .text-purp {
   color: $purp;
+}
+
+.text-purpl {
+  color: $purpl;
+}
+
+.text-purpli {
+  color: $purpli;
 }
 
 .text-blue {
@@ -66,4 +76,12 @@ $yell: rgba(246, 226, 78, 0.8);
 
 .text-pink {
   color: $pink;
+}
+
+.bg-blue {
+   background-color: $blue;
+ }
+
+.bg-cyan {
+  background-color: $cyan;
 }
