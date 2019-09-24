@@ -18,6 +18,7 @@ import meetings from './modules/app/meetings';
 import meetingDet from './modules/app/meetingDet';
 import permissions from './modules/authorize/permissions';
 import roles from './modules/authorize/roles';
+import todos from './modules/app/todos';
 
 /**
  * Load vuex store and add modules
@@ -43,6 +44,7 @@ export default new Vuex.Store({
         meetings,
         meetingDet,
         permissions,
-        roles
+        roles,
+        todos
     }
 })

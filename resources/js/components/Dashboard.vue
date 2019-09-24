@@ -68,16 +68,23 @@
                 <!-- ./col -->
             </div>
             <!-- /.row -->
-        
+            <div class="row">
+                <Todo></Todo>
+            </div>
         </div><!-- /.container-fluid -->
     </section>
 </template>
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import Todo from './app/Todo';
 
     export default {
         name: "Dashboard",
+
+        components: {
+            Todo
+        },
 
         data() {
             return {

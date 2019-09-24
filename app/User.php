@@ -86,5 +86,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(MeetingDet::class);
     }
+    /**
+     * Relationship to projects details
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function todos()
+    {
+        return $this->hasMany(ToDo::class);
+    }
+
 
 }

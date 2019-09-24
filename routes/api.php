@@ -61,6 +61,9 @@ Route::apiResource('roles', 'API\RoleController');
 Route::apiResource('permissions', 'API\PermissionController');
 Route::apiResource('activities', 'API\ActivityController');
 
+Route::apiResource('todo', 'API\ToDoController');
+Route::patch('todo/{id}', 'API\ToDoController@markCompleted');
+
 // Mark read all notifications
 Route::get('/mark-all-read/{user}', function (User $user) {
     $user->unreadNotifications->markAsRead();

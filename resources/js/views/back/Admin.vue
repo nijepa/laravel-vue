@@ -171,7 +171,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-users-cog text-yell"></i>
                             <p>
-                                Manage Users
+                                Users
                                 <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>

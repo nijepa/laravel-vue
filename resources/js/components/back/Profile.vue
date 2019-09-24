@@ -110,7 +110,7 @@
 
                                 </div>
                                 <div class="text-center mt-5" v-if="nextUrl">
-                                    <button @click.prevent="loadMoreActivities(nextUrl)" class="btn btn-outline-secondary">
+                                    <button @click.prevent="loadMoreActivities(nextUrl)" class="btn btn-info">
                                         Load more activities
                                     </button>
                                 </div>
@@ -167,7 +167,7 @@
                                     <div class="form-group">
                                         <label for="photo" class="col-sm-2 control-label">Profile Photo</label>
                                         <div class="col-sm-12">
-                                            <input type="file" @change="updatePhoto" name="photo" class="form-input">
+                                            <input type="file" @change="updatePhoto" name="photo" id="photo" class="form-input">
                                         </div>
                                     </div>
                                     <div class="form-group">

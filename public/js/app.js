@@ -75337,7 +75337,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", [
         _vm._v(
-          "\r\n                                Manage Users\r\n                                "
+          "\r\n                                Users\r\n                                "
         ),
         _c("i", { staticClass: "right fa fa-angle-left" })
       ])
@@ -92992,6 +92992,164 @@ var mutations = {
 
 /***/ }),
 
+/***/ "./resources/js/store/modules/app/todos.js":
+/*!*************************************************!*\
+  !*** ./resources/js/store/modules/app/todos.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var getDefaultState = function getDefaultState() {
+  return {
+    todo: []
+  };
+};
+
+var state = {
+  todos: {},
+  todo: getDefaultState()
+};
+var getters = {
+  allTodos: function allTodos(state) {
+    return state.todos;
+  },
+  oneTodo: function oneTodo(state) {
+    return state.todo;
+  }
+};
+var actions = {
+  fetchTodos: function () {
+    var _fetchTodos = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('api/todo');
+
+            case 3:
+              response = _context.sent;
+              commit('setTodos', response.data);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function fetchTodos(_x) {
+      return _fetchTodos.apply(this, arguments);
+    }
+
+    return fetchTodos;
+  }(),
+  fetchTodo: function () {
+    var _fetchTodo = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2, todo) {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref2.commit;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("../api/todo/".concat(todo), todo);
+
+            case 3:
+              response = _context2.sent;
+              commit('setTodo', response.data);
+
+            case 5:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    function fetchTodo(_x2, _x3) {
+      return _fetchTodo.apply(this, arguments);
+    }
+
+    return fetchTodo;
+  }(),
+  addTodo: function () {
+    var _addTodo = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, form) {
+      var commit, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("api/todo", form);
+
+            case 3:
+              response = _context3.sent;
+              commit('add', response.data);
+
+            case 5:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    function addTodo(_x4, _x5) {
+      return _addTodo.apply(this, arguments);
+    }
+
+    return addTodo;
+  }(),
+  resetTodoState: function resetTodoState(_ref4) {
+    var commit = _ref4.commit;
+    commit('resetState');
+  }
+};
+var mutations = {
+  setTodos: function setTodos(state, todos) {
+    return state.todos = todos;
+  },
+  setTodo: function setTodo(state, todo) {
+    return state.todo = todo;
+  },
+  resetState: function resetState(state) {
+    Object.assign(state, getDefaultState());
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
 /***/ "./resources/js/store/modules/authorize/permissions.js":
 /*!*************************************************************!*\
   !*** ./resources/js/store/modules/authorize/permissions.js ***!
@@ -95083,6 +95241,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_app_meetingDet__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./modules/app/meetingDet */ "./resources/js/store/modules/app/meetingDet.js");
 /* harmony import */ var _modules_authorize_permissions__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./modules/authorize/permissions */ "./resources/js/store/modules/authorize/permissions.js");
 /* harmony import */ var _modules_authorize_roles__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./modules/authorize/roles */ "./resources/js/store/modules/authorize/roles.js");
+/* harmony import */ var _modules_app_todos__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./modules/app/todos */ "./resources/js/store/modules/app/todos.js");
+
 
 
 
@@ -95127,7 +95287,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     meetings: _modules_app_meetings__WEBPACK_IMPORTED_MODULE_16__["default"],
     meetingDet: _modules_app_meetingDet__WEBPACK_IMPORTED_MODULE_17__["default"],
     permissions: _modules_authorize_permissions__WEBPACK_IMPORTED_MODULE_18__["default"],
-    roles: _modules_authorize_roles__WEBPACK_IMPORTED_MODULE_19__["default"]
+    roles: _modules_authorize_roles__WEBPACK_IMPORTED_MODULE_19__["default"],
+    todos: _modules_app_todos__WEBPACK_IMPORTED_MODULE_20__["default"]
   }
 }));
 
