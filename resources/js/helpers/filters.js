@@ -20,3 +20,7 @@ Vue.filter('customTime', (fromDate) => {
 Vue.filter('dayMonthYear', (fromDate) => {
     return moment(fromDate).format("dddd, MMMM Do YYYY");
 });
+
+Vue.filter('msgTime', (fromDate) => {
+    return moment(fromDate).format("HH:mm, ddd DD");
+});

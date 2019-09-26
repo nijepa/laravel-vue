@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-header ui-sortable-handle" >
             <h3 class="card-title">
-                <i class="fas fa-list"></i>
+                <i class="cap-icon ci-list-ul"></i>
                 To Do List
             </h3>
 

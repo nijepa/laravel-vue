@@ -6,7 +6,6 @@ use App\Notifications\ProjectCreated;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Representation;
 use App\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;

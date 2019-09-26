@@ -9859,7 +9859,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.plink[data-v-80562a74] {\n    color: white;\n    cursor: pointer;\n}\n.ilink[data-v-80562a74] {\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.plink[data-v-80562a74] {\n    color: white;\n    cursor: pointer;\n}\n.ilink[data-v-80562a74] {\n    cursor: pointer;\n}\n.siz[data-v-80562a74] {\n    font-size: 35px;\n    color: #1b4b72;\n}\n.badge[data-v-80562a74] {\n    font-size: 15px;\n}\n", ""]);
 
 // exports
 
@@ -74521,7 +74521,7 @@ var render = function() {
                   attrs: { "data-toggle": "dropdown", href: "#" }
                 },
                 [
-                  _c("i", { staticClass: "far fa-bell fa-2x" }),
+                  _c("i", { staticClass: "cap-icon ci-notification-alt siz" }),
                   _vm._v(" "),
                   _c(
                     "span",
@@ -75170,7 +75170,7 @@ var staticRenderFns = [
           attrs: { "data-toggle": "dropdown", href: "#" }
         },
         [
-          _c("i", { staticClass: "far fa-comments fa-1.8x" }),
+          _c("i", { staticClass: "cap-icon ci-comment-dots siz" }),
           _vm._v(" "),
           _c("span", { staticClass: "badge badge-danger navbar-badge" }, [
             _vm._v("3")
@@ -92226,6 +92226,9 @@ Vue.filter('customTime', function (fromDate) {
 });
 Vue.filter('dayMonthYear', function (fromDate) {
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(fromDate).format("dddd, MMMM Do YYYY");
+});
+Vue.filter('msgTime', function (fromDate) {
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(fromDate).format("HH:mm, ddd DD");
 });
 
 /***/ }),

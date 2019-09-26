@@ -70,6 +70,7 @@
             <!-- /.row -->
             <div class="row">
                 <Todo></Todo>
+                <Chat :user="user"></Chat>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -78,12 +79,13 @@
 <script>
     import { mapGetters, mapActions } from 'vuex';
     import Todo from './app/Todo';
+    import Chat from './app/Chat';
 
     export default {
         name: "Dashboard",
 
         components: {
-            Todo
+            Todo, Chat
         },
 
         data() {
@@ -91,7 +93,12 @@
                 projects: [],
                 meetings: [],
                 users: [],
+                user: []
             }
+        },
+
+        mounted() {
+            this.user = window.user.user;
         },
 
         computed: {
@@ -113,6 +120,7 @@
                 });
             }
         },
+
         methods: {
             ...mapActions([
                 'fetchProjects',

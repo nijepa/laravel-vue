@@ -34,7 +34,7 @@
             <!-- Messages Dropdown Menu -->
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-comments fa-1.8x"></i>
+                    <i class="cap-icon ci-comment-dots siz"></i>
                     <span class="badge badge-danger navbar-badge">3</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -92,7 +92,7 @@
             <!-- Notifications Dropdown Menu -->
             <li class="nav-item dropdown" @click="markAsRead">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-bell fa-2x"></i>
+                    <i class="cap-icon ci-notification-alt siz"></i>
                     <span class="badge badge-warning navbar-badge">{{ unreadNotifications.length }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -505,5 +505,12 @@
     }
     .ilink {
         cursor: pointer;
+    }
+    .siz {
+        font-size: 35px;
+        color: #1b4b72;
+    }
+    .badge {
+        font-size: 15px;
     }
 </style>
