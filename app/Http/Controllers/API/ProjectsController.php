@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\StoreFileTrait;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
 class ProjectsController extends Controller
@@ -34,6 +35,17 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects = Project::orderBy('title')->with('Representation')->with('User')->get();//To get the output in array
+
+        return response()->json($projects);
+    }
+
+    public function indexGrouped()
+    {
+        $projects=DB::table('projects')
+            ->select(DB::raw('count(id) as total'),DB::raw('month(created_at) as dates'))
+            ->groupBy('dates')
+            ->orderBy('dates','desc')
+            ->get();
 
         return response()->json($projects);
     }

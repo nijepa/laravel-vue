@@ -21,6 +21,12 @@ const actions = {
         const response = await axios.get('api/todo');
         commit('setTodos', response.data)
     },
+    async fetchTodosP ({ commit }, id) {
+        const response = await axios.get(
+            `api/todo?page=${id}`
+        );
+        commit('setTodos', response.data);
+    },
     async fetchTodo ({ commit }, todo) {
         const response = await axios.get(
             `../api/todo/${todo}`,

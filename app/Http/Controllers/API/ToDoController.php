@@ -28,9 +28,9 @@ class ToDoController extends Controller
     public function index($userId = 0)
     {
         if($userId){
-            $todos = ToDo::with('user')->where('user_id', $userId)->get();
+            $todos = ToDo::with('user')->where('user_id', $userId)->paginate(8);
         }else {
-            $todos = ToDo::with('user')->get();
+            $todos = ToDo::orderBy('created_at', 'desc')->with('user')->paginate(8);
         }
         return response()->json($todos);
     }

@@ -48,7 +48,7 @@
     .feed {
         background: white;
         height: 100%;
-        max-height: 470px;
+        max-height: 266px;
         overflow-y: scroll;
 
         ul {

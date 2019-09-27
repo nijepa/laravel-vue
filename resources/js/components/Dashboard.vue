@@ -35,9 +35,12 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+                <div class="col-lg-6 col-6">
+                    <Chart  style="height: 240px;"></Chart>
+                </div>
                 <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
+                <!--<div class="col-lg-3 col-6">
+                    &lt;!&ndash; small box &ndash;&gt;
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>{{ meetings.meetings.length }}</h3>
@@ -50,9 +53,9 @@
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
+                &lt;!&ndash; ./col &ndash;&gt;
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
+                    &lt;!&ndash; small box &ndash;&gt;
                     <div class="small-box bg-danger">
                         <div class="inner">
                             <h3>65</h3>
@@ -64,7 +67,7 @@
                         </div>
                         <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
+                </div>-->
                 <!-- ./col -->
             </div>
             <!-- /.row -->
@@ -80,12 +83,13 @@
     import { mapGetters, mapActions } from 'vuex';
     import Todo from './app/Todo';
     import Chat from './app/Chat';
+    import Chart from './app/Chart';
 
     export default {
         name: "Dashboard",
 
         components: {
-            Todo, Chat
+            Todo, Chat, Chart
         },
 
         data() {
@@ -93,12 +97,27 @@
                 projects: [],
                 meetings: [],
                 users: [],
-                user: []
+                user: [],
+                chartdata: {},
+                totals: [],
+                months: [],
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                },
+
             }
         },
 
         mounted() {
             this.user = window.user.user;
+            axios.get('../api/indexGrouped')
+                .then((response) => {
+                    this.chartdata = response.data;
+                    this.totals = response.data.map(d => d.total);
+                    this.months = response.data.map(d => d.dates);
+                });
+
         },
 
         computed: {
@@ -118,7 +137,8 @@
                 return result.filter(item => {
                     return item.finished === 0
                 });
-            }
+            },
+
         },
 
         methods: {

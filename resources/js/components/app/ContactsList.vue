@@ -67,7 +67,7 @@
 
     .contacts-list {
         flex: 2;
-        max-height: 600px;
+        max-height: 408px;
        // overflow: scroll;
         overflow-y: scroll;
         border-left: 1px solid lightskyblue;

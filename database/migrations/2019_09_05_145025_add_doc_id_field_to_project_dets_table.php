@@ -26,7 +26,7 @@ class AddDocIdFieldToProjectDetsTable extends Migration
     public function down()
     {
         Schema::table('project_dets', function (Blueprint $table) {
-            //
+            $table->dropColumn('doc_id');
         });
     }
 }

@@ -67,6 +67,8 @@ Route::patch('todo/{id}', 'API\ToDoController@markCompleted');
 Route::apiResource('message', 'API\MessageController');
 Route::get('chatContact', 'API\UserController@chat');
 
+Route::get('indexGrouped', 'API\ProjectsController@indexGrouped');
+
 // Mark read all notifications
 Route::get('/mark-all-read/{user}', function (User $user) {
     $user->unreadNotifications->markAsRead();

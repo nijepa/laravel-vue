@@ -8,18 +8,26 @@
             </h3>
 
             <div class="card-tools">
-                <ul class="pagination pagination-sm">
+              <!--  <div>
+                    <button @click="prevPage" class="float-left btn btn-outline-info btn-sm"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <button @click="nextPage" class="float-right btn btn-outline-info btn-sm">Next <i class="fas fa-arrow-right"></i></button>
+                </div>-->
+                <pagination :data="todos.todos" @pagination-change-page="getResults">
+                    <span slot="prev-nav">&lt; Previous</span>
+                    <span slot="next-nav">Next &gt;</span>
+                </pagination>
+           <!--     <ul class="pagination pagination-sm">
                     <li class="page-item"><a href="#" class="page-link">«</a></li>
                     <li class="page-item"><a href="#" class="page-link">1</a></li>
                     <li class="page-item"><a href="#" class="page-link">2</a></li>
                     <li class="page-item"><a href="#" class="page-link">3</a></li>
                     <li class="page-item"><a href="#" class="page-link">»</a></li>
-                </ul>
+                </ul>-->
             </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <ul class="todo-list ui-sortable" data-widget="todo-list" v-for="todo in allTodos" :key="todo.id">
+            <ul class="todo-list ui-sortable" data-widget="todo-list" v-for="todo in todos.todos.data" :key="todo.id">
 
                 <li style="" class="">
                     <!-- drag handle -->
@@ -114,7 +122,7 @@
 
         data() {
             return {
-                todos: [],
+                todos: {},
                 form: new Form({
                     id: '',
                     title: '',
@@ -129,16 +137,26 @@
         computed: mapGetters(['allTodos']),
 
         methods: {
-            ...mapActions(['fetchTodos']),
+            ...mapActions(['fetchTodos', 'fetchTodosP']),
 
             loadTodos() {
                 if(this.$gate.isAdmin()) {
                     /*              axios.get("api/user")
                                       .then(({ data }) => (this.users = data))
                                       .catch();*/
-                    this.fetchTodos();
+                    this.fetchTodosP();
                     this.todos = this.$store.state.todos;
                 }
+            },
+
+            getResults(page = 1) {
+                this.fetchTodosP(page);
+                this.todos = this.$store.state.todos;
+        /*        axios.get('api/user?page=' + page)
+                    .then(response => {
+                        console.log(response.data);
+                        this.users = response.data;
+                    });*/
             },
 
             markCompleted(id, todo) {
