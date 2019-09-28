@@ -15,7 +15,7 @@ class RoleController extends Controller
      */
     private $role;
 
-    function __construct(Role $role)
+    public function __construct(Role $role)
     {
         $this->role = $role;
     }
@@ -85,11 +85,12 @@ class RoleController extends Controller
         }
         return response(['message'=>'Role Updated']);
     }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function destroy($id)
     {

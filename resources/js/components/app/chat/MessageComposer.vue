@@ -36,6 +36,5 @@
         border-radius: 5px;
         border: 1px solid lightblue;
         padding: 6px;
-
     }
 </style>

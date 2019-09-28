@@ -5,7 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-yellow font-weight-bold h3"><i class="fas fa-user-tag fa-2x text-yellow"></i> ROLES</h3>
+                        <h3 class="card-title text-yellow font-weight-bold h3">
+                            <i class="fas fa-user-tag fa-2x text-yellow"></i>
+                            ROLES
+                        </h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add Role <span><i class="cap-icon ci-plus"></i></span>
@@ -26,15 +29,20 @@
                             <tr v-for="role in roles.roles.data" :key="role.id">
                                 <td>{{ role.id }}</td>
                                 <td>{{ role.name }}</td>
-                                <td><multiselect v-model="role.permissions" :options="options" :multiple="true"  placeholder="none selected" track-by="name" label="name" disabled></multiselect></td>
-<!--                                <td><span class="tag tag-success">{{  role.permissions.id  }}</span></td>-->
+                                <td>
+                                    <multiselect v-model="role.permissions" :options="options" :multiple="true"
+                                                 placeholder="none selected" track-by="name" label="name" disabled>
+                                    </multiselect>
+                                </td>
                                 <td>{{ role.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(role)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
+                                    <button @click="editModal(role)" class="btn btn-info btn-sm"
+                                            data-toggle="tooltip" data-placement="top" title="Edit User">
                                         <i class="cap-icon ci-file-edit"></i>
                                     </button>
                                     /
-                                    <button  @click="deleteRole(role)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
+                                    <button  @click="deleteRole(role)" class="btn btn-danger btn-sm"
+                                             data-toggle="tooltip" data-placement="top" title="Delete User">
                                         <i class="cap-icon ci-trash"></i>
                                     </button>
                                 </td>
@@ -58,8 +66,14 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="cap-icon ci-plus icolor"></i> Add New Role</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="cap-icon ci-file-edit icolor"></i> Update Role</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">
+                                <i class="cap-icon ci-plus icolor"></i>
+                                Add New Role
+                            </h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">
+                                <i class="cap-icon ci-file-edit icolor"></i>
+                                Update Role
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -88,9 +102,15 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="cap-icon ci-times"></i></span></button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="cap-icon ci-check"></i></span></button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="cap-icon ci-save"></i></span></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close
+                                    <span><i class="cap-icon ci-times"></i></span>
+                                </button>
+                                <button type="submit" v-show="!editMode" class="btn btn-success">Create
+                                    <span><i class="cap-icon ci-check"></i></span>
+                                </button>
+                                <button type="submit" v-show="editMode" class="btn btn-success">Update
+                                    <span><i class="cap-icon ci-save"></i></span>
+                                </button>
                             </div>
                             <!-- /.modal-body -->
                         </form>

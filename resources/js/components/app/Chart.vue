@@ -1,5 +1,4 @@
 <script>
-    import VueCharts from 'vue-chartjs'
     import { Line, mixins } from 'vue-chartjs'
 
     export default {
@@ -18,7 +17,7 @@
         },
 
         async created() {
-            await axios.get('../api/indexGrouped')
+            await axios.get('../api/projectsPerMonth')
                 .then((response) => {
                     // JSON responses are automatically parsed.
                     const responseData = response.data;

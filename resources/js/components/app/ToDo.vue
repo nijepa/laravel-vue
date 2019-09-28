@@ -8,21 +8,10 @@
             </h3>
 
             <div class="card-tools">
-              <!--  <div>
-                    <button @click="prevPage" class="float-left btn btn-outline-info btn-sm"><i class="fas fa-arrow-left"></i> Previous</button>
-                    <button @click="nextPage" class="float-right btn btn-outline-info btn-sm">Next <i class="fas fa-arrow-right"></i></button>
-                </div>-->
                 <pagination :data="todos.todos" @pagination-change-page="getResults">
                     <span slot="prev-nav">&lt; Previous</span>
                     <span slot="next-nav">Next &gt;</span>
                 </pagination>
-           <!--     <ul class="pagination pagination-sm">
-                    <li class="page-item"><a href="#" class="page-link">«</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">»</a></li>
-                </ul>-->
             </div>
         </div>
         <!-- /.card-header -->
@@ -30,40 +19,39 @@
             <ul class="todo-list ui-sortable" data-widget="todo-list" v-for="todo in todos.todos.data" :key="todo.id">
 
                 <li style="" class="">
-                    <!-- drag handle -->
-              <!--      <span class="handle ui-sortable-handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    &lt;!&ndash; checkbox &ndash;&gt;
-                    <div class="icheck-primary d-inline ml-2">
-                        <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                        <label for="todoCheck1"></label>
-                    </div>-->
-
                     <div class="custom-control custom-checkbox d-inline">
                         <input type="checkbox" class="custom-control-input mousep" :id="todo.id"
                                name="completed" v-model="todo.completed" @click="markCompleted(todo.id, todo.completed)">
                         <label class="custom-control-label mousep" :for="todo.id"></label>
                     </div>
-
                     <!-- todo text -->
                     <span class="text" :class="{ completed : todo.completed}">{{ todo.title }} </span>
-
                     <!-- General tools such as edit or delete-->
-                    <small class="badge" :class="todo.priority == 'high' ? 'badge-danger' : todo.priority == 'low' ? 'badge-info' : 'badge-warning'"> <i class="fas fa-exclamation"></i> {{ todo.priority }}</small>
+                    <small class="badge"
+                           :class="todo.priority == 'high' ? 'badge-danger' : todo.priority == 'low' ? 'badge-info' : 'badge-warning'">
+                        <i class="fas fa-exclamation"></i>
+                        {{ todo.priority }}
+                    </small>
                     <!-- Emphasis label -->
                     <small class="badge" ><i class="far fa-clock"></i> {{ todo.created_at | customDate }}</small>
                     <div class="tools">
-                        <button type="button" class="btn btn-info btn-sm" @click="editModal(todo)"><i class="fas fa-edit"></i></button>
-                        <button  @click="deleteTodo(todo)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User"><i class="fas fa-trash"></i></button>
+                        <button type="button" class="btn btn-info btn-sm" @click="editModal(todo)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button  @click="deleteTodo(todo)" class="btn btn-danger btn-sm"
+                                 data-toggle="tooltip" data-placement="top" title="Delete User">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 </li>
             </ul>
         </div>
         <!-- /.card-body -->
         <div class="card-footer clearfix">
-            <button type="button" class="btn btn-info float-right" @click="newModal()"><i class="fas fa-plus"></i> Add item</button>
+            <button type="button" class="btn btn-info float-right" @click="newModal()">
+                <i class="fas fa-plus"></i>
+                Add item
+            </button>
         </div>
     </div>
     <!-- Modal -->
@@ -71,8 +59,14 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="cap-icon ci-plus icolor"></i> Add New ToDo</h5>
-                    <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="cap-icon ci-file-edit icolor"></i> Update ToDo</h5>
+                    <h5 class="modal-title" v-show="!editMode" id="addNewLabel">
+                        <i class="cap-icon ci-plus icolor"></i>
+                        Add New ToDo
+                    </h5>
+                    <h5 class="modal-title" v-show="editMode" id="addNewLabel">
+                        <i class="cap-icon ci-file-edit icolor"></i>
+                        Update ToDo
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -88,7 +82,8 @@
                         </div>
                         <label >Priority</label>
                         <div class="form-group custom-control custom-radio" v-for="(prio, index) in priorities" :key="index">
-                            <input type="radio" class="custom-control-input mousep" :name="prio.name" :value="prio.name" v-model="form.priority" :id="prio.name">
+                            <input type="radio" class="custom-control-input mousep"
+                                   :name="prio.name" :value="prio.name" v-model="form.priority" :id="prio.name">
                             <label class="custom-control-label mousep" :for="prio.name">{{ prio.name }}</label>
                             <has-error :form="form" field="priority"></has-error>
                         </div>
@@ -100,9 +95,15 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="cap-icon ci-times"></i></span></button>
-                        <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="cap-icon ci-check"></i></span></button>
-                        <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="cap-icon ci-save"></i></span></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close
+                            <span><i class="cap-icon ci-times"></i></span>
+                        </button>
+                        <button type="submit" v-show="!editMode" class="btn btn-success">Create
+                            <span><i class="cap-icon ci-check"></i></span>
+                        </button>
+                        <button type="submit" v-show="editMode" class="btn btn-success">Update
+                            <span><i class="cap-icon ci-save"></i></span>
+                        </button>
                     </div>
                     <!-- /.modal-body -->
                 </form>
@@ -141,9 +142,6 @@
 
             loadTodos() {
                 if(this.$gate.isAdmin()) {
-                    /*              axios.get("api/user")
-                                      .then(({ data }) => (this.users = data))
-                                      .catch();*/
                     this.fetchTodosP();
                     this.todos = this.$store.state.todos;
                 }
@@ -152,11 +150,6 @@
             getResults(page = 1) {
                 this.fetchTodosP(page);
                 this.todos = this.$store.state.todos;
-        /*        axios.get('api/user?page=' + page)
-                    .then(response => {
-                        console.log(response.data);
-                        this.users = response.data;
-                    });*/
             },
 
             markCompleted(id, todo) {

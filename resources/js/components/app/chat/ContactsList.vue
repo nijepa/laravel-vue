@@ -1,12 +1,15 @@
 <template>
     <div class="contacts-list">
         <ul>
-            <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{ 'selected': contact === selected}">
+            <li v-for="contact in sortedContacts" :key="contact.id"
+                @click="selectContact(contact)" :class="{ 'selected': contact === selected}">
                 <div class="avatar">
                     <img :src="'img/profile/'+contact.photo" :alt="contact.name">
                 </div>
                 <div class="contact">
-                    <p class="name" :class="(onlineContacts.find(onlineContact=>onlineContact.id==contact.id)? 'green' : 'red')">{{ contact.name }}</p>
+                    <p class="name" :class="(onlineContacts.find(onlineContact=>onlineContact.id==contact.id)? 'green' : 'red')">
+                        {{ contact.name }}
+                    </p>
                     <p class="email">{{ contact.email }}</p>
                 </div>
                 <span class="unread" v-if="contact.unread">{{ contact.unread }}</span>

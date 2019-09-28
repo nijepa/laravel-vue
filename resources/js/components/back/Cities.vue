@@ -5,7 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-city fa-2x icolor"></i> CITIES</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3">
+                            <i class="fas fa-city fa-2x icolor"></i>
+                            CITIES
+                        </h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add City <span><i class="cap-icon ci-plus"></i></span>
@@ -27,14 +30,20 @@
                                 <td>{{ city.id }}</td>
                                 <td>{{ city.name }}</td>
 
-                                <td><span class="tag tag-success">{{ city.country_id ? city.country.name : 'not selected'  }}</span></td>
+                                <td>
+                                    <span class="tag tag-success">
+                                        {{ city.country_id ? city.country.name : 'not selected'  }}
+                                    </span>
+                                </td>
                                 <td>{{ city.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(city)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
+                                    <button @click="editModal(city)" class="btn btn-info btn-sm"
+                                            data-toggle="tooltip" data-placement="top" title="Edit User">
                                         <i class="cap-icon ci-file-edit"></i>
                                     </button>
                                     /
-                                    <button  @click="deleteCity(city)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
+                                    <button  @click="deleteCity(city)" class="btn btn-danger btn-sm"
+                                             data-toggle="tooltip" data-placement="top" title="Delete User">
                                         <i class="cap-icon ci-trash"></i>
                                     </button>
                                 </td>
@@ -58,8 +67,14 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="cap-icon ci-plus icolor"></i> Add New City</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="cap-icon ci-file-edit icolor"></i> Update City</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">
+                                <i class="cap-icon ci-plus icolor"></i>
+                                Add New City
+                            </h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">
+                                <i class="cap-icon ci-file-edit icolor"></i>
+                                Update City
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -89,9 +104,15 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="cap-icon ci-times"></i></span></button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="cap-icon ci-check"></i></span></button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="cap-icon ci-save"></i></span></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close
+                                    <span><i class="cap-icon ci-times"></i></span>
+                                </button>
+                                <button type="submit" v-show="!editMode" class="btn btn-success">Create
+                                    <span><i class="cap-icon ci-check"></i></span>
+                                </button>
+                                <button type="submit" v-show="editMode" class="btn btn-success">Update
+                                    <span><i class="cap-icon ci-save"></i></span>
+                                </button>
                             </div>
                             <!-- /.modal-body -->
                         </form>
@@ -140,9 +161,6 @@
 
             loadCities() {
                 if(this.$gate.isAdmin()) {
-      /*              axios.get("api/user")
-                        .then(({ data }) => (this.users = data))
-                        .catch();*/
                     this.fetchCitiesP();
                     this.cities = this.$store.state.cities;
                 }
@@ -151,11 +169,6 @@
             getResults(page = 1) {
                 this.fetchCitiesP(page);
                 this.cities = this.$store.state.cities;
-        /*        axios.get('api/user?page=' + page)
-                    .then(response => {
-                        console.log(response.data);
-                        this.users = response.data;
-                    });*/
             },
 
             newModal() {
@@ -175,7 +188,6 @@
                 //this.addCity(this.form);
                  this.form.post('api/city')
                      .then(({ data }) => {
-                        //console.log(data);
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
                         toast.fire({
@@ -189,7 +201,6 @@
 
             updateCity(id) {
                 this.$Progress.start();
-                //console.log(this.form);
                 //this.renewCity(this.form);
 
                 this.form.put('api/city/'+this.form.id)
@@ -242,17 +253,7 @@
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
                 this.fetchCitiesS(query);
-        /*        axios.get('api/findUser?q=' + query)
-                    .then((data) => {
-                        console.log(data);
-                        this.users = data.data
-                    })
-                    .catch(() => {
-
-                    })*/
             });
-            // this.fetchUsers();
-            // this.users = this.$store.state.users;
             this.loadCities();
             this.fetchCountries();
             this.countries = this.$store.state.countries;

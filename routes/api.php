@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Front end apis
+// FRONTEND APIS
 Route::apiResources(['owner' => 'API\OwnersController']);
 Route::apiResources(['representation' => 'API\RepresentationsController']);
 Route::apiResources(['reps_det' => 'API\RepresentationDetsController']);
@@ -31,7 +31,7 @@ Route::get('contactF', 'API\ContactsController@contactF');
 Route::get('aboutF', 'API\AboutsController@aboutF');
 
 
-// Backend apis
+// BACKEND APIS
 Route::apiResources(['user' => 'API\UserController']);
 Route::apiResources(['city' => 'API\CitiesController']);
 Route::apiResources(['country' => 'API\CountriesController']);
@@ -48,14 +48,16 @@ Route::get('countries', 'API\CountriesController@selectAll');
 
 Route::get('findUser', 'API\UserController@search');
 
-// Web App apis
+// WEB APP APIS
 Route::get('companies', 'API\RepresentationsController@companies');
 
 Route::apiResources(['project' => 'API\ProjectsController']);
 Route::apiResources(['project_dets' => 'API\ProjectDetsController']);
+Route::get('projectsPerMonth', 'API\ProjectsController@projectsPerMonth');
 
 Route::apiResources(['meeting' => 'API\MeetingsController']);
 Route::apiResources(['meeting_dets' => 'API\MeetingDetsController']);
+Route::get('meetingsPerMonth', 'API\MeetingsController@meetingsPerMonth');
 
 Route::apiResource('roles', 'API\RoleController');
 Route::apiResource('permissions', 'API\PermissionController');
@@ -66,8 +68,6 @@ Route::patch('todo/{id}', 'API\ToDoController@markCompleted');
 
 Route::apiResource('message', 'API\MessageController');
 Route::get('chatContact', 'API\UserController@chat');
-
-Route::get('indexGrouped', 'API\ProjectsController@indexGrouped');
 
 // Mark read all notifications
 Route::get('/mark-all-read/{user}', function (User $user) {

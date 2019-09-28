@@ -39,7 +39,12 @@ class ProjectsController extends Controller
         return response()->json($projects);
     }
 
-    public function indexGrouped()
+    /**
+     * Display list of projects count per month
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function projectsPerMonth()
     {
         $projects=DB::table('projects')
             ->select(DB::raw('count(id) as total'),DB::raw('month(created_at) as dates'))
@@ -85,7 +90,7 @@ class ProjectsController extends Controller
         ]);
 
         $userNote = Auth::user();
-        //dd($userNote);
+
         $admins = User::all()->filter(function($project) {
             return $project->hasRole('Admin');
         });
@@ -134,7 +139,6 @@ class ProjectsController extends Controller
         $user = Auth::user()->id;
         $request->merge(['user_id' => $user]);
 
-        //$fdate = Carbon::createFromFormat('D M d Y H:i:s e+', $request->project_started);
         $fdate = Carbon::parse($request->project_started);
         $request->merge(['project_started' => $fdate]);
 

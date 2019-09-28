@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $guarded = [];
+
     /**
      * The attributes that are mass assignable.
      *

@@ -3,9 +3,9 @@
         <ul v-if="contact">
             <li v-for="message in messages" :key="message.id" :class="`message ${message.to === contact.id ? 'sent' : 'received'} `">
                 <span class="text">
-                    {{ message.message }} <small class="badge" ><i class="far fa-clock"></i> {{ message.created_at | msgTime }}</small>
+                    {{ message.message }}
+                    <small class="badge" ><i class="far fa-clock"></i> {{ message.created_at | msgTime }}</small>
                 </span>
-
             </li>
         </ul>
     </div>
@@ -33,6 +33,7 @@
                 }, 150);
             }
         },
+
         watch: {
             contact(contact) {
                 this.scrollToBottom();

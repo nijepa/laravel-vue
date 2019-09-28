@@ -15,10 +15,12 @@
     return (int) $user->id === (int) $id;
 });*/
 
+// Broadcast chat messages
 Broadcast::channel('messages.{id}', function ($user, $id) {
     return $user->id === (int) $id;
 });
 
+// Broadcast user status (online, offline) for chat
 Broadcast::channel('chat', function ($user) {
     if(auth()->check()){
         return $user;

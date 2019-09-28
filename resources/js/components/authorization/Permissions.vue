@@ -5,7 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-yellow font-weight-bold h3"><i class="fas fa-user-lock fa-2x text-yellow"></i> PERMISSIONS</h3>
+                        <h3 class="card-title text-yellow font-weight-bold h3">
+                            <i class="fas fa-user-lock fa-2x text-yellow"></i>
+                            PERMISSIONS
+                        </h3>
                         <div class="card-tools">
                             <button class="btn btn-success" @click="newModal()">
                                 Add Permission <span><i class="cap-icon ci-plus"></i></span>
@@ -27,11 +30,12 @@
                                 <td>{{ permission.name }}</td>
                                 <td>{{ permission.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(permission)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <button @click="editModal(permission)" class="btn btn-info btn-sm"
+                                            data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="cap-icon ci-file-edit"></i>
                                     </button>
-
-                                    <button  @click="deletePermission(permission)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <button  @click="deletePermission(permission)" class="btn btn-danger btn-sm"
+                                             data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="cap-icon ci-trash"></i>
                                     </button>
                                 </td>
@@ -55,13 +59,20 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="cap-icon ci-plus icolor"></i> Add New Permission</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="cap-icon ci-file-edit icolor"></i> Update Permission</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">
+                                <i class="cap-icon ci-plus icolor"></i>
+                                Add New Permission
+                            </h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">
+                                <i class="cap-icon ci-file-edit icolor"></i>
+                                Update Permission
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div><!-- /.modal-header -->
-                        <form @submit.prevent="editMode ? updatePermission() : createPermission()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? updatePermission() : createPermission()"
+                              @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Name</label>
@@ -71,9 +82,15 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="cap-icon ci-times"></i></span></button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="cap-icon ci-check"></i></span></button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="cap-icon ci-save"></i></span></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close
+                                    <span><i class="cap-icon ci-times"></i></span>
+                                </button>
+                                <button type="submit" v-show="!editMode" class="btn btn-success">Create
+                                    <span><i class="cap-icon ci-check"></i></span>
+                                </button>
+                                <button type="submit" v-show="editMode" class="btn btn-success">Update
+                                    <span><i class="cap-icon ci-save"></i></span>
+                                </button>
                             </div>
                             <!-- /.modal-body -->
                         </form>

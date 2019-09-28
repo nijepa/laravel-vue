@@ -87,14 +87,14 @@
                                         @onimageload="OnImageLoad">
                                 </appUploadFiles>
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="form.name" type="text" name="name" placeholder="Name"
+                                    <label for="name">Name</label>
+                                    <input v-model="form.name" type="text" name="name" placeholder="Name" id="name"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="form.description" type="text" name="description" placeholder="Description"
+                                    <label for="desc">Name</label>
+                                    <input v-model="form.description" type="text" name="description" placeholder="Description" id="desc"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
                                     <has-error :form="form" field="description"></has-error>
                                 </div>

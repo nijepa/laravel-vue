@@ -40,6 +40,7 @@ class ToDoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws
      */
     public function store(Request $request)
     {
@@ -75,8 +76,9 @@ class ToDoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ToDo  $toDo
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return array
+     * @throws
      */
     public function update(Request $request, $id)
     {
@@ -96,6 +98,14 @@ class ToDoController extends Controller
         return ['todo' => $todo];
     }
 
+    /**
+     * Mark ToDos as complete
+     *
+     * @param Request $request
+     * @param $id
+     * @return array
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function markCompleted(Request $request, $id) {
         $this->authorize('isAdmin');
 
@@ -109,8 +119,9 @@ class ToDoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ToDo  $toDo
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return array
+     * @throws
      */
     public function destroy($id)
     {

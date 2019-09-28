@@ -37,7 +37,7 @@ class ContactsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function contactF()
     {
@@ -50,7 +50,7 @@ class ContactsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      *
      * @throws
      */
@@ -69,17 +69,6 @@ class ContactsController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

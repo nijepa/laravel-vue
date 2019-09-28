@@ -210,20 +210,6 @@
                 }
             },
 
-    /*        onPageChange(page) {
-                this.currentPage = page;
-            },
-
-            onPageSizeChanged(ps) {
-                this.onPageChange(1);
-                this.pageSize = ps;
-            },
-
-            onSearchChanged(s) {
-                this.onPageChange(1);
-                this.search = s;
-            },*/
-
             imagesPlaces() {
                 this.image = 'img/profile/'+this.form.photo_id;
             },

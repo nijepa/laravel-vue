@@ -39,7 +39,7 @@ class MeetingDetsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
-     * @return Response
+     * @return array
      * @throws
      */
     public function store(Request $request)

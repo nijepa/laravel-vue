@@ -5,7 +5,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title text-blue font-weight-bold h3"><i class="fas fa-certificate fa-2x icolor"></i> ABOUT</h3>
+                        <h3 class="card-title text-blue font-weight-bold h3">
+                            <i class="fas fa-certificate fa-2x icolor"></i>
+                            ABOUT
+                        </h3>
                     </div>
                     <div class="d-flex justify-content-center mt-3">
                         <button :class="classB" @click="changeAbout()">
@@ -55,7 +58,8 @@
                                 <td>{{ aboutD.description }}</td>
                                 <td>{{ aboutD.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(aboutD)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
+                                    <button @click="editModal(aboutD)" class="btn btn-info btn-sm"
+                                            data-toggle="tooltip" data-placement="top" title="Edit User">
                                         <i class="cap-icon ci-file-edit"></i>
                                     </button>
                                 </td>
@@ -273,20 +277,6 @@
         },
 
         created() {
-            Fire.$on('searching', () => {
-                let query = this.$parent.search;
-                this.fetchAboutsS(query);
-                /*        axios.get('api/findUser?q=' + query)
-                            .then((data) => {
-                                console.log(data);
-                                this.users = data.data
-                            })
-                            .catch(() => {
-
-                            })*/
-            });
-            // this.fetchUsers();
-            // this.users = this.$store.state.users;
             this.loadAbouts();
             Fire.$on('AfterCreate', () => {
                 this.loadAbouts();

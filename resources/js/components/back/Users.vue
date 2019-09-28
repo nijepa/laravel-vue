@@ -40,12 +40,32 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th @click="sortBy('id')">ID <i v-if="sortKey === 'id'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
+                                    <th @click="sortBy('id')">ID
+                                        <i v-if="sortKey === 'id'"
+                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic">
+                                        </i>
+                                    </th>
                                     <th>Photo</th>
-                                    <th @click="sortBy('name')">Name <i v-if="sortKey === 'name'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-                                    <th @click="sortBy('email')">Email <i v-if="sortKey === 'email'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-                                    <th @click="sortBy('type')">Type <i v-if="sortKey === 'type'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
-                                    <th @click="sortBy('created_at')">Created At <i v-if="sortKey === 'created_at'" :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic"></i></th>
+                                    <th @click="sortBy('name')">Name
+                                        <i v-if="sortKey === 'name'"
+                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic">
+                                        </i>
+                                    </th>
+                                    <th @click="sortBy('email')">Email
+                                        <i v-if="sortKey === 'email'"
+                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic">
+                                        </i>
+                                    </th>
+                                    <th @click="sortBy('type')">Type
+                                        <i v-if="sortKey === 'type'"
+                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic">
+                                        </i>
+                                    </th>
+                                    <th @click="sortBy('created_at')">Created At
+                                        <i v-if="sortKey === 'created_at'"
+                                           :class="sortOrder === 'asc' ? 'fas fa-angle-up' : 'fas fa-angle-down'" class="ic">
+                                        </i>
+                                    </th>
                                     <th>Modify</th>
                                 </tr>
                             </thead>
@@ -59,11 +79,13 @@
                                 <td><span class="tag tag-success">{{ user.type | upText }}</span></td>
                                 <td>{{ user.created_at | customDate }}</td>
                                 <td>
-                                    <button @click="editModal(user)" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Edit User">
+                                    <button @click="editModal(user)" class="btn btn-info btn-sm"
+                                            data-toggle="tooltip" data-placement="top" title="Edit User">
                                         <i class="fas fa-user-edit"></i>
                                     </button>
                                     /
-                                    <button  @click="deleteUser(user)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete User">
+                                    <button  @click="deleteUser(user)" class="btn btn-danger btn-sm"
+                                             data-toggle="tooltip" data-placement="top" title="Delete User">
                                         <i class="fas fa-user-minus"></i>
                                     </button>
                                 </td>
@@ -100,8 +122,12 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header" v-if="editMode ? classes='edit' : classes='add'" :class="classes">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel"><i class="fas fa-user-plus icolor"></i> ADD NEW USER</h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel"><i class="fas fa-user-edit icolor"></i> UPDATE USER</h5>
+                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">
+                                <i class="fas fa-user-plus icolor"></i> ADD NEW USER
+                            </h5>
+                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">
+                                <i class="fas fa-user-edit icolor"></i> UPDATE USER
+                            </h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -139,7 +165,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="bio">Short bio for user (optional)</label>
-                                    <input v-model="form.bio" id="bio" type="text" name="bio" placeholder="Short bio for user (optional)"
+                                    <input v-model="form.bio" id="bio" type="text" name="bio"
+                                           placeholder="Short bio for user (optional)"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }">
                                     <has-error :form="form" field="bio"></has-error>
                                 </div>
@@ -166,9 +193,15 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span><i class="cap-icon ci-times"></i></span></button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create <span><i class="cap-icon ci-check"></i></span></button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update <span><i class="cap-icon ci-save"></i></span></button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close
+                                    <span><i class="cap-icon ci-times"></i></span>
+                                </button>
+                                <button type="submit" v-show="!editMode" class="btn btn-success">Create
+                                    <span><i class="cap-icon ci-check"></i></span>
+                                </button>
+                                <button type="submit" v-show="editMode" class="btn btn-success">Update
+                                    <span><i class="cap-icon ci-save"></i></span>
+                                </button>
                             </div>
                             <!-- /.modal-body -->
                         </form>

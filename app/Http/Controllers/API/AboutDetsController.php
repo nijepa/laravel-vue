@@ -34,7 +34,7 @@ class AboutDetsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
-     * @return Response
+     * @return array
      * @throws
      */
     public function store(Request $request)
@@ -56,7 +56,7 @@ class AboutDetsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return json Response
+     * @return JsonResponse
      */
     public function show($id)
     {

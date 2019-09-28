@@ -76,7 +76,7 @@ class ProjectDetsController extends Controller
         $admins = User::all()->filter(function($projectDet) {
             return $projectDet->hasRole('Admin');
         });
-//dd($projectDet);
+
         try {
             Notification::send($admins, new ProjectDetailCreated($projectDet));
         } catch(\Exception $e){

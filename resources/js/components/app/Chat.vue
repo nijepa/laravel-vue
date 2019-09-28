@@ -18,8 +18,8 @@
 </template>
 
 <script>
-    import Conversation from './Conversation';
-    import ContactsList from './ContactsList';
+    import Conversation from './Chat/Conversation';
+    import ContactsList from './Chat/ContactsList';
 
     export default {
         name: "Chat",

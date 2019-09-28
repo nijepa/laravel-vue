@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MeetingsController extends Controller
 {
@@ -26,7 +27,7 @@ class MeetingsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -36,10 +37,27 @@ class MeetingsController extends Controller
     }
 
     /**
+     * Display list of meetings count per month
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function meetingsPerMonth()
+    {
+        $meetings=DB::table('meetings')
+            ->select(DB::raw('count(id) as total'),DB::raw('month(created_at) as dates'))
+            ->groupBy('dates')
+            ->orderBy('dates','desc')
+            ->get();
+
+        return response()->json($meetings);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws
      */
     public function store(Request $request)
     {
@@ -73,7 +91,7 @@ class MeetingsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Meeting  $meeting
+     * @param  \App\Meeting  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -86,9 +104,10 @@ class MeetingsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Meeting  $meeting
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request, int $id
+     * @param  \App\Meeting  $id
+     * @return array
+     * @throws
      */
     public function update(Request $request, $id)
     {
@@ -117,8 +136,9 @@ class MeetingsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Meeting  $meeting
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return array
+     * @throws
      */
     public function destroy($id)
     {

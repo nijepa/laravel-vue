@@ -17,7 +17,7 @@ class MessageController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api')->only('store', 'update', 'destroy', 'show');
+        $this->middleware('auth:api')->only('store',  'show');
     }
 
     /**
@@ -31,20 +31,10 @@ class MessageController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -65,8 +55,8 @@ class MessageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Message  $message
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
@@ -84,28 +74,5 @@ class MessageController extends Controller
         return response()->json($messages);
         /*$messages = Message::where('from', (int) $id)->where('to', auth()->id())->orWhere('to', $id)->where('from', auth()->id())->get();
         return response()->json($messages);*/
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Message $message)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Message $message)
-    {
-        //
     }
 }

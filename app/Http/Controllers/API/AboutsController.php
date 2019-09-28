@@ -21,7 +21,7 @@ class AboutsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -33,7 +33,7 @@ class AboutsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function aboutF()
     {
@@ -46,7 +46,7 @@ class AboutsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
-     * @return Response
+     * @return array
      * @throws
      */
     public function store(Request $request)
@@ -68,7 +68,7 @@ class AboutsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return json Response
+     * @return JsonResponse
      */
     public function show($id)
     {
