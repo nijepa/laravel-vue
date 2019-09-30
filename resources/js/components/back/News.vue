@@ -8,14 +8,14 @@
                             :title="'NEWS'"
                             :button-title="'News'"
                             :at-click="newModal"
-                            :button-icon="'fas fa-boxes fa-2x icolor'"
+                            :button-icon="'far fa-newspaper fa-2x icolor'"
                             @pageSizeChanged="onPageSizeChanged"
                             @searchChanged="onSearchChanged"
                     ></appTableOptions>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
-                            <tbody>
+                            <thead>
                             <tr>
                                 <th @click="sortBy('id')">ID
                                     <i v-if="sortKey === 'id'" :class="classe"></i>
@@ -32,9 +32,11 @@
                                 </th>
                                 <th>Modify</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr v-for="news in repsSorted" :key="news.id">
                                 <router-link
-                                        :to="{name:'prod', params: {id: news.id, selNews: news}}"
+                                        :to="{name:'newsd', params: {id: news.id, selNews: news}}"
                                         activeClass="active" tag="a" class="nav-item nav-link">
                                     {{ news.id }}
                                 </router-link>

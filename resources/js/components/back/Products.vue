@@ -15,7 +15,7 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
-                            <tbody>
+                            <thead>
                             <tr>
                                 <th @click="sortBy('id')">ID
                                     <i v-if="sortKey === 'id'" :class="classe"></i>
@@ -32,12 +32,22 @@
                                 </th>
                                 <th>Modify</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr v-for="product in repsSorted" :key="product.id">
-                                <router-link
+                                <td>
+                                    <router-link
+                                            :to="{name:'prod', params: {id: product.id, selProduct: product}}"
+                                            activeClass="active" tag="a" class="btn btn-secondary btn-sm"
+                                            data-toggle="tooltip" data-placement="top" title="View Details">
+                                        <i class="fas fa-list">  {{ product.id }}</i>
+                                    </router-link>
+                                </td>
+                                <!--<router-link
                                         :to="{name:'prod', params: {id: product.id, selProduct: product}}"
                                         activeClass="active" tag="a" class="nav-item nav-link">
                                     {{ product.id }}
-                                </router-link>
+                                </router-link>-->
 <!--                                <td>{{ product.id }}</td>-->
                                 <td><img :src="'img/products/'+product.photo_id" alt="" style="height: 50px"></td>
                                 <td>{{ product.name }}</td>

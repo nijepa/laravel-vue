@@ -22,6 +22,7 @@ $yell: rgba(246, 226, 78, 0.8);
 $purpl: #cebaff;
 $purpli: #d7d9ff;
 
+
 .text-yell {
   color: $yell;
 }
@@ -78,10 +79,18 @@ $purpli: #d7d9ff;
   color: $pink;
 }
 
+.text-white {
+  color: white;
+}
+
 .bg-blue {
    background-color: $blue;
  }
 
 .bg-cyan {
   background-color: $cyan;
+}
+
+.bg-header {
+  background-color: #024e68;
 }

@@ -44,7 +44,7 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
-                            <tbody>
+                            <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Caption</th>
@@ -52,6 +52,8 @@
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr v-for="aboutD in aboutsDet.aboutDet" :key="aboutD.id">
                                 <td>{{ aboutD.id }}</td>
                                 <td>{{ aboutD.caption }}</td>

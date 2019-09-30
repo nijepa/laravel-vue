@@ -25,6 +25,7 @@ Route::apiResources(['product' => 'API\ProductsController']);
 Route::apiResources(['product_dets' => 'API\ProductDetsController']);
 Route::apiResources(['about_dets' => 'API\AboutDetsController']);
 Route::apiResources(['news' => 'API\NewsController']);
+Route::apiResources(['news_dets' => 'API\NewsDetController']);
 
 Route::get('productF', 'API\ProductsController@productF');
 Route::get('contactF', 'API\ContactsController@contactF');
@@ -64,7 +65,7 @@ Route::apiResource('permissions', 'API\PermissionController');
 Route::apiResource('activities', 'API\ActivityController');
 
 Route::apiResource('todo', 'API\ToDoController');
-Route::patch('todo/{id}', 'API\ToDoController@markCompleted');
+Route::put('todoMark/{id}', 'API\ToDoController@markCompleted');
 
 Route::apiResource('message', 'API\MessageController');
 Route::get('chatContact', 'API\UserController@chat');

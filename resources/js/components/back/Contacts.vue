@@ -14,7 +14,7 @@
                     ></appTableOptions>
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
-                            <tbody>
+                            <thead>
                             <tr>
                                 <th @click="sortBy('id')">ID
                                     <i v-if="sortKey === 'id'" :class="classe"></i>
@@ -31,6 +31,8 @@
                                 </th>
                                 <th>Modify</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr v-for="contact in repsSorted" :key="contact.id">
                                 <td>{{ contact.id }}</td>
                                 <td><img :src="'img/profile/'+contact.photo_id" alt="" style="height: 50px"></td>

@@ -55,6 +55,7 @@ class ToDoController extends Controller
 
         return ToDo::create([
             'title' => $request['title'],
+            'description' => $request['description'],
             'user_id' => $request['user_id'],
             'completed' => $request['completed'],
             'priority' => $request['priority']
@@ -111,7 +112,7 @@ class ToDoController extends Controller
 
         $todo = ToDo::findOrFail($id);
 
-        $todo->update($request->completed);
+        $todo->update($request->all());
 
         return ['todo' => $todo];
     }

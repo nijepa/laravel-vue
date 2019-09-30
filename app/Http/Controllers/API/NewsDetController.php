@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
+use App\News_det;
+use App\Traits\StoreImageTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class NewsDetController extends Controller
 {
+    use StoreImageTrait;
+
+    /**
+     * ProductsDets Controller constructor.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store', 'update', 'destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,9 @@ class NewsDetController extends Controller
      */
     public function index()
     {
-        //
+        $newsdets = News_Det::orderBy('description')->get();//To get the output in array
+
+        return response()->json($newsdets);
     }
 
     /**
@@ -36,7 +51,9 @@ class NewsDetController extends Controller
      */
     public function show($id)
     {
-        //
+        $newsdets = News_det::where('news_id', $id)->get();
+
+        return response()->json($newsdets);
     }
 
     /**

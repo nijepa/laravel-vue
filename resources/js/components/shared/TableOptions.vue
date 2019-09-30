@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mb-3">
         <div class="card-header">
             <h3 class="card-title text-blue font-weight-bold h3">
                 <i :class="buttonIcon"> </i>
@@ -12,12 +12,12 @@
             </button>
         </div>
         <div class="d-flex align-items-center">
-            <div class="form-group ml-3 mt-3">
-                <label><i class='cap-icon ci-search-plus'></i></label>
-                <input @keyup="changeSearch()" type="text" class="form-control" v-model="search" placeholder="Search">
+            <div class="d-flex justify-content-between ml-3">
+                <div class=""><input @keyup="changeSearch()" type="text" class="form-control" v-model="search" placeholder="Search"></div>
+                <div class="ml-2 mt-2"><label><i class="cap-icon ci-search-plus" style="font-size: 22px"></i></label></div>
             </div>
-            <div class="form-group ml-auto mr-3 mt-3">
-                <label for="selPageSize"><i class='cap-icon ci-list-ol'></i></label>
+            <div class="d-flex justify-content-between ml-auto mr-3">
+                <div class="mr-2 mt-2"><label for="selPageSize"><i class="cap-icon ci-list-ol" style="font-size: 22px"></i></label></div>
                 <select v-model="selPageSize" @change="changePageSize()" name="selPageSize" class="form-control" id="selPageSize">
                     <option value="3">3</option>
                     <option value="5">5</option>

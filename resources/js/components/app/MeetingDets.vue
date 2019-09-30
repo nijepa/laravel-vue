@@ -6,17 +6,31 @@
             <!-- Card -->
                 <div class="card" data-aos="flip-up">
                     <div class="d-flex justify-content-between mt-3">
-                        <div class="ml-3 mt-3">
-                            <div class="">
-                                <h3 class="d-inline p-2 text-blue font-weight-bold">{{ oneMeeting.title }}</h3>
-                            </div>
-                            <div class="mt-2">
-                                <h4 class="d-inline p-2">{{ oneMeeting.description }}</h4>
-                            </div>
+                        <div class="mt-3 ml-3">
+                            <h3 class="card-title text-blue font-weight-bold h3">
+                                <i class="fas fa-handshake"> </i>
+                                MEETING
+                            </h3>
                         </div>
                         <router-link to="/meetings" class="nav-link btn btn-outline-secondary mr-3" tag="button">
                             <span><i class="cap-icon ci-arrow-left-circled"></i> BACK</span>
                         </router-link>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="ml-3 mt-3">
+                            <div class="">
+                                <span>Title : </span><h3 class="d-inline p-2 text-blue font-weight-bold"> {{ oneMeeting.title }}</h3>
+                            </div>
+                            <div class="mt-2">
+                                <span>Started : </span><h4 class="d-inline p-2"> {{ oneMeeting.meeting_started | customDate }}</h4>
+                            </div>
+                            <div class="mt-2">
+                                <span>Company : </span><h4 class="d-inline p-2"> {{ oneMeeting.representation.name }}</h4>
+                            </div>
+                            <div class="mt-2">
+                                <span>Description : </span><h4 class="d-inline p-2">{{ oneMeeting.description }}</h4>
+                            </div>
+                        </div>
                     </div>
                     <hr>
                     <div v-if="meetingDets.meetingDet.length">
@@ -29,7 +43,7 @@
                                 @searchChanged="onSearchChanged"
                         ></appTableOptions>
                 <!-- /.card-header -->
-                        <hr>
+<!--                        <hr>-->
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover">
                                 <thead>
@@ -187,9 +201,9 @@
                                     <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2"
+                                    <input type="checkbox" class="custom-control-input cur" id="customCheck2"
                                            name="finished" v-model="form.finished">
-                                    <label class="custom-control-label" for="customCheck2">FINISHED</label>
+                                    <label class="custom-control-label cur" for="customCheck2">FINISHED</label>
                                 </div>
                             </div>
             <!-- /.modal-body -->
@@ -464,5 +478,8 @@
 
     .add {
         background-color: #34c67d;
+    }
+    .cur {
+        cursor: pointer;
     }
 </style>

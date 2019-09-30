@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title text-yellow font-weight-bold h3">
-                            <i class="fas fa-user-lock fa-2x text-yellow"></i>
+                            <i class="fas fa-user-lock fa-2x icolor"></i>
                             PERMISSIONS
                         </h3>
                         <div class="card-tools">
@@ -18,13 +18,15 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
-                            <tbody>
+                            <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr v-for="permission in permissions.permissions.data" :key="permission.id">
                                 <td>{{ permission.id }}</td>
                                 <td>{{ permission.name }}</td>

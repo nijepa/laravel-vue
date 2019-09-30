@@ -2,8 +2,8 @@
     <div class="col-lg-6 col-6">
     <div class="card">
         <div class="card-header ui-sortable-handle" >
-            <h3 class="card-title">
-                <i class="cap-icon ci-list-ul"></i>
+            <h3 class="card-title text-blue" style="font-size: 22px; font-weight: 900">
+                <i class="cap-icon ci-list-ul icolor"></i>
                 To Do List
             </h3>
 
@@ -21,7 +21,7 @@
                 <li style="" class="">
                     <div class="custom-control custom-checkbox d-inline">
                         <input type="checkbox" class="custom-control-input mousep" :id="todo.id"
-                               name="completed" v-model="todo.completed" @click="markCompleted(todo.id, todo.completed)">
+                               name="completed" v-model="todo.completed" @click="markCompleted(todo.id, todo)">
                         <label class="custom-control-label mousep" :for="todo.id"></label>
                     </div>
                     <!-- todo text -->
@@ -38,7 +38,7 @@
                         <button type="button" class="btn btn-info btn-sm" @click="editModal(todo)">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button  @click="deleteTodo(todo)" class="btn btn-danger btn-sm"
+                        <button @click="deleteTodo(todo)" class="btn btn-danger btn-sm"
                                  data-toggle="tooltip" data-placement="top" title="Delete User">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -79,6 +79,12 @@
                             <input v-model="form.title" type="text" name="title" id="title" placeholder="Title"
                                    class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                             <has-error :form="form" field="title"></has-error>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea v-model="form.description" type="text" name="description" id="description" placeholder="Description"
+                                      class="form-control" :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
+                            <has-error :form="form" field="description"></has-error>
                         </div>
                         <label >Priority</label>
                         <div class="form-group custom-control custom-radio" v-for="(prio, index) in priorities" :key="index">
@@ -127,6 +133,7 @@
                 form: new Form({
                     id: '',
                     title: '',
+                    description: '',
                     completed: 0,
                     priority: ''
                 }),
@@ -153,7 +160,8 @@
             },
 
             markCompleted(id, todo) {
-                axios.patch('../api/todo/'+id, todo)
+                todo.completed = !todo.completed;
+                axios.put('api/todoMark/'+id, todo)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         toast.fire({

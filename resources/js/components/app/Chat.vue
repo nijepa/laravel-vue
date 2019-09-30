@@ -2,8 +2,8 @@
     <div class="col-lg-6 col-6">
         <div class="card">
             <div class="card-header ui-sortable-handle" >
-                <h3 class="card-title">
-                    <i class="fas fa-comments"></i>
+                <h3 class="card-title text-blue" style="font-size: 22px; font-weight: 900">
+                    <i class="cap-icon ci-comment-dots icolor"></i>
                     Messenger
                 </h3>
             </div>
@@ -97,7 +97,7 @@
         created() {
             Echo.join(`chat`)
                 .here((users) => {
-                    console.log('online', users);
+                    //console.log('online', users);
                     this.onlineContacts = users;
                 })
                 .joining((user) => {

@@ -4,7 +4,7 @@ const getDefaultState = () => {
     return {
         newsDet: []
     }
-}
+};
 
 const state = {
     newsDet: getDefaultState()
@@ -16,10 +16,11 @@ const getters = {
 
 const actions = {
     async fetchNewsDet ({ commit }, newsDet) {
-        const response = await axios.get(`http://localhost/don/donau/public/backend/api/news_det/read.php/?id=${newsDet.id}`,
+        const response = await axios.get(
+            `../api/news_dets/${newsDet}`,
             newsDet
         );
-        commit('setNewsDet', response.data.data);
+        commit('setNewsDet', response.data);
     },
     resetNewsState ({ commit }) {
         commit('resetState')

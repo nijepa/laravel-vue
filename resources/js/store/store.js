@@ -9,6 +9,7 @@ import contacts from './modules/front/contacts';
 import owner from './modules/front/owner';
 import repDet from './modules/front/repDet';
 import news from './modules/front/news';
+import newsDet from './modules/front/newsDet';
 import countries from './modules/countries';
 import cities from './modules/cities';
 import users from './modules/users';
@@ -36,6 +37,7 @@ export default new Vuex.Store({
         owner,
         repDet,
         news,
+        newsDet,
         cities,
         countries,
         users,

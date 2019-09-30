@@ -17,46 +17,54 @@
                     <div class="card-body table-responsive p-0">
                         <!-- table -->
                         <table class="table table-hover">
-                            <tbody>
+                            <thead>
                             <tr>
                                 <th @click="sortBy('id')">ID
                                     <i v-if="sortKey === 'id'" :class="classe"></i>
                                 </th>
                                 <th @click="sortBy('meeting_started')">Started At
-                                    <i v-if="sortKey === 'meeting_started'" :class="classe"></i>
+                                    <i v-if="sortKey === 'meeting_started'" :class="classe" class="ic"></i>
                                 </th>
-                                <th @click="sortBy('city')">City
-                                    <i v-if="sortKey === 'city'" :class="classe"></i>
+                                <th @click="sortBy('city.name')">City
+                                    <i v-if="sortKey === 'city.name'" :class="classe" class="ic"></i>
                                 </th>
-                                <th @click="sortBy('name')">Company
-                                    <i v-if="sortKey === 'name'" :class="classe"></i>
+                                <th @click="sortBy('representation.name')">Company
+                                    <i v-if="sortKey === 'representation.name'" :class="classe" class="ic"></i>
                                 </th>
                                 <th @click="sortBy('title')">Title
-                                    <i v-if="sortKey === 'title'" :class="classe"></i>
+                                    <i v-if="sortKey === 'title'" :class="classe" class="ic"></i>
                                 </th>
                                 <th @click="sortBy('description')">Description
-                                    <i v-if="sortKey === 'description'" :class="classe"></i>
+                                    <i v-if="sortKey === 'description'" :class="classe" class="ic"></i>
                                 </th>
                                 <th>File</th>
                                 <th @click="sortBy('name')">User
-                                    <i v-if="sortKey === 'name'" :class="classe"></i>
+                                    <i v-if="sortKey === 'name'" :class="classe" class="ic"></i>
                                 </th>
                                 <th @click="sortBy('finished')">Finished
-                                    <i v-if="sortKey === 'finished'" :class="classe"></i>
+                                    <i v-if="sortKey === 'finished'" :class="classe" class="ic"></i>
                                 </th>
                                 <th @click="sortBy('created_at')">Created At
-                                    <i v-if="sortKey === 'created_at'" :class="classe"></i>
+                                    <i v-if="sortKey === 'created_at'" :class="classe" class="ic"></i>
                                 </th>
                                 <th>Modify</th>
                             </tr>
+                            </thead>
                             <!-- /.table-header -->
+                            <tbody>
                             <tr v-for="meeting in repsSorted" :key="meeting.id">
                                 <td>
                                     <router-link
                                             :to="{name:'meet', params: {id: meeting.id, selMeeting: meeting}}"
+                                            activeClass="active" tag="a" class="btn btn-secondary btn-sm"
+                                            data-toggle="tooltip" data-placement="top" title="View Details">
+                                        <i class="far fa-handshake">  {{ meeting.id }}</i>
+                                    </router-link>
+                                  <!--  <router-link
+                                            :to="{name:'meet', params: {id: meeting.id, selMeeting: meeting}}"
                                             activeClass="active" tag="a" class="nav-item nav-link">
                                         {{ meeting.id }}
-                                    </router-link>
+                                    </router-link>-->
                                 </td>
                                 <td>{{ meeting.meeting_started | tableDate }}</td>
 <!--                                <td><datepicker :input-class="`qqq`" :disabled="true" :bootstrap-styling="true" v-model="meeting.meeting_started"></datepicker></td>-->
@@ -165,9 +173,9 @@
                                     <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2"
+                                    <input type="checkbox" class="custom-control-input cur" id="customCheck2"
                                            name="finished" v-model="form.finished">
-                                    <label class="custom-control-label" for="customCheck2">FINISHED</label>
+                                    <label class="custom-control-label cur" for="customCheck2">FINISHED</label>
                                 </div>
                             </div>
                             <appModalActions
@@ -390,10 +398,19 @@
     }
 </script>
 
-<style module>
+<style scoped>
     .qqq {
         width: 110px !important;
         background-color: white !important;
         border-color: white !important;
+    }
+    .cur {
+        cursor: pointer;
+    }
+    th {
+        cursor:pointer;
+    }
+    .ic {
+        color: #4cb2e9;
     }
 </style>

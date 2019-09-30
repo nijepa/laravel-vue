@@ -96,7 +96,7 @@ class MeetingsController extends Controller
      */
     public function show($id)
     {
-        $meeting = Meeting::findOrFail($id);
+        $meeting = Meeting::with('Representation')->findOrFail($id);
 
         return response()->json($meeting);
     }

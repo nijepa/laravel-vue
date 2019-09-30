@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title text-yellow font-weight-bold h3">
-                            <i class="fas fa-user-tag fa-2x text-yellow"></i>
+                            <i class="fas fa-user-tag fa-2x icolor"> </i>
                             ROLES
                         </h3>
                         <div class="card-tools">
@@ -18,7 +18,7 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
-                            <tbody>
+                            <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
@@ -26,6 +26,8 @@
                                 <th>Created At</th>
                                 <th>Modify</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr v-for="role in roles.roles.data" :key="role.id">
                                 <td>{{ role.id }}</td>
                                 <td>{{ role.name }}</td>

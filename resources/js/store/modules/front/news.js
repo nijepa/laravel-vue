@@ -18,12 +18,12 @@ const getters = {
 
 const actions = {
     async fetchNews ({ commit }) {
-        const response = await axios.get('api/news');
+        const response = await axios.get('../api/news');
         commit('setNews', response.data)
     },
     async fetchNewsD ({ commit }, newsD) {
         const response = await axios.get(
-            `api/news/${newsD.id}`,
+            `../api/news/${newsD}`,
             newsD
         );
         commit('setNewsD', response.data);

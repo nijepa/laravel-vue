@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Notifications\ProjectCreated;
 use App\Project;
+use App\Representation;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -34,7 +36,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('title')->with('Representation')->with('User')->get();//To get the output in array
+        $projects = Project::orderBy('project_started', 'desc')->with('Representation')->with('User')->get();//To get the output in array
 
         return response()->json($projects);
     }
@@ -47,7 +49,7 @@ class ProjectsController extends Controller
     public function projectsPerMonth()
     {
         $projects=DB::table('projects')
-            ->select(DB::raw('count(id) as total'),DB::raw('month(created_at) as dates'))
+            ->select(DB::raw('count(id) as total'), DB::raw('month(created_at) as dates'))
             ->groupBy('dates')
             ->orderBy('dates','desc')
             ->get();
@@ -111,7 +113,7 @@ class ProjectsController extends Controller
      */
     public function show($id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::with('Representation')->findOrFail($id);
 
         return response()->json($project);
     }

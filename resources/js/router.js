@@ -44,6 +44,7 @@ export default new Router({
 
         // News routes
         {path: '/newsb', component: () => import('./components/back/News.vue')},
+        {name: 'newsd', path: '/newsDets/:id', component: () => import('./components/back/NewsDets.vue'), props: true},
 
         // Representations routes
         {path: '/reps', component: () => import('./components/back/Reps.vue')},

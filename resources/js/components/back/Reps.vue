@@ -12,7 +12,7 @@
                             @searchChanged="onSearchChanged"
                     ></appTableOptions>
                     <!-- /.card-header -->
-                    <hr>
+<!--                    <hr>-->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
                             <thead>
@@ -50,11 +50,17 @@
 <!--                                    :to="{ name: 'repd', params: { repID: rep }}"-->
                                     <td>
                                         <keep-alive>
-                                        <router-link
+                                            <router-link
+                                                    :to="{name:'repd', params: {id: rep.id, selRep: rep}}"
+                                                    activeClass="active" tag="a" class="btn btn-secondary btn-sm"
+                                                    data-toggle="tooltip" data-placement="top" title="View Details">
+                                                <i class="far fa-file-alt">  {{ rep.id }}</i>
+                                            </router-link>
+                                        <!--<router-link
                                             :to="{name:'repd', params: {id: rep.id, selRep: rep}}"
                                             activeClass="active" tag="a" class="nav-item nav-link">
                                             {{ rep.id }}
-                                        </router-link>
+                                        </router-link>-->
                                         </keep-alive>
                                     </td>
                                     <td>

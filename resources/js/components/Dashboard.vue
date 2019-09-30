@@ -3,40 +3,45 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-3 col-6" data-aos="flip-up">
                     <!-- small box -->
                     <div class="small-box bg-blue">
                         <div class="inner">
                             <h3>{{ projects.projects.length }}</h3>
                             <p>Total Projects</p>
-                            <h3>{{ filteredProjects.length }} - {{ parseInt(filteredProjects.length/projects.projects.length*100) }}<sup style="font-size: 20px">%</sup></h3>
+                            <h3>{{ this.activeProjects.length }} - {{ parseInt(this.activeProjects.length/projects.projects.length*100) }}<sup style="font-size: 20px">%</sup></h3>
                             <h5>Active projects</h5>
-
                         </div>
                         <div class="icon">
                             <i class="fas fa-project-diagram"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <router-link to="/projects" class="small-box-footer" tag="a">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </router-link>
+<!--                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
                 <!-- ./col -->
-                <div class="col-lg-3 col-6">
+                <div class="col-lg-3 col-6" data-aos="flip-down">
                     <!-- small box -->
                     <div class="small-box bg-cyan">
                         <div class="inner">
                             <h3>{{ meetings.meetings.length }}</h3>
                             <p>Total meetings</p>
-                            <h3>{{ filteredMeetings.length }} - {{ parseInt(filteredMeetings.length/meetings.meetings.length*100) }}<sup style="font-size: 20px">%</sup></h3>
+                            <h3>{{ this.activeMeetings.length }} - {{ parseInt(this.activeMeetings.length/meetings.meetings.length*100) }}<sup style="font-size: 20px">%</sup></h3>
                             <h5>Active meetings</h5>
                         </div>
                         <div class="icon">
                             <i class="fa fa-handshake"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <router-link to="/meetings" class="small-box-footer" tag="a">
+                            More info <i class="fas fa-arrow-circle-right"></i>
+                        </router-link>
+<!--                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
                     </div>
                 </div>
                 <div class="col-lg-6 col-6">
-                    <Chart  style="height: 240px;"></Chart>
+                    <Chart style="height: 240px;" data-aos="flip-up"></Chart>
                 </div>
                 <!-- ./col -->
                 <!--<div class="col-lg-3 col-6">
@@ -72,8 +77,8 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <Todo></Todo>
-                <Chat :user="user"></Chat>
+                <Todo ></Todo>
+                <Chat :user="user" data-aos="zoom-in-left"></Chat>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -96,27 +101,25 @@
             return {
                 projects: [],
                 meetings: [],
-                users: [],
-                user: [],
-                chartdata: {},
-                totals: [],
-                months: [],
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                },
-
+                //users: [],
+                user: {},
+                activeProjects: [],
+                activeMeetings: [],
             }
         },
 
         mounted() {
             this.user = window.user.user;
-            axios.get('../api/indexGrouped')
+     /*       axios.get('../api/indexGrouped')
                 .then((response) => {
                     this.chartdata = response.data;
                     this.totals = response.data.map(d => d.total);
                     this.months = response.data.map(d => d.dates);
-                });
+                });*/
+
+        },
+
+        beforeMount() {
 
         },
 
@@ -126,15 +129,15 @@
             filteredProjects() {
                 let result = this.projects.projects;
 
-                return result.filter(item => {
+                this.activeProjects = result.filter(item => {
                     return item.finished === 0
                 });
             },
 
             filteredMeetings() {
-                let result = this.meetings.meetings;
+                let res = this.meetings.meetings;
 
-                return result.filter(item => {
+                this.activeMeetings = res.filter(item => {
                     return item.finished === 0
                 });
             },
@@ -145,7 +148,7 @@
             ...mapActions([
                 'fetchProjects',
                 'fetchMeetings',
-                'fetchUsers'
+               // 'fetchUsers'
             ]),
 
             loadData() {
@@ -154,14 +157,14 @@
                     this.projects = this.$store.state.projects;
                     this.fetchMeetings();
                     this.meetings = this.$store.state.meetings;
-                    this.fetchUsers();
-                    this.users = this.$store.state.users;
+                 /*   this.fetchUsers();
+                    this.users = this.$store.state.users;*/
                 }
             },
         },
 
-        created() {
-            this.loadData();
+        async created() {
+            await this.loadData();
         }
     }
 </script>

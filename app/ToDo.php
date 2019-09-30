@@ -12,7 +12,7 @@ class ToDo extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'priority', 'completed', 'user_id'
+        'title', 'priority', 'description', 'completed', 'user_id'
     ];
 
     /**
