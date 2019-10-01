@@ -227,8 +227,6 @@
 
                 result =  _.orderBy(result, this.sortKey, this.sortOrder);
 
-                console.log(result);
-
                 return result.filter((row, index) => {
                     this.totalPages = Math.ceil(result.length / this.pageSize);
                     let start = (this.currentPage - 1) * this.pageSize;

@@ -37,17 +37,32 @@ class NewsDetController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @throws
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $this->validate($request, [
+            'description' => 'required|string|max:191'
+        ]);
+
+        if ($request->photo_id !== null) {
+            $this->savePhoto($request, 'news', 'photo_id');
+        }
+
+        return News_det::create([
+            'description' => $request['description'],
+            'news_id' => $request['news_id'],
+            'photo_id' => $request['photo_id'],
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function show($id)
     {
@@ -61,21 +76,43 @@ class NewsDetController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $newsdet = News_det::findOrFail($id);
+
+        $this->validate($request, [
+            'description' => 'required|string|max:191'
+        ]);
+
+        if ($request->photo_id !== null) {
+            $this->savePhoto($request, 'news', 'photo_id');
+        }
+
+        $newsdet->update($request->all());
+
+        return ['newsdet' => $newsdet];
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return array
+     * @throws
      */
     public function destroy($id)
     {
-        //
+        $this->authorize('isAdmin');
+
+        $newsdet = News_det::findOrFail($id);
+
+        $newsdet->delete();
+
+        return ['message' => 'News detail deleted'];
     }
 }

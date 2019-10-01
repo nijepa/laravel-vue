@@ -130,16 +130,19 @@
                             <div class="modal-body">
                                 <input v-model="form.news_id" type="hidden" name="news_id" id="news_id">
                                 <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input v-model="form.title" id="title" type="text" name="title" placeholder="Title"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
+                                    <label for="description">Description</label>
+                                    <input v-model="form.description" id="description" type="text" name="description" placeholder="Description"
+                                           class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
                                     <has-error :form="form" field="title"></has-error>
                                 </div>
-                                <div class="form-group">
-                                    <label for="doc_id" >Document</label>
-                                    <input type="text" class="form-control" v-model="form.doc_id" name="doc_id" id="doc_id" disabled>
-                                    <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
-                                </div>
+                                <appUploadFiles
+                                        :title="'Photo'"
+                                        :fieldname="'photo_id'"
+                                        :imgsrc="image"
+                                        :imgplace="'image'"
+                                        @onimageselect="OnImageSelect"
+                                        @onimageload="OnImageLoad">
+                                </appUploadFiles>
                             </div>
             <!-- /.modal-body -->
                             <div class="modal-footer">
@@ -197,12 +200,14 @@
 
                 form: new Form({
                     id: '',
-                    title: '',
                     description: '',
                     news_id: '',
                     photo_id: '',
                     doc: null
                 }),
+
+                photo_id: '',
+                image: '',
             }
         },
         /**
@@ -248,52 +253,6 @@
                 }
             },
 
-            onFileChange(e){
-                let file = e.target.files[0];
-                let limit = 1024 * 1024 * 2;
-                let type = [
-                    'application/pdf',
-                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
-
-                if(file['size'] > limit){
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You are uploading a large file',
-                    });
-                    return false;
-                }
-
-                if(!type.includes(file['type'])) {
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You need to upload document file',
-                    });
-                    return false;
-                }
-
-                this.form.doc = e.target.files[0];
-                this.form.doc_id = this.form.doc.name;
-            },
-
-  /*          onPageChange(page) {
-                console.log(page);
-                this.currentPage = page;
-            },
-
-            onPageSizeChanged(ps) {
-                this.onPageChange(1);
-                this.pageSize = ps;
-            },
-
-            onSearchChanged(s) {
-                this.onPageChange(1);
-                this.search = s;
-            },*/
-
             imagesPlaces() {
                 this.logo = 'img/news/'+this.form.logo_id;
             },
@@ -303,7 +262,7 @@
                 this.form.news_id = this.oneNews.id;
                 let formData = this.newsData();
 
-                axios.post('../api/news_det', formData)
+                axios.post('../api/news_dets', formData)
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -320,7 +279,7 @@
                 this.$Progress.start();
                 let formData = this.newsData(1);
 
-                axios.post('../api/news_det/'+this.form.id, formData)
+                axios.post('../api/news_dets/'+this.form.id, formData)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -337,10 +296,10 @@
 
             newsData(action = '') {
                 let data = new FormData();
-                data.append('title', this.form.title);
+                data.append('description', this.form.description);
                 data.append('news_id', this.form.news_id);
-                data.append('doc_id', this.form.doc_id);
-                data.append('doc', this.form.doc);
+                data.append('photo_id', this.form.photo_id);
+                //data.append('doc', this.form.doc);
                 if (action) data.append('_method', 'put');
                 return data;
             },
