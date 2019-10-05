@@ -17,8 +17,8 @@
                     </div>
                     <div class="mx-3">
 <!--                        <form action="" class="mt-3">-->
-                            <fieldset :disabled="dis">
-                                <div class="form-group">
+                            <fieldset >
+                                <div class="form-group" :disabled="dis">
                                     <label for="title">Title</label>
                                     <input class="form-control" type="text" v-model="about.about.title" id="title">
                                 </div>

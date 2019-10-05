@@ -277,6 +277,18 @@
                                         <p>News</p>
                                     </router-link>
                                 </li>
+                                <li class="nav-item">
+                                    <router-link to="/export" class="nav-link">
+                                        <i class="fas fa-sync-alt nav-icon text-purp"></i>
+                                        <p>Export</p>
+                                    </router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link to="/production" class="nav-link">
+                                        <i class="fas fa-tools nav-icon text-purp"></i>
+                                        <p>Production</p>
+                                    </router-link>
+                                </li>
 <!--                            @endcan-->
                         </ul>
                     </li>
