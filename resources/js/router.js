@@ -32,6 +32,7 @@ export default new Router({
         {path: '/profile', component: () => import('./components/back/Profile.vue')},
         {path: '/abouts', component: () => import('./components/back/Abouts.vue')},
         {path: '/export', component: () => import('./components/back/Export.vue')},
+        {path: '/productions', component: () => import('./components/back/Production.vue')},
         {path: '*', component: () => import('./components/NotFound.vue')},
 
         // Lists routes

@@ -41,6 +41,7 @@ Route::apiResources(['newsb' => 'API\NewsController']);
 Route::apiResources(['contact' => 'API\ContactsController']);
 Route::apiResources(['about' => 'API\AboutsController']);
 Route::apiResources(['export' => 'API\ExportController']);
+Route::apiResources(['productions' => 'API\ProductionController']);
 Route::apiResources(['reps' => 'API\RepresentationsController']);
 
 Route::get('profile', 'API\UserController@profile');
