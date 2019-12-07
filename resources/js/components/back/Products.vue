@@ -103,10 +103,14 @@
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label for="desc">Name</label>
+                                    <label for="desc">Description</label>
                                     <input v-model="form.description" type="text" name="description" placeholder="Description" id="desc"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('description') }">
                                     <has-error :form="form" field="description"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <label for="body">Body</label>
+                                    <VueEditor v-model="form.body" id="body" />
                                 </div>
                             </div>
                             <appModalActions
@@ -137,6 +141,7 @@
     import tableActions from '../../mixins/tableActions';
     import paginationActions from '../../mixins/paginationActions';
     import modalForm from '../../mixins/modalForm';
+    import { VueEditor } from "vue2-editor";
 
     export default {
         name: "Products",
@@ -147,7 +152,8 @@
             appTableActions: TableActions,
             appModalActions: ModalActions,
             appModalHeader: ModalHeader,
-            appUploadFiles: UploadFiles
+            appUploadFiles: UploadFiles,
+            VueEditor
         },
 
         mixins: [tableActions, modalForm, paginationActions],
@@ -160,7 +166,8 @@
                     id: '',
                     photo_id: '',
                     name: '',
-                    description: ''
+                    description: '',
+                    body: ''
                 }),
 
                 image: ''

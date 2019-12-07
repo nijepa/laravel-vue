@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title text-blue font-weight-bold h3">
-                            <i class="fas fa-sync-alt fa-2x icolor"></i>
+                            <i class="fas fa-tools fa-2x icolor"></i>
                             PRODUCTION
                         </h3>
                     </div>
@@ -16,11 +16,12 @@
                         </button>
                     </div>
                     <div class="mx-3" >
-                        <fieldset >
-                            <div class="form-group" v-for="prod in productions" :key="exp.id" >
+                        <fieldset :disabled="dis" >
+                            <div class="form-group" v-for="prod in productions" :key="prod.id" >
                                 <label for="body">Description</label>
-                                <ckeditor :editor="editor" v-model="prod.body" id="body" name="body" :disabled="dis">
-                                </ckeditor>
+                                <VueEditor v-model="prod.body" id="body" name="body" :disabled="dis" />
+                                <!--<ckeditor :editor="editor" v-model="prod.body" id="body" name="body" :disabled="dis">
+                                </ckeditor>-->
                             </div>
                         </fieldset>
                         <div class="d-flex justify-content-center mb-3">
@@ -41,10 +42,15 @@
 
 <script>
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import { VueEditor } from "vue2-editor";
 
     export default {
 
-        name: "Export",
+        name: "Productions",
+
+        components: {
+            VueEditor
+        },
 
         data() {
             return {

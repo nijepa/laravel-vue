@@ -10,6 +10,8 @@ import owner from './modules/front/owner';
 import repDet from './modules/front/repDet';
 import news from './modules/front/news';
 import newsDet from './modules/front/newsDet';
+import production from './modules/front/production';
+import exports from './modules/front/export';
 import countries from './modules/countries';
 import cities from './modules/cities';
 import users from './modules/users';
@@ -38,6 +40,8 @@ export default new Vuex.Store({
         repDet,
         news,
         newsDet,
+        production,
+        exports,
         cities,
         countries,
         users,

@@ -1,6 +1,6 @@
 <template>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close
+        <button @click="clearErrors()" type="button" class="btn btn-danger" data-dismiss="modal">Close
             <span><i class="cap-icon ci-times"></i></span>
         </button>
         <button type="submit" v-show="!mode" class="btn btn-success">Create
@@ -21,6 +21,11 @@
                 type: Boolean,
                 required: true
             },
+
+            clearErrors: {
+                type: Function,
+                required: false
+            }
         }
     }
 </script>

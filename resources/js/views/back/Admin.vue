@@ -284,7 +284,7 @@
                                     </router-link>
                                 </li>
                                 <li class="nav-item">
-                                    <router-link to="/production" class="nav-link">
+                                    <router-link to="/productions" class="nav-link">
                                         <i class="fas fa-tools nav-icon text-purp"></i>
                                         <p>Production</p>
                                     </router-link>

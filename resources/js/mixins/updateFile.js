@@ -32,7 +32,7 @@ export default
             }
 
             this.form.doc = e.target.files[0];
-            console.log(this.form.doc);
+            //console.log(this.form.doc);
             this.form.doc_id = this.form.doc.name;
         }
     }

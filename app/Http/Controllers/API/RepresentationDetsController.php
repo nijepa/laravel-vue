@@ -21,6 +21,7 @@ class RepresentationDetsController extends Controller
     {
         $this->middleware('auth:api')->only('store', 'update', 'destroy');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +32,20 @@ class RepresentationDetsController extends Controller
         $repdets = RepDet::orderBy('title')->get();
 
         return response()->json($repdets);
+    }
+
+    /**
+     * Display a listing of the resource with download type.
+     *
+     * @return json Response
+     */
+    public function infoType($id, $type)
+    {
+        $infos = RepDet::orderBy('title')->where('info_type', '=', $type)->where('rep_id', '=', $id)->get();
+/*        $infos += RepDet::orderBy('title')->where('info_type', '===', 'About')->get();
+        $infos += RepDet::orderBy('title')->where('info_type', '===', 'Product')->get();*/
+
+        return response()->json($infos);
     }
 
     /**

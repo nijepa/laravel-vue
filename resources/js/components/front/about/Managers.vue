@@ -9,7 +9,7 @@
                                 Naši tuljani
                             </h1>
                             <p class="lead">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias laborum numquam aperiam dolores a porro!
+                                Rade ka pčelice, ne staju.
                             </p>
                         </div>
                     </div>

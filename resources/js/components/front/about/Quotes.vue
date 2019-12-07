@@ -31,13 +31,10 @@
                 switch(id) {
                     case 1:
                         return 'ci-load';
-                        break;
                     case 2:
                         return 'ci-box-opened';
-                        break;
                     case 3:
                         return 'ci-compass';
-                        break;
                 }
             }
         },

@@ -11,7 +11,7 @@
                                 Zašto DONAU?
                             </h1>
                             <p class="lead pb-3">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus obcaecati alias rerum dolore fugiat debitis?
+                                Najbolji smo, rasturamo, razbijamo, odvaljujemo.
                             </p>
                         </div>
 
@@ -21,15 +21,13 @@
                                 <div class="card-header">
                                     <h5 class="mb-0">
                                         <div :href="'#collapse' + about.id" data-toggle="collapse" data-parent="#accordion" class="accor"  @click="onAccor(about.id)">
-                                            <i :class="{'cap-icon ci-arrow-down': clicked2 == false, 'cap-icon ci-arrow-up': clicked2 == true}"></i>  {{about.caption}}
+                                            <i class="cap-icon ci-arrow-down" :class="{'cap-icon ci-arrow-down': clicked1 === !about.id, 'cap-icon ci-arrow-up': clicked1 === about.id}"></i>  {{about.caption}}
                                         </div>
                                     </h5>
                                 </div>
 
                                 <div :id="'collapse' + about.id" class="collapse">
-                                    <div class="card-body">
-                                        {{ about.description }}
-                                    </div>
+                                    <div class="card-body" v-html="about.description"></div>
                                 </div>
                             </div>
                         </div>
@@ -56,10 +54,7 @@
 
         data() {
             return {
-                show1: '',
-                show2: '',
-                show2: '',
-                clicked1: true,
+                clicked1: 0,
                 clicked2: false,
                 clicked3: false,
             }
@@ -71,13 +66,16 @@
             ...mapActions(['fetchAboutF']),
 
             onAccor(id) {
-                if (id === 1) {
+                const upI = 'cap-icon ci-arrow-up';
+                const downI = 'cap-icon ci-arrow-down';
+                this.clicked1 = id;
+          /*      if (id === 1) {
                     this.clicked1 = !this.clicked1
                 } else if (id === 2) {
                     this.clicked2 = !this.clicked2
                 } else {
                     this.clicked3 = !this.clicked3
-                }
+                }*/
             }
         },
 

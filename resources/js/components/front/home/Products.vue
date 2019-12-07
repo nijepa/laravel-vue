@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="row">
-                        <div :key="product.id" class="col-lg-3 col-md-6" v-for="product in allProducts">
+                        <div :key="product.id" class="col-lg-4 col-md-6" v-for="product in allProducts">
                             <div class="card">
                                 <div @click="getProduct(product.id)" class="card-body">
                                     <img :src="'../img/products/' + product.photo_id" alt="" class="img-fluid rounded-circle w-80 mb-3">

@@ -141,6 +141,10 @@
                                     <has-error :form="form" field="title"></has-error>
                                 </div>
                                 <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <VueEditor v-model="form.description" id="description" />
+                                </div>
+                                <div class="form-group">
                                     <label for="doc_id" >Document</label>
                                     <input type="text" class="form-control" v-model="form.doc_id" name="doc_id" id="doc_id" disabled>
                                     <input type="file" @change="onFileChange" name="doc" class="form-input" id="doc">
@@ -180,6 +184,7 @@
     import modalForm from '../../mixins/modalForm';
     import paginationActions from '../../mixins/paginationActions';
     import UploadFiles from '../shared/UploadFiles';
+    import { VueEditor } from "vue2-editor";
 
     export default {
 
@@ -188,7 +193,8 @@
         components: {
             appPagination: Paginations,
             appTableOptions: TableOptions,
-            appUploadFiles: UploadFiles
+            appUploadFiles: UploadFiles,
+            VueEditor
         },
 
         mixins: [tableActions, modalForm, paginationActions],
@@ -208,6 +214,9 @@
                     photo_id: '',
                     doc: null
                 }),
+
+                photo_id: '',
+                image: '',
             }
         },
         /**
@@ -306,9 +315,10 @@
             createProduct() {
                 this.$Progress.start();
                 this.form.product_id = this.oneProduct.id;
+                console.log(this.oneProduct.id);
                 let formData = this.productData();
 
-                axios.post('../api/products_det', formData)
+                axios.post('../api/product_dets', formData)
                     .then(({ data }) => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -325,7 +335,7 @@
                 this.$Progress.start();
                 let formData = this.productData(1);
 
-                axios.post('../api/products_det/'+this.form.id, formData)
+                axios.post('../api/product_dets/'+this.form.id, formData)
                     .then(() => {
                         Fire.$emit('AfterCreate');
                         $('#addNew').modal('hide');
@@ -344,6 +354,7 @@
                 let data = new FormData();
                 data.append('title', this.form.title);
                 data.append('product_id', this.form.product_id);
+                data.append('description', this.form.description);
                 data.append('doc_id', this.form.doc_id);
                 data.append('doc', this.form.doc);
                 if (action) data.append('_method', 'put');
@@ -361,7 +372,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        this.form.delete('../api/products_det/'+product.id).then(()=>{
+                        this.form.delete('../api/product_dets/'+product.id).then(()=>{
                             swal.fire(
                                 'Deleted!',
                                 'Document has been deleted.',

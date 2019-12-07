@@ -44,7 +44,7 @@
                                         <i class="cap-icon ci-file-edit"></i>
                                     </button>
                                     /
-                                    <button  @click="deleteCity(city)" class="btn btn-danger btn-sm"
+                                    <button  @click="deleteItem(city)" class="btn btn-danger btn-sm"
                                              data-toggle="tooltip" data-placement="top" title="Delete User">
                                         <i class="cap-icon ci-trash"></i>
                                     </button>
@@ -68,27 +68,19 @@
             <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" v-show="!editMode" id="addNewLabel">
-                                <i class="cap-icon ci-plus icolor"></i>
-                                Add New City
-                            </h5>
-                            <h5 class="modal-title" v-show="editMode" id="addNewLabel">
-                                <i class="cap-icon ci-file-edit icolor"></i>
-                                Update City
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                        <appModalHeader
+                            :title="'City'"
+                            :mode="editMode"
+                        ></appModalHeader>
                         <!-- /.modal-header -->
-                        <form @submit.prevent="editMode ? updateCity() : createCity()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? updateItem() : createItem()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="form.name" type="text" name="name" placeholder="Name"
+                                    <label for="name">Name</label>
+                                    <input v-model="form.name" type="text" name="name" id="name" placeholder="Name"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                                    <has-error :form="form" field="name"></has-error>
+                                    <has-error  :form="form" field="name"></has-error>
+                                    <p class="errorText" v-if="errors.name">{{errors.name[0]}}</p>
                                 </div>
                                 <div class="form-group">
                                     <label>Country</label>
@@ -105,17 +97,10 @@
                                     <has-error :form="form" field="type"></has-error>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close
-                                    <span><i class="cap-icon ci-times"></i></span>
-                                </button>
-                                <button type="submit" v-show="!editMode" class="btn btn-success">Create
-                                    <span><i class="cap-icon ci-check"></i></span>
-                                </button>
-                                <button type="submit" v-show="editMode" class="btn btn-success">Update
-                                    <span><i class="cap-icon ci-save"></i></span>
-                                </button>
-                            </div>
+                            <appModalActions
+                                :mode="editMode"
+                                :clear-errors="clearErrors"
+                            ></appModalActions>
                             <!-- /.modal-body -->
                         </form>
                         <!-- /.form -->
@@ -132,10 +117,21 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import ModalHeader from '../shared/ModalHeader';
+    import ModalActions from '../shared/ModalActions';
+    import modalForm from '../../mixins/modalForm';
+    import dataModifiers from '../../mixins/dataModifiers';
 
     export default {
 
         name: "Cities",
+
+        components: {
+            appModalActions: ModalActions,
+            appModalHeader: ModalHeader
+        },
+
+        mixins: [modalForm, dataModifiers],
 
         data() {
             return {
@@ -146,7 +142,12 @@
                     name: '',
                     country_id: ''
                 }),
-                editMode: true
+
+                editMode: true,
+                errors: {},
+
+                apiPath: '../api/city',
+                infoMessage: 'City'
             }
         },
 
@@ -173,7 +174,25 @@
                 this.cities = this.$store.state.cities;
             },
 
-            newModal() {
+            prepareData(action = '') {
+                let data = new FormData();
+                data.append('name', this.form.name);
+                data.append('country_id', this.form.country_id);
+                if (action) {
+                    data.append('_method', 'put');
+                }
+                return data;
+            },
+
+            imagesPlaces() {
+                this.image = 'img/cities/'+this.form.photo_id;
+            },
+
+            clearErrors() {
+                this.errors = {}
+            },
+
+ /*           newModal() {
                 this.editMode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
@@ -183,9 +202,9 @@
                 this.editMode = true;
                 $('#addNew').modal('show');
                 this.form.fill(city);
-            },
+            },*/
 
-            createCity() {
+       /*     createCity() {
                 this.$Progress.start();
                 //this.addCity(this.form);
                  this.form.post('api/city')
@@ -218,9 +237,9 @@
                     .catch(() => {
                         this.$Progress.fail();
                     })
-            },
+            },*/
 
-            deleteCity(city){
+     /*       deleteCity(city){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -248,7 +267,7 @@
                         console.log('qqqqqqqqqqqq');
                     }
                 })
-            }
+            }*/
         },
 
         created() {
@@ -268,5 +287,7 @@
 </script>
 
 <style scoped>
-
+    .errorText {
+        color: #bd2130;
+    }
 </style>

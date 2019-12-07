@@ -6,7 +6,8 @@
                 <div class="col-4 my-5">
                     <nav @click="getProduct(product, product.id)" :key="product.id"
                           class="nav flex-column list-group" v-for="product in allProducts">
-                        <a style="height:150px;" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{product.name}}
+                        <a @click="moveTo" :class="{ active : active_el === product.id }" style="height:150px;"
+                           class="nav-link list-group-item list-group-item-action list-group-item-primary list-font">{{product.name}}
                             <img :src="'../img/products/' + product.photo_id" class="img-fluid mx-auto d-block h-75">
                         </a>
                     </nav>
@@ -20,13 +21,16 @@
                                 <img :src="'../img/products/' + oneProduct.photo_id" alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
                                 <h3>{{ oneProduct.name }}</h3>
 <!--                                <h5 class="text-muted">{{oneRep.short_desc}}</h5>-->
-                                <p class="my-3" v-html="oneProduct.description"></p>
+                                <h4 class="my-3" v-html="oneProduct.description"></h4>
+                                <hr>
+                                <p v-html="oneProduct.body"></p>
 
                                 <div v-if="allProductDet.length">
-                                    <img :src="'../img/companies/docs/pdfdown.png'" alt="" class="img-fluid my-3">
-                                    <div :key="productDet.id" v-for="productDet in allProductDet">
+                                    <h1 class="h-color my-3 font-weight-bold">DETALJI</h1>
+                                    <div :key="productDet.id" v-for="productDet in allProductDet" class="my-3">
 <!--                                        <a :href="'../img/companies/docs/' + repDet.doc_id" target="_blank" class="my-3"><i class="cap-icon ci-download m-1"></i> {{repDet.title}}</a>-->
-                                        <p>{{ productDet.title }}</p>
+                                        <h3 class="font-italic">{{ productDet.title }}</h3>
+                                        <p v-html="productDet.description"></p>
                                     </div>
                                 </div>
                             </div>
@@ -54,6 +58,14 @@
 
         name: "Products",
 
+        data() {
+            return {
+                classe: '',
+                active_el: 0,
+                isActive: false,
+            }
+        },
+
         computed:
             mapGetters([
                 'allProducts',
@@ -69,11 +81,25 @@
                 'fetchProductDet'
             ]),
 
+            moveTo () {
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            },
+
             getProduct(product, id) {
                 const selProduct = product;
                 const selProductID = id;
                 this.fetchProduct(selProductID);
                 this.fetchProductDet(selProductID);
+                this.classe = 'active';
+                this.activate(selProductID);
+            },
+
+            activate:function(el){
+                this.active_el = el;
             }
         },
 
@@ -88,7 +114,50 @@
 </script>
 
 <style scoped>
+    .h-color {
+        color: #1f6fb2;
+    }
+
     .nav-link {
         background-color: white;
+    }
+
+    a {
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .list-font {
+        font-size: 20px;
+    }
+
+    @media (max-width: 858px) {
+        .list-font {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 780px) {
+        .list-font {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 702px) {
+        .list-font {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 724px) {
+        .list-font {
+            font-size: 11px;
+        }
+    }
+
+    @media (max-width: 623px) {
+        .list-font {
+            font-size: 10px;
+        }
     }
 </style>

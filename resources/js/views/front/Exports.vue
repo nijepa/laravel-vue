@@ -4,7 +4,7 @@
             <appHeader></appHeader>
         </transition>
         <transition appear name="slid" mode="out-in">
-            <appIntro title="Uvoz / Izvoz" desc="stranih kompanija"></appIntro>
+            <appIntro title="Uvoz / Izvoz" desc="širom Evrope"></appIntro>
         </transition>
         <transition appear name="slid" mode="out-in">
             <appExports></appExports>

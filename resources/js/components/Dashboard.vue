@@ -3,77 +3,11 @@
         <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-                <div class="col-lg-3 col-6" data-aos="flip-up">
-                    <!-- small box -->
-                    <div class="small-box bg-blue">
-                        <div class="inner">
-                            <h3>{{ projects.projects.length }}</h3>
-                            <p>Total Projects</p>
-                            <h3>{{ this.activeProjects.length }} - {{ parseInt(this.activeProjects.length/projects.projects.length*100) }}<sup style="font-size: 20px">%</sup></h3>
-                            <h5>Active projects</h5>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-project-diagram"></i>
-                        </div>
-                        <router-link to="/projects" class="small-box-footer" tag="a">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </router-link>
-<!--                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6" data-aos="flip-down">
-                    <!-- small box -->
-                    <div class="small-box bg-cyan">
-                        <div class="inner">
-                            <h3>{{ meetings.meetings.length }}</h3>
-                            <p>Total meetings</p>
-                            <h3>{{ this.activeMeetings.length }} - {{ parseInt(this.activeMeetings.length/meetings.meetings.length*100) }}<sup style="font-size: 20px">%</sup></h3>
-                            <h5>Active meetings</h5>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-handshake"></i>
-                        </div>
-                        <router-link to="/meetings" class="small-box-footer" tag="a">
-                            More info <i class="fas fa-arrow-circle-right"></i>
-                        </router-link>
-<!--                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
-                    </div>
-                </div>
+                <Stats />
+                <StatsMeetings />
                 <div class="col-lg-6 col-6">
                     <Chart style="height: 240px;" data-aos="flip-up"></Chart>
                 </div>
-                <!-- ./col -->
-                <!--<div class="col-lg-3 col-6">
-                    &lt;!&ndash; small box &ndash;&gt;
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>{{ meetings.meetings.length }}</h3>
-
-                            <p>TO DO</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                &lt;!&ndash; ./col &ndash;&gt;
-                <div class="col-lg-3 col-6">
-                    &lt;!&ndash; small box &ndash;&gt;
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>E-mails</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>-->
-                <!-- ./col -->
             </div>
             <!-- /.row -->
             <div class="row">
@@ -89,42 +23,39 @@
     import Todo from './app/Todo';
     import Chat from './app/Chat';
     import Chart from './app/Chart';
+    import Stats from './app/Stats';
+    import StatsMeetings from './app/StatsMeetings';
+    import { CircleLoader } from '@saeris/vue-spinners';
 
     export default {
         name: "Dashboard",
 
         components: {
-            Todo, Chat, Chart
+            Todo, Chat, Chart, Stats, StatsMeetings, CircleLoader
         },
 
         data() {
             return {
-                projects: [],
-                meetings: [],
-                //users: [],
-                user: {},
-                activeProjects: [],
-                activeMeetings: [],
+                user: {}
             }
         },
 
         mounted() {
             this.user = window.user.user;
-     /*       axios.get('../api/indexGrouped')
-                .then((response) => {
-                    this.chartdata = response.data;
-                    this.totals = response.data.map(d => d.total);
-                    this.months = response.data.map(d => d.dates);
-                });*/
-
-        },
-
-        beforeMount() {
-
         },
 
         computed: {
-            ...mapGetters(['allProjects', 'allMeetings', 'allUsers']),
+            // ...mapGetters(['allProjects', 'allMeetings', 'allUsers']),
+
+  /*          filteredMeetings() {
+                let res = this.meetings.meetings;
+
+                this.activeMeetings = res.filter(item => {
+                    return item.finished === 0
+                });
+
+                this.isLoadingM = false;
+            },
 
             filteredProjects() {
                 let result = this.projects.projects;
@@ -132,39 +63,33 @@
                 this.activeProjects = result.filter(item => {
                     return item.finished === 0
                 });
-            },
 
-            filteredMeetings() {
-                let res = this.meetings.meetings;
-
-                this.activeMeetings = res.filter(item => {
-                    return item.finished === 0
-                });
-            },
+                this.isLoadingP = false;
+            }*/
 
         },
 
         methods: {
             ...mapActions([
-                'fetchProjects',
-                'fetchMeetings',
+               /* 'fetchProjects',
+                'fetchMeetings',*/
                // 'fetchUsers'
             ]),
 
-            loadData() {
+            /*loadData() {
                 if(this.$gate.isAdmin()) {
                     this.fetchProjects();
                     this.projects = this.$store.state.projects;
                     this.fetchMeetings();
                     this.meetings = this.$store.state.meetings;
-                 /*   this.fetchUsers();
-                    this.users = this.$store.state.users;*/
+                 /!*   this.fetchUsers();
+                    this.users = this.$store.state.users;*!/
                 }
-            },
+            },*/
         },
 
-        async created() {
-            await this.loadData();
+        created() {
+            // this.loadData();
         }
     }
 </script>

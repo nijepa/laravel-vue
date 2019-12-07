@@ -15,7 +15,8 @@
             </div>
         </div>
         <!-- /.card-header -->
-        <div class="card-body">
+        <div v-if="isLoading" class="card-body"><CircleLoader :color="`#024e68`" /></div>
+        <div v-if="!isLoading" class="card-body">
             <ul class="todo-list ui-sortable" data-widget="todo-list" v-for="todo in todos.todos.data" :key="todo.id">
 
                 <li style="" class="">
@@ -123,10 +124,13 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import { CircleLoader } from '@saeris/vue-spinners';
 
     export default {
         name: "ToDo",
-
+        components: {
+            CircleLoader
+        },
         data() {
             return {
                 todos: {},
@@ -138,7 +142,8 @@
                     priority: ''
                 }),
                 priorities: [{name: 'High'}, {name: 'Medium'} , {name: 'Low'}],
-                editMode: true
+                editMode: true,
+                isLoading: true
             }
         },
 
@@ -151,6 +156,7 @@
                 if(this.$gate.isAdmin()) {
                     this.fetchTodosP();
                     this.todos = this.$store.state.todos;
+                    setTimeout(() => this.isLoading = false, 1000);
                 }
             },
 

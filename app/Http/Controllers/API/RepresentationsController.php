@@ -41,7 +41,19 @@ class RepresentationsController extends Controller
      */
     public function companies()
     {
-        $reps = Representation::orderBy('name')->where('isRepresentation', '===', 0)->with('City')->get();
+        $reps = Representation::orderBy('name')->where('isRepresentation', '=', 0)->with('City')->get();
+
+        return response()->json($reps);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return json Response
+     */
+    public function allCompanies()
+    {
+        $reps = Representation::orderBy('name')->with('City')->get();
 
         return response()->json($reps);
     }

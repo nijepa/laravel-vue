@@ -13,6 +13,7 @@ class ProductDet extends Model
      */
     protected $fillable = [
         'title',
+        'product_id',
         'photo_id',
         'description'
     ];

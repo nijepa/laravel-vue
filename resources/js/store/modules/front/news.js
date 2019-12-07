@@ -21,6 +21,10 @@ const actions = {
         const response = await axios.get('../api/news');
         commit('setNews', response.data)
     },
+    async fetchNewsB ({ commit }) {
+        const response = await axios.get('../api/newsBack');
+        commit('setNews', response.data)
+    },
     async fetchNewsD ({ commit }, newsD) {
         const response = await axios.get(
             `../api/news/${newsD}`,

@@ -16,11 +16,12 @@
                         </button>
                     </div>
                     <div class="mx-3" >
-                        <fieldset >
+                        <fieldset :disabled="dis">
                             <div class="form-group" v-for="exp in exports" :key="exp.id" >
                                 <label for="body">Description</label>
-                                <ckeditor :editor="editor" v-model="exp.body" id="body" name="body" :disabled="dis">
-                                </ckeditor>
+              <!--                  <ckeditor :editor="editor" v-model="exp.body" id="body" name="body" :disabled="dis">
+                                </ckeditor>-->
+                                <VueEditor v-model="exp.body" id="body" name="body" :disabled="dis" />
                             </div>
                         </fieldset>
                         <div class="d-flex justify-content-center mb-3">
@@ -41,10 +42,15 @@
 
 <script>
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import { VueEditor } from "vue2-editor";
 
     export default {
 
         name: "Export",
+
+        components: {
+            VueEditor
+        },
 
         data() {
             return {

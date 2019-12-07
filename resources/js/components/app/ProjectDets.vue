@@ -19,16 +19,16 @@
                     <div class="d-flex justify-content-between mt-3">
                         <div class="ml-3 mt-3">
                             <div class="">
-                                <span>Title : </span><h3 class="d-inline p-2 text-blue font-weight-bold"> {{ oneProject.title }}</h3>
+                                <span>Title : </span><h3 class="d-inline p-2 text-blue font-weight-bold"> {{ selProject.title }}</h3>
                             </div>
                             <div class="mt-2">
-                                <span>Started : </span><h4 class="d-inline p-2"> {{ oneProject.project_started | customDate }}</h4>
+                                <span>Started : </span><h4 class="d-inline p-2"> {{ selProject.project_started | customDate }}</h4>
                             </div>
                             <div class="mt-2">
-                                <span>Company : </span><h4 class="d-inline p-2"> {{ oneProject.representation.name }}</h4>
+                                <span>Company : </span><h4 class="d-inline p-2"> {{ selProject.representation.name }}</h4>
                             </div>
                             <div class="mt-2">
-                                <span>Description : </span><h4 class="d-inline p-2"> {{ oneProject.description }}</h4>
+                                <span>Description : </span><h4 class="d-inline p-2"> {{ selProject.description }}</h4>
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                                                 <i class="cap-icon ci-file-edit"></i>
                                             </button>
                                             /
-                                            <button  @click="deleteProject(projectDet)"
+                                            <button  @click="deleteItem(projectDet)"
                                                      class="btn btn-danger btn-sm"
                                                      data-toggle="tooltip" data-placement="top" title="Delete Company">
                                                 <i class="cap-icon ci-trash"></i>
@@ -145,6 +145,7 @@
                         </div>
                     </div>
                 </div>
+<!--                <div v-else class="card" data-aos="flip-up" >dfghfh</div>-->
             <!-- /.card -->
             </div>
 
@@ -165,7 +166,7 @@
                         </div>
             <!-- /.modal-header -->
                         <form enctype="multipart/form-data"
-                              @submit.prevent="editMode ? updateProject() : createProject()"
+                              @submit.prevent="editMode ? updateItem() : createItem()"
                               @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <input v-model="form.project_id" type="hidden" name="project_id" id="project_id">
@@ -183,7 +184,7 @@
                                     <has-error :form="form" field="caption"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label>Note</label>
+                                    <label for="note">Note</label>
                                     <textarea v-model="form.note" type="text" id="note" name="note" placeholder="Note"
                                               class="form-control" :class="{ 'is-invalid': form.errors.has('note') }"></textarea>
                                     <has-error :form="form" field="note"></has-error>
@@ -226,13 +227,14 @@
 </template>
 
 <script>
-    import { mapGetters, mapActions } from 'vuex';
+    import { mapGetters, mapActions, mapState } from 'vuex';
     import Paginations from '../shared/Paginations';
     import TableOptions from '../shared/TableOptions';
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
     import updateFile from '../../mixins/updateFile';
     import paginationActions from '../../mixins/paginationActions';
+    import dataModifiers from '../../mixins/dataModifiers';
     import UploadFiles from '../shared/UploadFiles';
     import Datepicker from 'vuejs-datepicker';
 
@@ -247,7 +249,7 @@
             Datepicker
         },
 
-        mixins: [tableActions, modalForm, updateFile, paginationActions],
+        mixins: [tableActions, modalForm, updateFile, paginationActions, dataModifiers],
 
         data() {
             return {
@@ -264,8 +266,12 @@
                     project_id: '',
                     finished: '',
                     doc_id: '',
-                    doc: null
+                    doc: ''
                 }),
+
+                apiPath: '../api/project_dets',
+                infoMessage: 'Project detail'
+
             }
         },
         /**
@@ -274,18 +280,20 @@
          */
         computed: {
 
+            loaded() {
+                return this.$store.state.projects.projectLoading;
+            },
+
             ...mapGetters(['allProjects', 'allProjectDet', 'oneProject']),
 
             repsSorted() {
                 let result = this.projectDets.projectDet;
 
                 if (this.search) {
-                    result = result.filter(item => item.title.toLowerCase().includes(this.search));
+                    result = result.filter(item => item.caption.toLowerCase().includes(this.search));
                 }
 
                 result =  _.orderBy(result, this.sortKey, this.sortOrder);
-
-                console.log(result);
 
                 return result.filter((row, index) => {
                     this.totalPages = Math.ceil(result.length / this.pageSize);
@@ -295,7 +303,13 @@
                 });
             },
         },
-
+   /*     beforeRouteEnter (to, from, next) {
+            if (store.state.projects.project.length === 0) {
+                console.log(store.state.projects.project.length);
+                store.dispatch(this.fetchProject(this.projectId))
+                    .then(next);
+            }
+        },*/
         methods: {
 
             ...mapActions([
@@ -306,8 +320,8 @@
 
             loadProjects() {
                 if(this.$gate.isAdmin()) {
-                    this.fetchProject(this.projectId);
-                    this.project = this.$store.state.project;
+                    /*this.fetchProject(this.projectId);
+                    this.project = this.$store.state.projects.project;*/
                     this.fetchProjectDet(this.projectId);
                     this.projectDets = this.$store.state.projectDet;
                 }
@@ -332,7 +346,7 @@
                 this.logo = 'img/companies/'+this.form.logo_id;
             },
 
-            createProject() {
+/*            createProject() {
                 this.$Progress.start();
                 this.form.project_id = this.oneProject.id;
                 let formData = this.projectData();
@@ -348,9 +362,9 @@
                         this.$Progress.finish();
                     })
                     .catch(() => {})
-            },
+            },*/
 
-            updateProject() {
+ /*           updateProject() {
                 this.$Progress.start();
                 let formData = this.projectData(1);
 
@@ -367,23 +381,27 @@
                     .catch(() => {
                         this.$Progress.fail();
                     })
-            },
+            },*/
 
-            projectData(action = '') {
+            prepareData(action = '') {
                 let data = new FormData();
                 data.append('caption', this.form.caption);
-                data.append('note', this.form.note);
+                if (this.form.note !== null) data.append('note', this.form.note);
                 data.append('date_added', this.form.date_added);
+                if (this.form.doc_id !==  null) data.append('doc_id', this.form.doc_id);
+                data.append('doc', this.form.doc);
                 let trueFalse = this.form.finished == 0 ? 0 : 1;
                 data.append('finished', trueFalse);
-                data.append('project_id', this.form.project_id);
-                data.append('doc_id', this.form.doc_id);
-                data.append('doc', this.form.doc);
-                if (action) data.append('_method', 'put');
+                if (action) {
+                    data.append('project_id', this.form.project_id);
+                    data.append('_method', 'put');
+                } else {
+                    data.append('project_id', this.selProject.id);
+                }
                 return data;
             },
 
-            deleteProject(project){
+     /*       deleteProject(project){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -409,7 +427,7 @@
                         console.log('error');
                     }
                 })
-            },
+            },*/
         },
 
         created() {

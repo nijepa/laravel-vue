@@ -2,22 +2,47 @@
     <div class="">
         <div class="container">
             <div class="row">
+                <div class="col-4"></div>
+                <div class="col-8 my-3">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <a @click="switchMenu('Info')" class="nav-item nav-link active" href="#">Info <span class="sr-only">(current)</span></a>
+                                <div v-if="allRepDetAbout.length">
+                                    <a class="nav-item nav-link" href="#">O Firmi</a>
+                                </div>
+                                <div v-if="allRepDetProduct.length">
+                                    <a @click="switchMenu('Product')" class="nav-item nav-link" href="#">Proizvodi</a>
+                                </div>
+                                <div v-if="allRepDetDownload.length">
+                                    <a @click="switchMenu('Download')" class="nav-item nav-link" href="#">Downloads</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
 
-                <div class="col-4 my-5">
-                    <nav  @click="getRep(rep, rep.id)" :key="rep.id" class="nav flex-column list-group" v-for="rep in allReps">
-                        <a :class="{ active : active_el === rep.id }" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{rep.name}}
-                            <img :src="'../img/companies/logosSmall/' + rep.logo_small_id" class="img-fluid mx-auto d-block">
+                <div class="col-4 mb-3">
+                    <nav @click="getRep(rep, rep.id)" :key="rep.id"
+                         class="nav flex-column list-group" v-for="rep in allReps">
+                        <a @click="moveTo" :class="{ active : active_el === rep.id }"
+                           class="nav-link list-group-item list-group-item-action list-group-item-primary list-font">{{rep.name}}
+                            <img :src="'../img/companies/logosSmall/' + rep.logo_small_id" class="img-fluid mx-auto d-block" alt="">
                         </a>
                     </nav>
                 </div>
 
-                <div class="col-8 my-5">
+                <div class="col-8 mb-3">
                     <div class="card">
                         <transition name="slide" mode="out-in" appear>
-
-                            <div :key="oneRep.id" v-if="oneRep.id" class="card-body">
+       <!--                     <div :key="oneRep.id" v-if="oneRep.id" class="card-body">
                                 <a :href="oneRep.website" target="_blank">
-                                    <img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block">
+                                    <img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block" alt="">
                                 </a>
                                 <img :src="'../img/companies/' + oneRep.photo_id"
                                      alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
@@ -35,7 +60,29 @@
                                         </a>
                                     </div>
                                 </div>
+                            </div>-->
 
+                            <div :key="oneRep.id" v-if="oneRep.id" class="card-body">
+                                <a :href="oneRep.website" target="_blank">
+                                    <img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block" alt="">
+                                </a>
+                                <img :src="'../img/companies/' + oneRep.photo_id"
+                                     alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
+                                <h3>{{oneRep.name}}
+                                    <a :href="oneRep.website" target="_blank"><i class='cap-icon ci-website' :title="oneRep.website"></i></a>
+                                </h3>
+                                <div v-if="activeMenuItem === 'Info'" class="card-body">
+                                    <h5 class="text-muted">{{oneRep.short_desc}}</h5>
+                                    <p class="my-3" v-html="oneRep.description"></p>
+                                </div>
+                                <div v-if="activeMenuItem === 'Download'">
+                                    <img :src="'../img/companies/docs/pdfdown.png'" alt="" class="img-fluid my-3">
+                                    <div :key="repDet.id" v-for="repDet in allRepDet">
+                                        <a :href="'../img/companies/docs/' + repDet.doc_id" target="_blank" class="my-3">
+                                            <i class="cap-icon ci-download m-1"></i> {{repDet.title}}
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
 
                             <div key=2 v-else class="card-body">
@@ -67,6 +114,7 @@
                 classe: '',
                 active_el: 0,
                 isActive: false,
+                activeMenuItem: 'Info'
             }
         },
 
@@ -74,7 +122,10 @@
             mapGetters([
                 'allReps',
                 'oneRep',
-                'allRepDet'
+                'allRepDet',
+                'allRepDetDownload',
+                'allRepDetAbout',
+                'allRepDetProduct'
             ]),
 
         methods: {
@@ -82,15 +133,49 @@
                 'fetchReps',
                 'fetchRep',
                 'resetRepState',
-                'fetchRepDet'
+                'fetchRepDet',
+                'fetchRepDetDownload',
+                'fetchRepDetAbout',
+                'fetchRepDetProduct'
             ]),
+
+            moveTo () {
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            },
+
+            switchMenu(menuItem) {
+                this.activeMenuItem = menuItem;
+            },
 
             getRep(rep, id) {
                 const selRep = rep;
                 const selRepID = id;
-                console.log(id);
+                const infoT = 'Download';
+                const infoA = 'About';
+                const infoP = 'Product';
+                //console.log(id);
                 this.fetchRep(selRepID);
                 this.fetchRepDet(selRepID);
+                let obj = {
+                    repDet: selRepID,
+                    infoType: infoT,
+                };
+                let objA = {
+                    repDet: selRepID,
+                    infoType: infoA,
+                };
+                let objP = {
+                    repDet: selRepID,
+                    infoType: infoP,
+                };
+                console.log(obj);
+                this.fetchRepDetDownload(obj);
+                this.fetchRepDetAbout(objA);
+                this.fetchRepDetProduct(objP);
                 this.classe = 'active';
                 this.activate(selRepID);
             },
@@ -111,21 +196,43 @@
 </script>
 
 <style scoped>
-    .active {
-        background-color: #85b5c6;
-    }
-
     a {
         cursor: pointer;
         text-decoration: none;
     }
 
-    .slide-enter-active {
-        animation: slide-in 800ms ease-out forwards;
+    .list-font {
+        font-size: 20px;
     }
 
-    .slide-leave-active {
-        animation: slide-out 800ms ease-out forwards;
+    @media (max-width: 858px) {
+        .list-font {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 780px) {
+        .list-font {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 702px) {
+        .list-font {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 724px) {
+        .list-font {
+            font-size: 11px;
+        }
+    }
+
+    @media (max-width: 623px) {
+        .list-font {
+            font-size: 10px;
+        }
     }
 
     @keyframes slide-in {

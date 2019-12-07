@@ -17,10 +17,11 @@
                     </div>
                     <div class="mx-3">
 <!--                        <form action="" class="mt-3">-->
-                            <fieldset >
-                                <div class="form-group" :disabled="dis">
+                            <fieldset :disabled="dis">
+                                <div class="form-group" >
                                     <label for="title">Title</label>
                                     <input class="form-control" type="text" v-model="about.about.title" id="title">
+                                    <has-error :form="form" field="title"></has-error>
                                 </div>
                    <!--             <div class="form-group">
                                     <label for="description">Description</label>
@@ -28,10 +29,11 @@
                                 </div>-->
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <ckeditor :editor="editor" v-model="about.about.body" id="description" name="description"
+                                    <VueEditor v-model="about.about.body" id="body" :disabled="dis" />
+                                    <!--<ckeditor :editor="editor" v-model="about.about.body" id="description" name="description"
                                               :class="{ 'is-invalid': form.errors.has('description') }">
-                                    </ckeditor>
-                                    <has-error :form="form" field="description"></has-error>
+                                    </ckeditor>-->
+                                    <has-error :form="form" field="body"></has-error>
                                 </div>
                             </fieldset>
                             <div class="d-flex justify-content-center mb-3">
@@ -57,7 +59,7 @@
                             <tr v-for="aboutD in aboutsDet.aboutDet" :key="aboutD.id">
                                 <td>{{ aboutD.id }}</td>
                                 <td>{{ aboutD.caption }}</td>
-                                <td>{{ aboutD.description }}</td>
+                                <td v-html="aboutD.description"></td>
                                 <td>{{ aboutD.created_at | customDate }}</td>
                                 <td>
                                     <button @click="editModal(aboutD)" class="btn btn-info btn-sm"
@@ -87,16 +89,16 @@
                         <form @submit.prevent="editMode ? updateAbout() : createAbout()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Caption</label>
-                                    <input v-model="form.caption" type="text" name="title" placeholder="Caption"
+                                    <label for="caption">Caption</label>
+                                    <input v-model="form.caption" type="text" id="caption" placeholder="Caption"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('caption') }">
                                     <has-error :form="form" field="caption"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <ckeditor :editor="editor" v-model="form.description" id="description" name="description"
+                                    <VueEditor v-model="form.description" id="description" name="description"
                                               :class="{ 'is-invalid': form.errors.has('description') }">
-                                    </ckeditor>
+                                    </VueEditor>
                                     <has-error :form="form" field="description"></has-error>
                                 </div>
                             </div>
@@ -125,6 +127,7 @@
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+    import { VueEditor } from "vue2-editor";
 
     export default {
 
@@ -134,6 +137,7 @@
             appTableActions: TableActions,
             appModalActions: ModalActions,
             appModalHeader: ModalHeader,
+            VueEditor
         },
 
         mixins: [tableActions, modalForm],
@@ -155,7 +159,7 @@
                 dis: true,
                 classI: 'cap-icon ci-file-edit',
                 classB: 'btn btn-outline-info',
-                editor: ClassicEditor,
+                editor: ClassicEditor
             }
         },
 

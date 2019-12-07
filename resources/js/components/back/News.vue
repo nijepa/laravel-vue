@@ -36,14 +36,20 @@
                             <tbody>
                             <tr v-for="news in repsSorted" :key="news.id">
                                 <router-link
+                                    :to="{name:'newsd', params: {id: news.id, selNews: news}}"
+                                    activeClass="active" tag="a" class="btn btn-secondary btn-sm"
+                                    data-toggle="tooltip" data-placement="top" title="View Details">
+                                    <i class="fas fa-list">  {{ news.id }}</i>
+                                </router-link>
+                      <!--          <router-link
                                         :to="{name:'newsd', params: {id: news.id, selNews: news}}"
                                         activeClass="active" tag="a" class="nav-item nav-link">
                                     {{ news.id }}
-                                </router-link>
+                                </router-link>-->
 <!--                                <td>{{ news.id }}</td>-->
                                 <td><img :src="'img/news/'+news.pic_id" alt="" style="height: 50px"></td>
                                 <td>{{ news.title }}</td>
-                                <td>{{ news.body }}</td>
+                                <td v-html="news.body"></td>
                                 <td>{{ news.created_at | customDate }}</td>
                                 <appTableActions
                                         :action-title="'News'"
@@ -89,17 +95,15 @@
                                         @onimageload="OnImageLoad">
                                 </appUploadFiles>
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="form.title" type="text" name="name" placeholder="Name"
+                                    <label for="name">Name</label>
+                                    <input v-model="form.title" type="text" id="name" name="name" placeholder="Name"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
                                     <has-error :form="form" field="title"></has-error>
                                 </div>
-                 <!--               <div class="form-group">
-                                    <label>Name</label>
-                                    <input v-model="form.body" type="text" name="description" placeholder="Description"
-                                           class="form-control" :class="{ 'is-invalid': form.errors.has('body') }">
-                                    <has-error :form="body" field="description"></has-error>
-                                </div>-->
+                                <div class="form-group">
+                                    <label for="body">Description</label>
+                                    <VueEditor v-model="form.body" name="body" id="body" />
+                                </div>
                             </div>
                             <appModalActions
                                     :mode="editMode"
@@ -129,6 +133,7 @@
     import tableActions from '../../mixins/tableActions';
     import paginationActions from '../../mixins/paginationActions';
     import modalForm from '../../mixins/modalForm';
+    import { VueEditor } from "vue2-editor";
 
     export default {
         name: "News",
@@ -139,7 +144,8 @@
             appTableActions: TableActions,
             appModalActions: ModalActions,
             appModalHeader: ModalHeader,
-            appUploadFiles: UploadFiles
+            appUploadFiles: UploadFiles,
+            VueEditor
         },
 
         mixins: [tableActions, modalForm, paginationActions],
@@ -182,7 +188,7 @@
 
         methods: {
             ...mapActions([
-                'fetchNews',
+                'fetchNewsB',
                 'fetchNewsP',
                 'fetchNewsS',
                 'addNews',
@@ -192,7 +198,7 @@
 
             loadNews() {
                 if(this.$gate.isAdmin()) {
-                    this.fetchNews();
+                    this.fetchNewsB();
                     this.news = this.$store.state.news;
                 }
             },
@@ -212,7 +218,7 @@
             },*/
 
             imagesPlaces() {
-                this.image = 'img/news/'+this.form.photo_id;
+                this.image = 'img/news/'+this.form.pic_id;
             },
 
             createNews() {

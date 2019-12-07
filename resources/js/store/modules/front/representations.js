@@ -10,11 +10,13 @@ const state = {
     reps: [],
     rep: getDefaultState(),
     companies: [],
+    firms: []
 };
 
 const getters = {
     allReps: state => state.reps,
     allCompanies: state => state.companies,
+    allFirms: state => state.firms,
     oneRep: state => state.rep
 };
 
@@ -34,6 +36,10 @@ const actions = {
         const response = await axios.get('../api/companies');
         commit('setCompanies', response.data)
     },
+    async fetchFirms ({ commit }) {
+        const response = await axios.get('../api/allCompanies');
+        commit('setFirms', response.data)
+    },
     resetRepState ({ commit }) {
         commit('resetState')
     }
@@ -43,6 +49,7 @@ const mutations = {
     setReps: (state, reps) => (state.reps = reps),
     setRep: (state, rep) => (state.rep = rep),
     setCompanies: (state, companies) => (state.companies = companies),
+    setFirms: (state, firms) => (state.firms = firms),
     resetState (state) {
         Object.assign(state, getDefaultState())
     }

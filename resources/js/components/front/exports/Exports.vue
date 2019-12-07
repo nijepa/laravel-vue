@@ -3,8 +3,10 @@
         <div class="card-header">
             <h2 itemprop="name">Uvoz / Izvoz</h2>
         </div>
-    <div class="card-body">
-        <ul class="menu ">
+    <div class="card-body" v-for="exports in allExports" :key="exports.id">
+            <p v-html="exports.body" ></p>
+    </div>
+<!--        <ul class="menu ">
             <li class="item-125"><a href="http://www.donautrade.rs/index.php/sr/tim-sistem"><span class="menutitle">Tim sistem</span> </a></li>
             <li class="item-126"><a href="http://www.donautrade.rs/index.php/sr/mbs"><span class="menutitle">MBS</span> </a></li>
             <li class="item-127"><a href="http://www.donautrade.rs/index.php/sr/em-dip"><span class="menutitle">EM-DIP</span> </a></li>
@@ -31,13 +33,30 @@
         <p>&nbsp;</p>
         <p><a href="http://www.donau.rs/index.php/sr/em-dip"><img src="http://www.donautrade.rs/images/companies/emdipS.gif" alt="" width="124" height="36" border="0" align="absmiddle"></a>&nbsp; <a href="http://www.donau.rs/index.php/sr/em-dip"><strong>"EM DIP"</strong></a> - Smederevo</p>
         <p>&nbsp;</p>
-        <p><strong><a href="http://www.donau.rs/index.php/sr/alfaplam"><img src="http://www.donautrade.rs/images/companies/alfaplam.png" alt="" width="185" height="59"></a>&nbsp; <a href="http://www.donau.rs/index.php/sr/alfaplam"><strong>"ALFA PLAM"</strong></a></strong> - Vranje</p> 	</div>
+        <p><strong><a href="http://www.donau.rs/index.php/sr/alfaplam"><img src="http://www.donautrade.rs/images/companies/alfaplam.png" alt="" width="185" height="59"></a>&nbsp; <a href="http://www.donau.rs/index.php/sr/alfaplam"><strong>"ALFA PLAM"</strong></a></strong> - Vranje</p> 	</div>-->
     </div>
 </template>
 
 <script>
+    import { mapGetters, mapActions } from 'vuex';
+
     export default {
-        name: "Exports"
+        name: "Exports",
+
+        computed:
+            mapGetters([
+                'allExports'
+            ]),
+
+        methods: {
+            ...mapActions([
+                'fetchExports'
+            ]),
+        },
+
+        created() {
+            this.fetchExports();
+        },
     }
 </script>
 

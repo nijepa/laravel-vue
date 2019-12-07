@@ -82,7 +82,7 @@
                                 <appTableActions
                                         :action-title="'Project'"
                                         :at-click-edit="editModal.bind(this, project)"
-                                        :at-click-delete="deleteProject.bind(this, project)"
+                                        :at-click-delete="deleteItem.bind(this, project)"
                                 ></appTableActions>
                             </tr>
                             </tbody>
@@ -115,7 +115,7 @@
                         ></appModalHeader>
                         <!-- /.modal-header -->
                         <!-- form -->
-                        <form @submit.prevent="editMode ? updateProject() : createProject()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? updateItem() : createItem()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="project_started">Date</label>
@@ -131,6 +131,7 @@
                                     <input v-model="form.title" type="text" id="title" name="title" placeholder="Title"
                                            class="form-control" :class="{ 'is-invalid': form.errors.has('title') }">
                                     <has-error :form="form" field="title"></has-error>
+                                    <p class="errorText" v-if="errors.title">{{errors.title[0]}}</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="representation_id">Company</label>
@@ -138,7 +139,7 @@
                                             class="form-control" :class="{ 'is-invalid': form.errors.has('representation_id') }">
                                         <option v-bind:value="rep.id"
                                                 :key="rep.id"
-                                                v-for="rep in reps.reps">{{ rep.name }}</option>
+                                                v-for="rep in reps.firms">{{ rep.name }}</option>
                                     </select>
                                     <has-error :form="form" field="representation_id"></has-error>
                                 </div>
@@ -163,6 +164,7 @@
                             </div>
                             <appModalActions
                                     :mode="editMode"
+                                    :clear-errors="clearErrors"
                             ></appModalActions>
                             <!-- /.modal-body -->
                         </form>
@@ -189,6 +191,8 @@
     import tableActions from '../../mixins/tableActions';
     import modalForm from '../../mixins/modalForm';
     import updateFile from '../../mixins/updateFile';
+    import paginationActions from '../../mixins/paginationActions';
+    import dataModifiers from '../../mixins/dataModifiers';
     import Datepicker from 'vuejs-datepicker';
 
     export default {
@@ -204,7 +208,7 @@
             Datepicker
         },
 
-        mixins: [tableActions, modalForm, updateFile],
+        mixins: [tableActions, modalForm, updateFile, paginationActions, dataModifiers],
 
         data() {
             return {
@@ -219,19 +223,30 @@
                     finished: 0,
                     project_started: '',
                     doc_id: '',
-                    doc: null
+                    doc: ''
                 }),
+
+                errors: {},
+
+                apiPath: '../api/project',
+                infoMessage: 'Project'
             }
         },
 
         computed: {
-            ...mapGetters(['allProjects', 'allReps']),
+            ...mapGetters(['allProjects', 'allFirms']),
 
             repsSorted() {
                 let result = this.projects.projects;
 
                 if (this.search) {
-                    result = result.filter(item => item.name.toLowerCase().includes(this.search));
+                    var self = this;
+                    result = result.filter(function (projects) {
+                        return projects.title.toLowerCase().indexOf(self.search.toLowerCase()) >= 0
+                            || projects.representation.name.toLowerCase().indexOf(self.search.toLowerCase()) >= 0;
+                    });
+
+                    // result = result.filter(item => item.title.toLowerCase().includes(this.search));
                 }
 
                 result =  _.orderBy(result, this.sortKey, this.sortOrder);
@@ -250,71 +265,23 @@
                 'fetchProjects',
                 'fetchProjectsP',
                 'fetchProjectsS',
-                'fetchReps'
+                'fetchFirms'
             ]),
 
             loadProjects() {
                 if(this.$gate.isAdmin()) {
                     this.fetchProjects();
                     this.projects = this.$store.state.projects;
-                    this.fetchReps();
+                    this.fetchFirms();
                     this.reps = this.$store.state.representations;
                 }
-            },
-
-            /*onFileChange(e){
-                let file = e.target.files[0];
-                let limit = 1024 * 1024 * 2;
-                let type = [
-                    'application/pdf',
-                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-                    'application/msword',
-                    'message/rfc822'];
-
-                if(file['size'] > limit){
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You are uploading a large file',
-                    });
-                    return false;
-                }
-                //console.log(file['type']);
-                if(!type.includes(file['type'])) {
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You need to upload document file',
-                    });
-                    return false;
-                }
-
-                this.form.doc = e.target.files[0];
-                console.log(this.form.doc);
-                this.form.doc_id = this.form.doc.name;
-            },*/
-
-            onPageChange(page) {
-                this.currentPage = page;
-            },
-
-            onPageSizeChanged(ps) {
-                this.onPageChange(1);
-                this.pageSize = ps;
-            },
-
-            onSearchChanged(s) {
-                this.onPageChange(1);
-                this.search = s;
             },
 
             imagesPlaces() {
                 this.image = 'img/projects/'+this.form.photo_id;
             },
 
-            createProject() {
+            /*createProject() {
                 this.$Progress.start();
                 let formData = this.prepareData();
 
@@ -331,9 +298,9 @@
                     .catch(() => {
                         console.log(this.form.errors)
                     })
-            },
+            },*/
 
-            updateProject(id) {
+     /*       updateProject(id) {
                 this.$Progress.start();
                 let formData = this.prepareData(1);
 
@@ -350,20 +317,18 @@
                     .catch(() => {
                         this.$Progress.fail();
                     })
-            },
+            },*/
 
             prepareData(action = '') {
                 let data = new FormData();
                 data.append('project_started', this.form.project_started);
                 data.append('title', this.form.title);
-                data.append('description', this.form.description);
+                if (this.form.description !== null) data.append('description', this.form.description);
                 data.append('representation_id', this.form.representation_id);
-                data.append('doc_id', this.form.doc_id);
+                if (this.form.doc_id !== null) data.append('doc_id', this.form.doc_id);
                 data.append('doc', this.form.doc);
                 let trueFalse = this.form.finished == 0 ? 0 : 1;
-                console.log(trueFalse);
                 data.append('finished', trueFalse);
-                //data.append('finished', this.form.finished);
 
                 if (action) {
                     data.append('_method', 'put');
@@ -371,7 +336,11 @@
                 return data;
             },
 
-            deleteProject(project){
+            clearErrors() {
+                this.errors = {}
+            },
+
+/*            deleteProject(project){
                 swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -397,8 +366,9 @@
                         console.log('error');
                     }
                 })
-            }
+            }*/
         },
+
         created() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
@@ -415,6 +385,9 @@
 </script>
 
 <style scoped>
+    .errorText {
+        color: #bd2130;
+    }
     .qqq {
         width: 110px !important;
         background-color: white !important;

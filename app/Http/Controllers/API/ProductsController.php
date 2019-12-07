@@ -68,6 +68,8 @@ class ProductsController extends Controller
         return Product::create([
             'name' => $request['name'],
             'description' => $request['description'],
+            'body' => $request['body'],
+            'photo_id' => $request['photo_id']
         ]);
     }
 

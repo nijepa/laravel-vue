@@ -26,11 +26,13 @@ Route::apiResources(['product_dets' => 'API\ProductDetsController']);
 Route::apiResources(['about_dets' => 'API\AboutDetsController']);
 Route::apiResources(['news' => 'API\NewsController']);
 Route::apiResources(['news_dets' => 'API\NewsDetController']);
+Route::apiResources(['production' => 'API\ProductionController']);
+Route::apiResources(['export' => 'API\ExportController']);
 
 Route::get('productF', 'API\ProductsController@productF');
 Route::get('contactF', 'API\ContactsController@contactF');
 Route::get('aboutF', 'API\AboutsController@aboutF');
-
+Route::get('infoType/{id}/{type}', 'API\RepresentationDetsController@infoType');
 
 // BACKEND APIS
 Route::apiResources(['user' => 'API\UserController']);
@@ -42,17 +44,20 @@ Route::apiResources(['contact' => 'API\ContactsController']);
 Route::apiResources(['about' => 'API\AboutsController']);
 Route::apiResources(['export' => 'API\ExportController']);
 Route::apiResources(['productions' => 'API\ProductionController']);
+Route::apiResources(['exports' => 'API\ExportController']);
 Route::apiResources(['reps' => 'API\RepresentationsController']);
 
 Route::get('profile', 'API\UserController@profile');
 Route::put('profile', 'API\UserController@updateProfile');
 
 Route::get('countries', 'API\CountriesController@selectAll');
+Route::get('newsBack', 'API\NewsController@newsBack');
 
 Route::get('findUser', 'API\UserController@search');
 
 // WEB APP APIS
 Route::get('companies', 'API\RepresentationsController@companies');
+Route::get('allCompanies', 'API\RepresentationsController@allCompanies');
 
 Route::apiResources(['project' => 'API\ProjectsController']);
 Route::apiResources(['project_dets' => 'API\ProjectDetsController']);

@@ -12,7 +12,7 @@ class NewsDetController extends Controller
     use StoreImageTrait;
 
     /**
-     * ProductsDets Controller constructor.
+     * NewsDets Controller constructor.
      *
      * @return void
      */
@@ -20,6 +20,7 @@ class NewsDetController extends Controller
     {
         $this->middleware('auth:api')->only('store', 'update', 'destroy');
     }
+
     /**
      * Display a listing of the resource.
      *

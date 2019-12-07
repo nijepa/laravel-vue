@@ -55,7 +55,7 @@ class ProductDetsController extends Controller
 
         return ProductDet::create([
             'product_id' => $request['product_id'],
-            'title' => $request['name'],
+            'title' => $request['title'],
             'description' => $request['description'],
             'photo_id' => $request['photo_id']
         ]);

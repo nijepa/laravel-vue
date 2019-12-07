@@ -24,8 +24,8 @@ class ProductionController extends Controller
      */
     public function index()
     {
-        $export = Production::orderBy('body')->get();
-        return $export;
+        $production = Production::orderBy('body')->get();
+        return $production;
     }
 
     /**
@@ -62,15 +62,15 @@ class ProductionController extends Controller
     {
         $this->authorize('isAdmin');
 
-        $export = Production::findOrFail($id);
+        $production = Production::findOrFail($id);
 
         $this->validate($request, [
             'body' => 'required|string'
         ]);
 
-        $export->update($request->all());
+        $production->update($request->all());
 
-        return ['export' => $export];
+        return ['production' => $production];
     }
 
     /**

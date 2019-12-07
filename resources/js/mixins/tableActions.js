@@ -44,7 +44,7 @@ export default
     methods: {
 
         onPageChange(page) {
-            console.log(page);
+            //console.log(page);
             this.currentPage = page;
         },
 

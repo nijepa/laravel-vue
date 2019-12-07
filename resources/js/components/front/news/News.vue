@@ -4,7 +4,8 @@
             <div class="col-4 my-5">
                 <nav @click="getNews(news, news.id)" :key="news.id"
                      class="nav flex-column list-group" v-for="news in allNews">
-                    <a style="height:150px;" class="nav-link list-group-item list-group-item-action list-group-item-primary">{{news.title}}
+                    <a :class="{ active : active_el === news.id }"  style="height:150px;"
+                       class="nav-link list-group-item list-group-item-action list-group-item-primary list-font">{{news.title}}
                         <img :src="'../img/news/' + news.pic_id" class="img-fluid mx-auto d-block h-75">
                     </a>
                 </nav>
@@ -15,7 +16,7 @@
                 <transition name="slide" mode="out-in" appear>
                     <div :key="oneNews.id" v-if="oneNews.id" class="card-body">
                         <!--                                <a :href="oneRep.website" target="_blank"><img :src="'../img/companies/' + oneRep.logo_id" class="img-fluid mx-auto d-block"></a>-->
-                        <img :src="'../img/news/' + oneNews.pic_id" alt="" class="img-fluid rounded-circle w-50 my-3 mx-auto d-block">
+                        <img :src="'../img/news/' + oneNews.pic_id" alt="" class="img-fluid w-250 my-3 mx-auto d-block">
                         <h3>{{ oneNews.title }}</h3>
                         <!--                                <h5 class="text-muted">{{oneRep.short_desc}}</h5>-->
                         <p class="my-3" v-html="oneNews.body"></p>
@@ -63,6 +64,14 @@
 
         name: "News",
 
+        data() {
+            return {
+                classe: '',
+                active_el: 0,
+                isActive: false,
+            }
+        },
+
         computed:
             mapGetters([
                 'allNews',
@@ -72,22 +81,36 @@
 
         methods: {
             ...mapActions([
-                'fetchNews',
+                'fetchNewsB',
                 'fetchNewsD',
                 'resetNewsState',
                 'fetchNewsDet'
             ]),
+
+            moveTo () {
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            },
 
             getNews(news, id) {
                 const selNews = news;
                 const selNewsID = id;
                 this.fetchNewsD(selNewsID);
                 this.fetchNewsDet(selNewsID);
+                this.classe = 'active';
+                this.activate(selNewsID);
+            },
+
+            activate:function(el){
+                this.active_el = el;
             }
         },
 
         created() {
-            this.fetchNews();
+            this.fetchNewsB();
         },
 
         destroyed:function(){
@@ -97,6 +120,49 @@
 </script>
 
 <style lang="scss" scoped>
+    .nav-link {
+        background-color: white;
+    }
+
+    a {
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .list-font {
+        font-size: 20px;
+    }
+
+    @media (max-width: 858px) {
+        .list-font {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 780px) {
+        .list-font {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 702px) {
+        .list-font {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 724px) {
+        .list-font {
+            font-size: 11px;
+        }
+    }
+
+    @media (max-width: 623px) {
+        .list-font {
+            font-size: 10px;
+        }
+    }
+
     #gallery {
 
         ul {
